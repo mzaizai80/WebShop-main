@@ -1,4 +1,4 @@
-﻿namespace WebShop.Models.Tests
+﻿namespace WebShop.Models
 {
     public class Category
     {
