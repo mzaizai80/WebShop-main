@@ -1,0 +1,30 @@
+{
+  "MaleCategories": [
+    {
+      "Id": 1,
+      "Name": "Men's Clothing"
+    },
+    {
+      "Id": 2,
+      "Name": "Men's Shoes"
+    },
+    {
+      "Id": 3,
+      "Name": "Men's Accessories"
+    }
+  ],
+  "FemaleCategories": [
+    {
+      "Id": 4,
+      "Name": "Women's Clothing"
+    },
+    {
+      "Id": 5,
+      "Name": "Women's Shoes"
+    },
+    {
+      "Id": 6,
+      "Name": "Women's Accessories"
+    }
+  ]
+}
