@@ -1,0 +1,27 @@
+@*
+@foreach (var product in Model)
+{
+    // Access the 'Categories' property on each product
+    foreach (var category in product.Categories)
+    {
+        // Display category information
+        <p>@category.Name</p>
+    }
+}
+
+
+
+ *@
+
+
+
+    @model List<Product>
+
+<h2>Products</h2>
+
+<ul>
+    @foreach (var product in Model)
+    {
+        <li>@product.Name - $@product.Price</li>
+    }
+</ul>
