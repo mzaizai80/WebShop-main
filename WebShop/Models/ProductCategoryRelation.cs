@@ -1,6 +1,6 @@
 ﻿namespace WebShop.Models
 {
-    public class ProductCatagoryRelation
+    public class ProductCategoryRelation
     {
         public int ProductId { get; set; }
         public Product Product { get; set; }
