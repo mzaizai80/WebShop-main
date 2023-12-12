@@ -1,6 +1,6 @@
 ﻿namespace WebShop.Services
 {
-    public class FileReader 
+    public class FileReader : IFileReader
     {
         public bool Exists(string path)
         {

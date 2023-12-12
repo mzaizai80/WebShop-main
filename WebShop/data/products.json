@@ -1,17 +1,20 @@
 [
   {
     "Id": 1,
-    "Name": "Product 1",
-    "Price": 19.99
+    "Name": "Laptop",
+    "Price": 999.99,
+    "PictureUrl": "laptop.jpg"
   },
   {
     "Id": 2,
-    "Name": "Product 2",
-    "Price": 29.99
+    "Name": "Smartphone",
+    "Price": 499.99,
+    "PictureUrl": "smartphone.jpg"
   },
   {
     "Id": 3,
-    "Name": "Product 3",
-    "Price": 39.99
+    "Name": "Headphones",
+    "Price": 79.99,
+    "PictureUrl": "headphones.jpg"
   }
 ]
