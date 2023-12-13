@@ -5,27 +5,63 @@ using Newtonsoft.Json;
 using WebShop.Models;
 using WebShop.Services;
 
-public class ProductService
+public class ProductService : IProductService, IProductCategoryService
 {
     private readonly IFileReader _fileReader;
-    //private readonly string _productsFilePath;
-    //private readonly string _categoriesFilePath;
-    //private readonly string _productCategoryFilePath;
-
-    //private readonly string _productsFilePath = "data/products.json";
-    //private readonly string _categoriesFilePath = "data/categories.json";
-    //private readonly string _productCategoryFilePath = "data/productCategoryRelation.json";
-
     private readonly string _productsFilePath;
     private readonly string _categoriesFilePath;
     private readonly string _productCategoryFilePath;
+    private readonly IFileWriter _fileWriter;
 
-    public ProductService(IFileReader fileReader, IOptions<ProductServiceOptions> options)
+    public ProductService()
+    {
+        // Default constructor implementation for Moq Tests only
+    }
+
+    public ProductService(IFileReader fileReader, IFileWriter fileWriter, IOptions<ProductServiceOptions> options)
     {
         _fileReader = fileReader ?? throw new ArgumentNullException(nameof(fileReader));
-        _productsFilePath = options.Value.ProductsFilePath ?? throw new ArgumentNullException(nameof(options.Value.ProductsFilePath));
-        _categoriesFilePath = options.Value.CategoriesFilePath ?? throw new ArgumentNullException(nameof(options.Value.CategoriesFilePath));
-        _productCategoryFilePath = options.Value.ProductCategoryFilePath ?? throw new ArgumentNullException(nameof(options.Value.ProductCategoryFilePath));
+        _fileWriter = fileWriter ?? throw new ArgumentNullException(nameof(fileWriter));
+        _productsFilePath = options.Value.ProductsFilePath ??
+                            throw new ArgumentNullException(nameof(options.Value.ProductsFilePath));
+        _categoriesFilePath = options.Value.CategoriesFilePath ??
+                              throw new ArgumentNullException(nameof(options.Value.CategoriesFilePath));
+        _productCategoryFilePath = options.Value.ProductCategoryFilePath ??
+                                   throw new ArgumentNullException(nameof(options.Value.ProductCategoryFilePath));
+    }
+
+
+    public void AddProduct(Product product)
+    {
+        var products = GetAllProducts();
+        products.Add(product);
+        SaveProducts(products);
+    }
+
+    public void UpdateProduct(Product updatedProduct)
+    {
+        var products = GetAllProducts();
+        var existingProduct = products.FirstOrDefault(p => p.Id == updatedProduct.Id);
+
+        if (existingProduct != null)
+        {
+            existingProduct.Name = updatedProduct.Name;
+            existingProduct.PictureUrl = updatedProduct.PictureUrl;
+
+            SaveProducts(products);
+        }
+    }
+
+    public void DeleteProduct(int productId)
+    {
+        var products = GetAllProducts();
+        var productToRemove = products.FirstOrDefault(p => p.Id == productId);
+
+        if (productToRemove != null)
+        {
+            products.Remove(productToRemove);
+            SaveProducts(products);
+        }
     }
 
 
@@ -33,79 +69,63 @@ public class ProductService
     {
         var productsJson = _fileReader.ReadAllText(_productsFilePath);
         var products = JsonConvert.DeserializeObject<List<Product>>(productsJson) ?? new List<Product>();
-
-        var categoriesJson = _fileReader.ReadAllText(_categoriesFilePath);
-        var categories = JsonConvert.DeserializeObject<List<Category>>(categoriesJson) ?? new List<Category>();
-
-        var productCategoryRelationJson = _fileReader.ReadAllText(_productCategoryFilePath);
-        var productCategoryRelation = JsonConvert.DeserializeObject<List<ProductCategoryRelation>>(productCategoryRelationJson) ?? new List<ProductCategoryRelation>();
-
-        ProcessProductCategories(products, categories, productCategoryRelation);
-        Console.WriteLine( "00000000000000000000000000000000000000000");
-        Console.WriteLine($"Result in public List<Product> GetAllProducts()");
-        Console.WriteLine($"Number of products: {products.Count}");
-        Console.WriteLine( "00000000000000000000000000000000000000000");
         return products;
     }
 
-    private static void ProcessProductCategories(List<Product> products, List<Category> categories, List<ProductCategoryRelation> productCategoryRelation)
+    private void SaveProducts(List<Product> products)
     {
-        Console.WriteLine("-------------------------------------------");
-        Console.WriteLine($"Result in  private static void ProcessProductCategories(List<Product> products, List<Category> categories, List<ProductCategoryRelation> productCategoryRelation)");
-        Console.WriteLine($"Number of products: {products.Count}");
-        Console.WriteLine($"Number of categories: {categories.Count}");
-        Console.WriteLine($"Number of product-category relations: {productCategoryRelation.Count}");
-        Console.WriteLine("-------------------------------------------");
+        var productsJson = JsonConvert.SerializeObject(products);
+        _fileWriter.WriteAllText(_productsFilePath, productsJson);
+    }
 
-        foreach (var product in products)
+
+
+    public Dictionary<Product, List<Category>> GetProductCategoryAssociations()
+    {
+        var products = GetAllProducts();
+        var categories = ICategoryService.GetAllCategories();
+        var productCategoryRelation = IProductCategoryService.GetAllProductCategoryRelation();
+
+        var productCategoryMap = new Dictionary<Product, List<Category>>();
+
+        foreach (var relation in productCategoryRelation)
         {
-            var productCategoryRelationIds = productCategoryRelation
-                .Where(pc => pc.ProductId == product.Id)
-                .Select(pc => pc.CategoryId)
-                .ToList();
+            var product = products.FirstOrDefault(p => p.Id == relation.ProductId);
+            var category = FindCategory(categories, relation.CategoryId);
 
-            var productCategoriesList = categories.Where(c => productCategoryRelationIds.Contains(c.Id)).ToList();
-            product.Categories = productCategoriesList;
+            if (product != null && category != null)
+            {
+                if (!productCategoryMap.ContainsKey(product))
+                {
+                    productCategoryMap[product] = new List<Category>();
+                }
 
-            // Add debugging statements
-            Console.WriteLine($"Product ID: {product.Id}");
-            Console.WriteLine($"Associated Categories: {string.Join(", ", product.Categories.Select(cat => cat.Name))}");
+                productCategoryMap[product].Add(category);
+            }
         }
+
+        return productCategoryMap;
     }
 
-/*
-    private static void ProcessProductCategories(List<Product> products, List<Category> categories, List<ProductCategoryRelation> productCategoryRelation)
+    public Category FindCategory(List<Category> categories, int categoryId)
     {
-        Console.WriteLine( "-------------------------------------------");
-        Console.WriteLine($"Result in  private static void ProcessProductCategories(List<Product> products, List<Category> categories, List<ProductCategoryRelation> productCategoryRelation)");
-        Console.WriteLine($"Number of products: {products.Count}");
-        Console.WriteLine($"Number of categories: {categories.Count}");
-        Console.WriteLine($"Number of categories: {productCategoryRelation.Count}");
-        Console.WriteLine( "-------------------------------------------");
-        foreach (var product in products)
+        foreach (var category in categories)
         {
-            var productCategoryRelationIds = productCategoryRelation
-                .Where(pc => pc.ProductId == product.Id)
-                .Select(pc => pc.CategoryId)
-                .ToList();
+            if (category.Id == categoryId)
+            {
+                return category;
+            }
 
-            var productCategoriesList = categories.Where(c => productCategoryRelationIds.Contains(c.Id)).ToList();
-            product.Categories = productCategoriesList;
+            if (category.Subcategories != null)
+            {
+                var foundSubcategory = category.Subcategories.FirstOrDefault(sub => sub.Id == categoryId);
+                if (foundSubcategory != null)
+                {
+                    return foundSubcategory;
+                }
+            }
         }
-    }
-*/
 
-    public List<Category> GetAllCategories()
-    {
-        var categoriesJson = _fileReader.ReadAllText(_categoriesFilePath);
-        var categories = JsonConvert.DeserializeObject<List<Category>>(categoriesJson) ?? new List<Category>();
-        Console.WriteLine( "******************************************");
-        Console.WriteLine($"Result in public List<Category> GetAllCategories()");
-        Console.WriteLine($"Number of categories: {categories.Count}");
-        Console.WriteLine( "******************************************");
-        return categories;
+        return null;
     }
-
 }
-
-

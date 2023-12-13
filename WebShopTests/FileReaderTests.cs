@@ -1,8 +1,6 @@
-﻿using NUnit.Framework;
-using WebShop.Services;
-using System.IO;
+﻿using WebShop.Services;
 
-namespace WebShop.Tests
+namespace WebShopTests
 {
     [TestFixture]
     public class FileReaderTests
@@ -75,17 +73,3 @@ namespace WebShop.Tests
         }
     }
 }
-
-
-//using System;
-//using System.Collections.Generic;
-//using System.Linq;
-//using System.Text;
-//using System.Threading.Tasks;
-
-//namespace WebShopTests
-//{
-//    internal class FileReaderTests
-//    {
-//    }
-//}

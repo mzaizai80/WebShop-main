@@ -6,5 +6,7 @@ public class Product
     public string Name { get; set; } = "";
     public decimal Price { get; set; }
     public string PictureUrl { get; set; } = "";
-    public List<Category> Categories { get; set; } = new List<Category>();
 }
+
+
+//public List<Category> Categories { get; set; } = new List<Category>();

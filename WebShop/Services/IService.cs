@@ -1,6 +1,6 @@
 ﻿using WebShop.Models;
 
-namespace WebShopTests
+namespace WebShop.Services
 {
     public interface IService
     {

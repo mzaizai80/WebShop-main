@@ -2,8 +2,8 @@
 {
     public class ProductServiceOptions
     {
-        public string ProductsFilePath { get; set; }
-        public string CategoriesFilePath { get; set; }
-        public string ProductCategoryFilePath { get; set; }
+        public required string ProductsFilePath { get; set; }
+        public required string CategoriesFilePath { get; set; }
+        public required string ProductCategoryFilePath { get; set; }
     }
 }

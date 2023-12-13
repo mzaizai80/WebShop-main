@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using WebShop.Services;
 
 namespace WebShopTests
 {

@@ -1,6 +1,7 @@
 ﻿using WebShop.Models;
 using WebShopTests;
 
+
 namespace WebShop.Services
 {
     public class Services : IService
@@ -21,7 +22,5 @@ namespace WebShop.Services
         {
             return _productService.GetAllCategories();
         }
-
     }
 }
-

@@ -1,10 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Moq;
+using WebShop.Services;
 
 namespace WebShopTests
 {
     [TestFixture]
-    internal class HomeControllerTests
+    public class HomeControllerTests
     {
         [Test]
         public void Index_Returns_View_With_Products()

@@ -1,3 +1,4 @@
+@using WebShop.Models
 @model List<Product>
 
 <!DOCTYPE html>
@@ -26,12 +27,6 @@
                         <td>@product.Id</td>
                         <td>@product.Name</td>
                         <td>@product.Price</td>
-                        <td>
-                            @foreach (var category in product.Categories)
-                            {
-                                <span class="badge badge-primary">@category.Name</span>
-                            }
-                        </td>
                     </tr>
                 }
             </tbody>
