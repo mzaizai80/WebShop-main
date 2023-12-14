@@ -5,12 +5,12 @@ using Newtonsoft.Json;
 using WebShop.Models;
 using WebShop.Services;
 
-public class ProductService : IProductService, IProductCategoryService
+public class ProductService : IProductService
 {
     private readonly IFileReader _fileReader;
     private readonly string _productsFilePath;
-    private readonly string _categoriesFilePath;
-    private readonly string _productCategoryFilePath;
+    private readonly ICategoryService _categoryService;
+    private readonly IProductCategoryService _productCategoryService;
     private readonly IFileWriter _fileWriter;
 
     public ProductService()
@@ -18,18 +18,15 @@ public class ProductService : IProductService, IProductCategoryService
         // Default constructor implementation for Moq Tests only
     }
 
-    public ProductService(IFileReader fileReader, IFileWriter fileWriter, IOptions<ProductServiceOptions> options)
+    public ProductService(IFileReader fileReader, IFileWriter fileWriter, IOptions<ProductServiceOptions> options, ICategoryService categoryService, IProductCategoryService productCategoryService)
     {
         _fileReader = fileReader ?? throw new ArgumentNullException(nameof(fileReader));
         _fileWriter = fileWriter ?? throw new ArgumentNullException(nameof(fileWriter));
         _productsFilePath = options.Value.ProductsFilePath ??
                             throw new ArgumentNullException(nameof(options.Value.ProductsFilePath));
-        _categoriesFilePath = options.Value.CategoriesFilePath ??
-                              throw new ArgumentNullException(nameof(options.Value.CategoriesFilePath));
-        _productCategoryFilePath = options.Value.ProductCategoryFilePath ??
-                                   throw new ArgumentNullException(nameof(options.Value.ProductCategoryFilePath));
+        _categoryService = categoryService ?? throw new ArgumentNullException(nameof(categoryService));
+        _productCategoryService = productCategoryService ?? throw new ArgumentNullException(nameof(productCategoryService));
     }
-
 
     public void AddProduct(Product product)
     {
@@ -78,13 +75,21 @@ public class ProductService : IProductService, IProductCategoryService
         _fileWriter.WriteAllText(_productsFilePath, productsJson);
     }
 
+    public List<Category> GetAllCategories()
+    {
+        return _categoryService.GetAllCategories();
+    }
 
+    public List<ProductCategoryRelation> GetAllProductCategoryRelation()
+    {
+        return _productCategoryService.GetAllProductCategoryRelation();
+    }
 
     public Dictionary<Product, List<Category>> GetProductCategoryAssociations()
     {
         var products = GetAllProducts();
-        var categories = ICategoryService.GetAllCategories();
-        var productCategoryRelation = IProductCategoryService.GetAllProductCategoryRelation();
+        var categories = GetAllCategories();
+        var productCategoryRelation = GetAllProductCategoryRelation();
 
         var productCategoryMap = new Dictionary<Product, List<Category>>();
 
@@ -105,27 +110,5 @@ public class ProductService : IProductService, IProductCategoryService
         }
 
         return productCategoryMap;
-    }
-
-    public Category FindCategory(List<Category> categories, int categoryId)
-    {
-        foreach (var category in categories)
-        {
-            if (category.Id == categoryId)
-            {
-                return category;
-            }
-
-            if (category.Subcategories != null)
-            {
-                var foundSubcategory = category.Subcategories.FirstOrDefault(sub => sub.Id == categoryId);
-                if (foundSubcategory != null)
-                {
-                    return foundSubcategory;
-                }
-            }
-        }
-
-        return null;
     }
 }

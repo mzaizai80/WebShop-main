@@ -22,11 +22,29 @@ namespace WebShop.Services
             var productCategoryRelation =
                 JsonConvert.DeserializeObject<List<ProductCategoryRelation>>(productCategoryRelationJson) ??
                 new List<ProductCategoryRelation>();
-            return productCategoryRelation;        }
+            return productCategoryRelation;
+        }
 
         public Category FindCategory(List<Category> categories, int categoryId)
         {
-            throw new NotImplementedException();
+            foreach (var category in categories)
+            {
+                if (category.Id == categoryId)
+                {
+                    return category;
+                }
+
+                if (category.Subcategories != null)
+                {
+                    var foundSubcategory = category.Subcategories.FirstOrDefault(sub => sub.Id == categoryId);
+                    if (foundSubcategory != null)
+                    {
+                        return foundSubcategory;
+                    }
+                }
+            }
+
+            return null;
         }
     }
 }

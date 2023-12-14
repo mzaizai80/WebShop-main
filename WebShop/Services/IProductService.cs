@@ -12,4 +12,3 @@ namespace WebShop.Services
         Dictionary<Product, List<Category>> GetProductCategoryAssociations();
     }
 }
-

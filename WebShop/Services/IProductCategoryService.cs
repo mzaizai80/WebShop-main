@@ -7,7 +7,6 @@ namespace WebShop.Services
     {
         List<ProductCategoryRelation> GetAllProductCategoryRelation();
         Category FindCategory(List<Category> categories, int categoryId);
+
     }
 }
-
-

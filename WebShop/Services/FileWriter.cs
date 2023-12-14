@@ -12,10 +12,3 @@ namespace WebShop.Services
 }
 
 
-
-//namespace WebShop.Services
-//{
-//    public class FileWriter
-//    {
-//    }
-//}
