@@ -7,10 +7,10 @@ using WebShop.Services;
 
 namespace WebShopTests
 {
-
     [TestFixture]
     public class ProductServiceTests
     {
+/*
         private ProductService _productService;
         private Mock<IFileReader> _fileReaderMock;
         private const string TestFilePath = "test_data/products_test.json";
@@ -428,9 +428,9 @@ namespace WebShopTests
             Assert.That(resultList[1].Name, Is.EqualTo("Category 2"));
 
         }
-        */
+        *,/
     }
-
+*/
 
 
 

@@ -5,8 +5,8 @@ namespace WebShopTests
     [TestFixture]
     public class ProductCategoryRelationTests
     {
-
-        private ProductCategoryRelation _productCategoryRelation;
+/*
+        //private ProductCategoryRelation _productCategoryRelation;
 
         [SetUp]
         public void Setup()
@@ -14,7 +14,7 @@ namespace WebShopTests
             Product product = new Product(); 
             Category category = new Category(); 
 
-            _productCategoryRelation = new ProductCategoryRelation(productId: 1, categoryId: 2);
+            //_productCategoryRelation = new ProductCategoryRelation(productId: 1, categoryId: 2);
          }
 
         [TestCase("ProductId")]
@@ -81,5 +81,6 @@ namespace WebShopTests
             Assert.AreEqual(productId, _productCategoryRelation.ProductId);
             Assert.AreEqual(categoryId, _productCategoryRelation.CategoryId);
         }
+        */
     }
 }

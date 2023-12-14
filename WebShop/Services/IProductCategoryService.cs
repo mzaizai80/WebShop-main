@@ -5,7 +5,7 @@ namespace WebShop.Services
 {
     public interface IProductCategoryService
     {
-        List<ProductCategoryRelation> GetAllProductCategoryRelation();
+        //List<ProductCategoryRelation> GetAllProductCategoryRelation();
         Category FindCategory(List<Category> categories, int categoryId);
 
     }

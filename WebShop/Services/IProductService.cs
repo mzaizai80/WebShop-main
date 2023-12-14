@@ -9,6 +9,6 @@ namespace WebShop.Services
         void UpdateProduct(Product updatedProduct);
         void DeleteProduct(int productId);
         List<Product> GetAllProducts();
-        Dictionary<Product, List<Category>> GetProductCategoryAssociations();
+        //Dictionary<Product, List<Category>> GetProductCategoryAssociations();
     }
 }

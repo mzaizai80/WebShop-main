@@ -16,6 +16,7 @@ namespace WebShop.Services
                                        throw new ArgumentNullException(nameof(options.Value.ProductCategoryFilePath));
         }
 
+        /*
         public List<ProductCategoryRelation> GetAllProductCategoryRelation()
         {
             var productCategoryRelationJson = _fileReader.ReadAllText(_productCategoryFilePath);
@@ -24,6 +25,7 @@ namespace WebShop.Services
                 new List<ProductCategoryRelation>();
             return productCategoryRelation;
         }
+        */
 
         public Category FindCategory(List<Category> categories, int categoryId)
         {

@@ -13,10 +13,16 @@ public class ProductService : IProductService
     private readonly IProductCategoryService _productCategoryService;
     private readonly IFileWriter _fileWriter;
 
-    public ProductService()
-    {
-        // Default constructor implementation for Moq Tests only
-    }
+
+    //public ProductService(IFileReader fileReader, IFileWriter fileWriter, IOptions<ProductServiceOptions> options, ICategoryService categoryService, IProductCategoryService productCategoryService)
+    //{
+    //    _fileReader = fileReader ?? throw new ArgumentNullException(nameof(fileReader));
+    //    _fileWriter = fileWriter ?? throw new ArgumentNullException(nameof(fileWriter));
+    //    _productsFilePath = options.Value.ProductsFilePath ??
+    //                        throw new ArgumentNullException(nameof(options.Value.ProductsFilePath));
+    //    _categoryService = categoryService ?? throw new ArgumentNullException(nameof(categoryService));
+    //    _productCategoryService = productCategoryService ?? throw new ArgumentNullException(nameof(productCategoryService));
+    //}
 
     public ProductService(IFileReader fileReader, IFileWriter fileWriter, IOptions<ProductServiceOptions> options, ICategoryService categoryService, IProductCategoryService productCategoryService)
     {
@@ -27,6 +33,12 @@ public class ProductService : IProductService
         _categoryService = categoryService ?? throw new ArgumentNullException(nameof(categoryService));
         _productCategoryService = productCategoryService ?? throw new ArgumentNullException(nameof(productCategoryService));
     }
+
+
+    //public ProductService()
+    //{
+    //    // Default constructor implementation for Moq Tests only
+    //}
 
     public void AddProduct(Product product)
     {
@@ -80,11 +92,60 @@ public class ProductService : IProductService
         return _categoryService.GetAllCategories();
     }
 
+    
+    /*
     public List<ProductCategoryRelation> GetAllProductCategoryRelation()
     {
         return _productCategoryService.GetAllProductCategoryRelation();
     }
+    
 
+    public Dictionary<Product, List<Category>> GetProductCategoryAssociations()
+    {
+        var products = GetAllProducts();
+        var categories = GetAllCategories();
+        var productCategoryRelation = GetAllProductCategoryRelation();
+
+        return GenerateProductCategoryMap(products, categories, productCategoryRelation);
+    }
+
+    private Dictionary<Product, List<Category>> GenerateProductCategoryMap(
+        List<Product> products,
+        List<Category> categories,
+        List<ProductCategoryRelation> productCategoryRelation)
+    {
+        var productCategoryMap = new Dictionary<Product, List<Category>>();
+
+        foreach (var relation in productCategoryRelation)
+        {
+            var product = products.FirstOrDefault(p => p.Id == relation.ProductId);
+            var category = FindCategory(categories, relation.CategoryId);
+
+            AddProductCategoryToMap(product, category, productCategoryMap);
+        }
+
+        return productCategoryMap;
+    }
+
+    private void AddProductCategoryToMap(
+        Product product,
+        Category category,
+        Dictionary<Product, List<Category>> productCategoryMap)
+    {
+        if (product != null && category != null)
+        {
+            if (!productCategoryMap.ContainsKey(product))
+            {
+                productCategoryMap[product] = new List<Category>();
+            }
+
+            productCategoryMap[product].Add(category);
+        }
+    }
+    */
+
+    
+    /*
     public Dictionary<Product, List<Category>> GetProductCategoryAssociations()
     {
         var products = GetAllProducts();
@@ -111,4 +172,5 @@ public class ProductService : IProductService
 
         return productCategoryMap;
     }
+    */
 }
