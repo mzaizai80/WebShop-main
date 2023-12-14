@@ -6,14 +6,16 @@ using Microsoft.Extensions.DependencyInjection;
 using WebShop.Services;
 using WebShopTests;
 
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services
-builder.Services.AddSingleton<IFileReader, FileReader>();
+builder.Services.AddScoped<IFileReader, FileReader>();
+builder.Services.AddScoped<IFileWriter, FileWriter>();
 builder.Services.Configure<ProductServiceOptions>(builder.Configuration.GetSection("ProductService"));
-builder.Services.AddSingleton<ProductService>();
-builder.Services.AddSingleton<IService, Services>();
+builder.Services.AddScoped<IProductCategoryService, ProductCategoryService>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
+builder.Services.AddTransient<ProductService>();
+builder.Services.AddTransient<IService, Services>();
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
@@ -34,23 +36,14 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
+//app.UseEndpoints(endpoints =>
+//{
+//    endpoints.MapControllerRoute(
+//        name: "default",
+//        pattern: "{controller=Home}/{action=Index}/{id?}");
+//});
+
 app.Run();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 //using Microsoft.AspNetCore.Builder;
 //using Microsoft.AspNetCore.Hosting;

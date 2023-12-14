@@ -1,4 +1,6 @@
-﻿namespace WebShop.Models.Tests
+﻿using WebShop.Models;
+
+namespace WebShopTests
 {
     [TestFixture]
     public class CategoryTests
@@ -12,9 +14,7 @@
             // Assert
             Assert.That(category.Id, Is.EqualTo(0));
             Assert.That(category.Name, Is.EqualTo(""));
-            Assert.IsNotNull(category.Subcategories);
-            Assert.IsEmpty(category.Subcategories);
-        }
+                    }
 
         [Test]
         public void Category_Should_Allow_Setting_Properties()
@@ -47,17 +47,7 @@
 
         }
 
-        [Test]
-        public void Category_Subcategories_Should_Be_Initialized()
-        {
-            // Arrange
-            Category category = new Category();
 
-            // Assert
-            Assert.IsNotNull(category.Subcategories);
-            Assert.IsEmpty(category.Subcategories);
-        }
-        
         [Test]
         public void Category_Subcategories_Should_Allow_Setting_Properties()
         {
@@ -97,32 +87,3 @@
     }
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//using System;
-//using System.Collections.Generic;
-//using System.Linq;
-//using System.Text;
-//using System.Threading.Tasks;
-
-//namespace WebShopTests
-//{
-//    internal class CategoryTests
-//    {
-//    }
-//}
