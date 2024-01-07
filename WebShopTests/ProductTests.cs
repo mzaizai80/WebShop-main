@@ -64,12 +64,11 @@
             var product = new Product();
 
             // Assert
-            Assert.IsNotNull(product);
+            Assert.That(product, Is.Not.Null);
             Assert.That(product.Name, Is.EqualTo(""));
             Assert.That(product.PictureUrl, Is.EqualTo(""));
             Assert.That(product.Price, Is.EqualTo(0m));
-//            Assert.That(product.CategoryId, Is.EqualTo(0)); // Assuming default CategoryId is 0
-        }
+            }
     }
 
 

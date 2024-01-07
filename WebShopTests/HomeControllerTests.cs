@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Moq;
+using WebShop;
 using WebShop.Services;
 
 namespace WebShopTests
@@ -49,11 +50,12 @@ namespace WebShopTests
             var result = controller.Index() as ViewResult;
 
             // Assert
-            Assert.IsNotNull(result);
-            Assert.IsInstanceOf<ViewResult>(result);
+            Assert.That(result, Is.Not.Null.And.InstanceOf<ViewResult>());
             Assert.That(result.ViewName, Is.EqualTo("Index").Or.Null); // Handle the case where ViewName is null
-            Assert.IsEmpty(result.Model as List<Product>); // Ensure an empty list of products is returned
+            Assert.That(result.Model, Is.TypeOf<List<Product>>().And.Empty); // Ensure an empty list of products is returned
         }
+
+        
 
 
         /*

@@ -1,5 +1,4 @@
 ﻿using WebShop.Models;
-using WebShopTests;
 
 
 namespace WebShop.Services
@@ -7,6 +6,8 @@ namespace WebShop.Services
     public class Services : IService
     {
         private readonly ProductService _productService;
+        private readonly ICategoryService _categoryService;
+private readonly IProductCategoryService _productCategoryService;
 
         public Services(ProductService productService)
         {
@@ -20,7 +21,12 @@ namespace WebShop.Services
 
         public IEnumerable<Category> GetAllCategories()
         {
-            return _productService.GetAllCategories();
+            return _categoryService.GetAllCategories();
+        }
+
+        public IEnumerable<ProductCategoryRelation> GetProductCategoryRelation()
+        {
+            return _productCategoryService.GetAllProductCategoryRelation();
         }
     }
 }

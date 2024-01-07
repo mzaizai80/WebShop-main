@@ -3,9 +3,9 @@
 namespace WebShopTests
 {
     [TestFixture]
-    public class FileReaderTests
+    public class FileServiceTests
     {
-        private FileReader _fileReader;
+        private FileService _fileService;
         private const string ExistingFilePath = "existing_file.txt";
         private const string NonExistingFilePath = "non_existing_file.txt";
         private const string FileContent = "This is a test file.";
@@ -13,7 +13,7 @@ namespace WebShopTests
         [SetUp]
         public void Setup()
         {
-            _fileReader = new FileReader();
+            _fileService = new FileService();
             // Create a test file for existing file tests
             File.WriteAllText(ExistingFilePath, FileContent);
         }
@@ -33,10 +33,10 @@ namespace WebShopTests
         {
             // Arrange
             // Act
-            bool fileExists = _fileReader.Exists(ExistingFilePath);
+            bool fileExists = _fileService.Exists(ExistingFilePath);
 
             // Assert
-            Assert.IsTrue(fileExists);
+            Assert.That(fileExists, Is.True);
         }
 
         [Test]
@@ -44,10 +44,10 @@ namespace WebShopTests
         {
             // Arrange
             // Act
-            bool fileExists = _fileReader.Exists(NonExistingFilePath);
+            bool fileExists = _fileService.Exists(NonExistingFilePath);
 
             // Assert
-            Assert.IsFalse(fileExists);
+            Assert.That(fileExists, Is.False);
         }
 
         [Test]
@@ -55,7 +55,7 @@ namespace WebShopTests
         {
             // Arrange
             // Act
-            string content = _fileReader.ReadAllText(ExistingFilePath);
+            string content = _fileService.ReadAllText(ExistingFilePath);
 
             // Assert
             Assert.That(content, Is.EqualTo(FileContent));
@@ -66,7 +66,7 @@ namespace WebShopTests
         {
             // Arrange
             // Act
-            string content = _fileReader.ReadAllText(NonExistingFilePath);
+            string content = _fileService.ReadAllText(NonExistingFilePath);
 
             // Assert
             Assert.That(content, Is.EqualTo(string.Empty));

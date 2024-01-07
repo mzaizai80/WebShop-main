@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace WebShop.Views.Home
+namespace WebShop.Views.temp
 {
     public class All_TabelsModel : PageModel
     {

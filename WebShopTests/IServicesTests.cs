@@ -37,7 +37,7 @@ namespace WebShopTests
             var result = _services.GetAllProducts();
 
             // Assert
-            Assert.AreEqual(expectedProducts.Count(), result.Count());
+            Assert.That(result.Count(), Is.EqualTo(expectedProducts.Count()));
         }
 
         [Test]

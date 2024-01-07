@@ -16,8 +16,8 @@ namespace WebShopTests
         [SetUp]
         public void Setup()
         {
-            _mockProductService = new Mock<ProductService>(); // Create a mock of ProductService
-            _services = new Services(_mockProductService.Object); // Inject the mock into Services
+            _mockProductService = new Mock<ProductService>();
+            _services = new Services(_mockProductService.Object); 
         }
 
         [Test]
@@ -38,26 +38,5 @@ namespace WebShopTests
             // Assert
             Assert.That(result.Count(), Is.EqualTo(expectedCategories.Count()));
         }
-
     }
 }
-
-
-
-
-
-
-
-
-//using System;
-//using System.Collections.Generic;
-//using System.Linq;
-//using System.Text;
-//using System.Threading.Tasks;
-
-//namespace WebShopTests
-//{
-//    public class ServicesTests
-//    {
-//    }
-//}

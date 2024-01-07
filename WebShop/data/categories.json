@@ -2,29 +2,51 @@
   {
     "Id": 1,
     "Name": "Electronics",
-    "Subcategories": [
-      {
-        "Id": 2,
-        "Name": "Laptops"
-      },
-      {
-        "Id": 3,
-        "Name": "Smartphones"
-      }
-    ]
+    "Subcategories": [ 2, 3 ]
+  },
+  {
+    "Id": 2,
+    "Name": "Laptops",
+    "Subcategories": []
+  },
+  {
+    "Id": 3,
+    "Name": "Smart-phones",
+    "Subcategories": []
   },
   {
     "Id": 4,
     "Name": "Accessories",
-    "Subcategories": [
-      {
-        "Id": 5,
-        "Name": "Headphones"
-      }
-    ]
+    "Subcategories": [ 5 ]
+  },
+  {
+    "Id": 5,
+    "Name": "Headphones",
+    "Subcategories": []
   },
   {
     "Id": 6,
-    "Name": "Clothing"
+    "Name": "Clothing",
+    "Subcategories": []
+  },
+  {
+    "Id": 7,
+    "Name": "Men",
+    "Subcategories": [ 9 ]
+  },
+  {
+    "Id": 8,
+    "Name": "Women",
+    "Subcategories": [ 10 ]
+  },
+  {
+    "Id": 9,
+    "Name": "Shirt",
+    "Subcategories": []
+  },
+  {
+    "Id": 10,
+    "Name": "Jackets",
+    "Subcategories": []
   }
 ]
