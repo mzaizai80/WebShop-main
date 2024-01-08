@@ -3,6 +3,9 @@ using Newtonsoft.Json;
 using WebShop.Models;
 using WebShop.Services;
 
+namespace WebShop.Services
+{
+    
 public class ProductService : IProductService
 {
     private readonly IFileService _fileService;
@@ -10,18 +13,16 @@ public class ProductService : IProductService
     private readonly ICategoryService _categoryService;
     private readonly IProductCategoryService _productCategoryService;
 
-    public ProductService(IFileService fileService, IOptions<ProductServiceOptions> options, ICategoryService categoryService, IProductCategoryService productCategoryService)
+    public ProductService(IFileService fileService, IOptions<ProductServiceOptions> options,
+        ICategoryService categoryService, IProductCategoryService productCategoryService)
     {
         _fileService = fileService ?? throw new ArgumentNullException(nameof(fileService));
-        _productsFilePath = options?.Value?.ProductsFilePath ?? throw new ArgumentNullException(nameof(options.Value.ProductsFilePath));
+        _productsFilePath = options?.Value?.ProductsFilePath ??
+                            throw new ArgumentNullException(nameof(options.Value.ProductsFilePath));
         _categoryService = categoryService ?? throw new ArgumentNullException(nameof(categoryService));
-        _productCategoryService = productCategoryService ?? throw new ArgumentNullException(nameof(productCategoryService));
+        _productCategoryService =
+            productCategoryService ?? throw new ArgumentNullException(nameof(productCategoryService));
     }
-
-    //public ProductService()
-    //{
-    //    // Default constructor implementation for Moq Tests only
-    //}
 
     public void AddProduct(Product product)
     {
@@ -37,6 +38,8 @@ public class ProductService : IProductService
             throw new ProductServiceException("Error adding product.", ex);
         }
     }
+
+
 
     public Product GetProductById(int productId)
     {
@@ -131,19 +134,29 @@ public class ProductService : IProductService
         }
     }
 
-    /*public List<Category> GetAllCategories()
+
+    public void SaveProducts(Product product)
     {
-        try
-        {
-            var Categorylist = _categoryService.GetAllCategories();
-            return Categorylist;
-        }
-        catch (Exception ex)
-        {
-            // Log or handle the exception as needed
-            throw new ProductServiceException("Error getting all categories.", ex);
-        }
-    }*/
+        throw new NotImplementedException();
+    }
+
+}
+}
+
+
+/*public List<Category> GetAllCategories()
+{
+    try
+    {
+        var Categorylist = _categoryService.GetAllCategories();
+        return Categorylist;
+    }
+    catch (Exception ex)
+    {
+        // Log or handle the exception as needed
+        throw new ProductServiceException("Error getting all categories.", ex);
+    }
+}*/
 
     /*public List<ProductCategoryRelation> GetAllProductCategoryRelation()
     {
@@ -176,6 +189,11 @@ public class ProductService : IProductService
         }
 
         return productCategoryMap;
+    }
+
+    private Category FindCategory(List<Category> categories, int categoryId)
+    {
+        throw new NotImplementedException();
     }
 
     private void AddProductCategoryToMap(
@@ -223,5 +241,5 @@ public class ProductService : IProductService
     }
     */
 
-}
+
 

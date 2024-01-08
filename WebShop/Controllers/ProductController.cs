@@ -1,14 +1,26 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using WebShop.Services;
 
 namespace WebShop.Controllers
 {
+
+    
     public class ProductController : Controller
     {
-        // GET: ProductController
-        public ActionResult Index()
+
+        private readonly IProductService _productServices;
+
+        public ProductController(IProductService productServices)
         {
-            return View();
+            _productServices = productServices;
+        }
+        
+        // GET: ProductController
+        public IActionResult Index()
+        {
+            var products = _productServices.GetAllProducts();
+            return View(products);
         }
 
         // GET: ProductController/Details/5

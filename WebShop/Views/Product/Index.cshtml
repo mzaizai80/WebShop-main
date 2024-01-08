@@ -1,0 +1,42 @@
+﻿@model List<Product>
+@*    ViewBag.Title = "products";
+    Layout = "_Layout";
+*@
+@{
+    Layout = "/Views/Shared/_Layout.cshtml";
+}
+
+<h2>products</h2>
+<div class="container mt-5">
+    <h1>Product List</h1>
+    <!-- Product-specific content -->
+    <table class="table table-bordered">
+        <!-- Product table structure -->
+        <thead>
+            <tr>
+                <th>Product ID</th>
+                <th>Name</th>
+                <!-- Add other columns as needed -->
+            </tr>
+        </thead>
+        <tbody>
+        
+
+        @if (Model != null)
+        {
+            foreach (var product in Model)
+            {
+                <tr>
+                    <td>@product.Id</td>
+                    <td>@product.Name</td>
+                    <!-- Add other columns as needed -->
+                </tr>
+            }
+        }
+        else
+        {
+            <p>th model is null</p>
+        }
+        </tbody>
+    </table>
+</div>

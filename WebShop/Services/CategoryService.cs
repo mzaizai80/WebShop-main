@@ -12,7 +12,7 @@ namespace WebShop.Services
         private readonly IFileService _fileService;
         private readonly string _categoriesFilePath;
 
-        public CategoryService(IFileService fileService, IOptions<ProductServiceOptions> options)
+        public CategoryService(IFileService fileService,   IOptions<ProductServiceOptions> options)
         {
             _fileService = fileService ?? throw new ArgumentNullException(nameof(fileService));
             _categoriesFilePath = options.Value.CategoriesFilePath ??
