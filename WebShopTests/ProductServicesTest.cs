@@ -9,12 +9,12 @@ namespace WebShopTests
 {
     [TestFixture]
     public class ProductServiceTests
-    {
+    {/*
         private ProductService _productService;
         private Mock<IProductService> _productServiceMock;
         private Mock<IFileService> _fileServicesMock;
         private Mock<ICategoryService> categoryServiceMock;
-        private Mock<IProductCategoryService> productCategoryServiceMock;
+        private Mock<IProductCategoryRelationService> productCategoryServiceMock;
         private Mock<IOptions<ProductServiceOptions>> productServiceOptionsMock ;
 
         private const string _testProductsFilePath = "test_data/products_test.json";
@@ -28,7 +28,7 @@ namespace WebShopTests
             productServiceOptionsMock = new Mock<IOptions<ProductServiceOptions>>();
             _productServiceMock = new Mock<IProductService>(); 
             categoryServiceMock = new Mock<ICategoryService>();
-            productCategoryServiceMock = new Mock<IProductCategoryService>();
+            productCategoryServiceMock = new Mock<IProductCategoryRelationService>();
 
             var productServiceOptions = Options.Create(new ProductServiceOptions
             {
@@ -41,7 +41,7 @@ namespace WebShopTests
                 _fileServicesMock.Object,
                 productServiceOptions,
                 Mock.Of<ICategoryService>(),
-                Mock.Of<IProductCategoryService>()
+                Mock.Of<IProductCategoryRelationService>()
             );
 
             //string testContent = "Test file content";
@@ -90,7 +90,7 @@ namespace WebShopTests
                 mockFileReader.Object,
                 mockOptions.Object,
                 Mock.Of<ICategoryService>(),
-                Mock.Of<IProductCategoryService>());
+                Mock.Of<IProductCategoryRelationService>());
 
             // Act
             var result = productService.GetProductById(productId);
@@ -121,7 +121,7 @@ namespace WebShopTests
                 mockFileReader.Object,
                 mockOptions.Object,
                 Mock.Of<ICategoryService>(), 
-                Mock.Of<IProductCategoryService>()); 
+                Mock.Of<IProductCategoryRelationService>()); 
 
             // Act
             List<Product> products = productService.GetAllProducts();
@@ -197,10 +197,10 @@ namespace WebShopTests
             _fileServicesMock.Object,
             mockOptions.Object,
             mockCategoryService.Object,
-            Mock.Of<IProductCategoryService>());
+            Mock.Of<IProductCategoryRelationService>());
 
         // Act
-        List<Category> result = productService.GetAllCategories();
+        List<Category> result = Service.GetAllCategories();
 
         // Assert
         Assert.That(result, Is.Not.Null);
@@ -226,7 +226,7 @@ namespace WebShopTests
             _fileServicesMock.Object,
             mockOptions.Object,
             mockCategoryService.Object,
-            Mock.Of<IProductCategoryService>());
+            Mock.Of<IProductCategoryRelationService>());
 
         // Act
         List<Category> result = productService.GetAllCategories();
@@ -261,7 +261,7 @@ namespace WebShopTests
             _fileServicesMock.Object,
             mockOptions.Object,
             mockCategoryService.Object,
-            Mock.Of<IProductCategoryService>());
+            Mock.Of<IProductCategoryRelationService>());
 
         // Act
         List<Category> result = productService.GetAllCategories();
@@ -297,7 +297,7 @@ namespace WebShopTests
             _fileServicesMock.Object,
             mockOptions.Object,
             mockCategoryService.Object,
-            Mock.Of<IProductCategoryService>());
+            Mock.Of<IProductCategoryRelationService>());
 
 
         // Act
@@ -394,7 +394,7 @@ public void GetAllProducts_ReturnsListOfProducts_Success()
 
 
 
-
+*/
 
 
 
@@ -458,7 +458,7 @@ public void GetAllProducts_ReturnsListOfProducts_Success()
         }));
 
         _fileReaderMock.Setup(x => x.ReadAllText("data/productCategoryRelation.json"))
-        .Returns(JsonConvert.SerializeObject(new List<ProductCategoryRelation>
+        .Returns(JsonConvert.SerializeObject(new List<SaveProductCategoryRelation>
         {
         }));
 

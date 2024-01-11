@@ -35,7 +35,7 @@ namespace WebShopTests
             // Act
             services.AddSingleton<IFileService, FileService>();
             services.AddSingleton<IOptions<ProductServiceOptions>>(productServiceOptions);
-            services.AddScoped<IProductCategoryService, ProductCategoryService>();
+            services.AddScoped<IProductCategoryRelationService, ProductCategoryRelationService>();
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddTransient<ProductService>();
             services.AddTransient<IService, Services>();
@@ -43,7 +43,7 @@ namespace WebShopTests
             // Assert
             var serviceProvider = services.BuildServiceProvider();
             Assert.That(serviceProvider.GetService<IFileService>(), Is.Not.Null);
-            Assert.That(serviceProvider.GetService<IProductCategoryService>(), Is.Not.Null);
+            Assert.That(serviceProvider.GetService<IProductCategoryRelationService>(), Is.Not.Null);
             Assert.That(serviceProvider.GetService<ICategoryService>(), Is.Not.Null);
             Assert.That(serviceProvider.GetService<ProductService>(), Is.Not.Null);
             Assert.That(serviceProvider.GetService<IService>(), Is.Not.Null);

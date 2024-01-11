@@ -1,5 +1,94 @@
 ﻿@model List<WebShop.Models.Category>
 
+<h2>Categories</h2>
+
+<ul>
+    @foreach (var category in Model)
+    {
+        <li>
+            <a asp-controller="Product" asp-action="Index" asp-route-categoryId="@category.Id">
+                @category.Name
+            </a>
+        </li>
+    }
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@*
+@model List<WebShop.Models.Category>
+
+<h1>Categories</h1>
+
+@foreach (var category in Model)
+{
+    <div class="category" style="margin-left: @(category.Subcategories?.Count * 20 ?? 0)px">
+        <h2>@category.Name</h2>
+
+        <!-- Link to the corresponding section -->
+        <a asp-area="" asp-controller="Home" asp-action="Index" asp-route-categoryId="@category.Id">View Section</a>
+    </div>
+}
+
+
+
+
+
+
+
+
+
+
+
+
+@model IEnumerable<WebShop.Models.Category>
+
+<h1>Categories</h1>
+
+@foreach (var category in Model)
+{
+    <div>
+        <h2>@category.Name</h2>
+
+        <!-- Link to the corresponding section -->
+        <a asp-area="" asp-controller="Home" asp-action="Index" asp-route-categoryId="@category.Id">View Section</a>
+
+        <!-- Add pagination for categories -->
+    </div>
+}
+
+<!-- Pagination -->
+<div>
+    @if (ViewBag.TotalPages > 1)
+    {
+        for (int i = 1; i <= ViewBag.TotalPages; i++)
+        {
+            <a href="@Url.Action("Index", new { page = i })">@i</a>
+        }
+    }
+</div>
+
+
+
+
+ @model List<WebShop.Models.Category>
+
 @{
     Layout = "/Views/Shared/_Layout.cshtml";
 }
@@ -24,4 +113,4 @@
         }
         </tbody>
     </table>
-</div>
+</div> *@

@@ -6,7 +6,7 @@ namespace WebShopTests
     public class ProductCategoryRelationTests
     {
 /*
-        //private ProductCategoryRelation _productCategoryRelation;
+        //private SaveProductCategoryRelation _productCategoryRelation;
 
         [SetUp]
         public void Setup()
@@ -14,7 +14,7 @@ namespace WebShopTests
             Product product = new Product(); 
             Category category = new Category(); 
 
-            //_productCategoryRelation = new ProductCategoryRelation(productId: 1, categoryId: 2);
+            //_productCategoryRelation = new SaveProductCategoryRelation(productId: 1, categoryId: 2);
          }
 
         [TestCase("ProductId")]

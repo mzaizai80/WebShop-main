@@ -2,7 +2,13 @@ namespace WebShop.Models
 {
     public class ProductCategoryRelation
     {
-        public int ProductId { get; set; }
-        public int CategoryId { get; set; }
+        public List<int> ProductIds { get; set; }
+        public List<int> CategoryIds { get; set; }
+
+        public ProductCategoryRelation()
+        {
+            ProductIds = new List<int>();
+            CategoryIds = new List<int> { 101 };
+        }
     }
 }

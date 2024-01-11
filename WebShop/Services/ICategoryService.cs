@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using WebShop.Models;
+﻿using WebShop.Models;
 
 namespace WebShop.Services
 {
@@ -11,5 +10,6 @@ namespace WebShop.Services
         List<Category> GetAllCategories();
         void SaveCategories(List<Category> categories);
         Category GetCategoryById(int categoryId);
+        Category GetCategoryById(List<Category> categories, int categoryId);
     }
 }

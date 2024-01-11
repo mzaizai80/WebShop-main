@@ -1,4 +1,6 @@
-﻿namespace WebShopTests
+﻿using WebShop.Models;
+
+namespace WebShopTests
 {
     internal class ProductTests
     {

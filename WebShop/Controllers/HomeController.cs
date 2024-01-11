@@ -15,11 +15,22 @@ namespace WebShop
             _service = service;
             }
 
-        public IActionResult Index()
+            public IActionResult Index(int? categoryId)
+            {
+                // Filter products by category if categoryId is provided
+                var products = categoryId.HasValue
+                    ? _service.GetProductsByCategory(categoryId.Value)
+                    : _service.GetAllProducts();
+
+                return View(products);
+            }
+
+        public IActionResult Indexa()
         {
             return View();
         }
-
+    }
+}
 
         //private readonly IService _service;
 
@@ -45,5 +56,3 @@ namespace WebShop
         //    //return View("/Views/Home/Index.cshtml", products);
         //    //return View("/Pages/Product/Index.cshtml", products);
         //}
-    }
-}

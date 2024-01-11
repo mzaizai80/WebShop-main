@@ -6,7 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Register services
 builder.Services.AddSingleton<IFileService, FileService>();
 builder.Services.Configure<ProductServiceOptions>(builder.Configuration.GetSection("ProductService"));
-builder.Services.AddScoped<IProductCategoryService, ProductCategoryService>();
+builder.Services.AddScoped<IProductCategoryRelationService, ProductCategoryRelationService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IService, Services>();

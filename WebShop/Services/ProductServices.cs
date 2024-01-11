@@ -1,27 +1,34 @@
 ﻿using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
+using System.Collections;
 using WebShop.Models;
-using WebShop.Services;
 
 namespace WebShop.Services
 {
-    
-public class ProductService : IProductService
+
+    public class ProductService : IProductService, IEnumerable<Product>
 {
     private readonly IFileService _fileService;
     private readonly string _productsFilePath;
-    private readonly ICategoryService _categoryService;
-    private readonly IProductCategoryService _productCategoryService;
+    private List<Product> _products;
 
-    public ProductService(IFileService fileService, IOptions<ProductServiceOptions> options,
-        ICategoryService categoryService, IProductCategoryService productCategoryService)
+    public ProductService(IFileService fileService, IOptions<ProductServiceOptions> options
+        )
     {
         _fileService = fileService ?? throw new ArgumentNullException(nameof(fileService));
         _productsFilePath = options?.Value?.ProductsFilePath ??
                             throw new ArgumentNullException(nameof(options.Value.ProductsFilePath));
-        _categoryService = categoryService ?? throw new ArgumentNullException(nameof(categoryService));
-        _productCategoryService =
-            productCategoryService ?? throw new ArgumentNullException(nameof(productCategoryService));
+        
+    }
+
+    public IEnumerator<Product> GetEnumerator()
+    {
+        return _products.GetEnumerator();
+    }
+
+    IEnumerator IEnumerable.GetEnumerator()
+    {
+        return GetEnumerator();
     }
 
     public void AddProduct(Product product)
@@ -38,8 +45,6 @@ public class ProductService : IProductService
             throw new ProductServiceException("Error adding product.", ex);
         }
     }
-
-
 
     public Product GetProductById(int productId)
     {
@@ -134,13 +139,16 @@ public class ProductService : IProductService
         }
     }
 
-
     public void SaveProducts(Product product)
     {
         throw new NotImplementedException();
     }
 
-}
+        public List<Product> GetProductById(List<int> productIds)
+        {
+            throw new NotImplementedException();
+        }
+    }
 }
 
 
@@ -158,7 +166,7 @@ public class ProductService : IProductService
     }
 }*/
 
-    /*public List<ProductCategoryRelation> GetAllProductCategoryRelation()
+    /*public List<SaveProductCategoryRelation> GetAllProductCategoryRelation()
     {
         return _productCategoryService.GetAllProductCategoryRelation();
     }
@@ -176,7 +184,7 @@ public class ProductService : IProductService
     private Dictionary<Product, List<Category>> GenerateProductCategoryMap(
         List<Product> products,
         List<Category> categories,
-        List<ProductCategoryRelation> productCategoryRelation)
+        List<SaveProductCategoryRelation> productCategoryRelation)
     {
         var productCategoryMap = new Dictionary<Product, List<Category>>();
 

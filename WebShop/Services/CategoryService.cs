@@ -1,22 +1,34 @@
 ﻿using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using WebShop.Models;
 
 namespace WebShop.Services
 {
-    public class CategoryService : ICategoryService
+    public class CategoryService : ICategoryService, IEnumerable<Category>
     {
         private readonly IFileService _fileService;
         private readonly string _categoriesFilePath;
+        private List<Category> _categories;
 
         public CategoryService(IFileService fileService,   IOptions<ProductServiceOptions> options)
         {
             _fileService = fileService ?? throw new ArgumentNullException(nameof(fileService));
             _categoriesFilePath = options.Value.CategoriesFilePath ??
                                   throw new ArgumentNullException(nameof(options.Value.CategoriesFilePath));
+        }
+
+        public IEnumerator<Category> GetEnumerator()
+        {
+            return _categories.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
         }
 
         public void SaveCategories(List<Category> categories)
@@ -79,6 +91,31 @@ namespace WebShop.Services
         {
             var categories = GetAllCategories();
             return categories.FirstOrDefault(c => c.Id == categoryId);
+        }
+
+        public Category GetCategoryById(List<Category> categories, int categoryId)
+        {
+            foreach (var category in categories)
+            {
+                if (category.Id == categoryId)
+                {
+                    return category;
+                }
+            }
+            return null;
+        }
+
+        private void GetSubcategoriesRecursive(List<Category> categories, int categoryId, List<int> subcategories)
+        {
+            var category = categories.FirstOrDefault(c => c.Id == categoryId);
+            if (category != null)
+            {
+                subcategories.Add(categoryId);
+                foreach (var subcategoryId in category.Subcategories)
+                {
+                    GetSubcategoriesRecursive(categories, subcategoryId, subcategories);
+                }
+            }
         }
     }
 }

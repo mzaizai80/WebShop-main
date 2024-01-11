@@ -7,5 +7,6 @@ namespace WebShop.Services
         IEnumerable<Product> GetAllProducts();
         IEnumerable<Category> GetAllCategories();
         IEnumerable<ProductCategoryRelation> GetProductCategoryRelation();
+        IEnumerable<Product> GetProductsByCategory(int categoryId);
     }
 }

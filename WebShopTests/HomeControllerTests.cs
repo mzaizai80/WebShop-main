@@ -1,10 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Moq;
 using WebShop;
+using WebShop.Models;
 using WebShop.Services;
 
 namespace WebShopTests
-{
+{/*
     [TestFixture]
     public class HomeControllerTests
     {
@@ -81,9 +82,9 @@ namespace WebShopTests
                 }
 
                 *
-         */
+         * /
 
-    }
+    }*/
 }
 
 

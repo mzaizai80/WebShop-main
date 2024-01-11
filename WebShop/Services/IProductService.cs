@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using WebShop.Models;
+﻿using WebShop.Models;
 
 namespace WebShop.Services
 {
@@ -11,7 +10,8 @@ namespace WebShop.Services
         void SaveProducts(Product product);
         Product GetProductById(int productId);
         List<Product> GetAllProducts();
-        
-        //Dictionary<Product, List<Category>> GetProductCategoryAssociations();
+        List<Product> GetProductById(List<int> productIds);
     }
 }
+
+        //Dictionary<Product, List<Category>> GetProductCategoryAssociations();

@@ -2,6 +2,7 @@
 using WebShop.Models;
 using WebShop.Services;
 
+
 public class CategoryController : Controller
 {
     private readonly ICategoryService _categoryService;
@@ -15,6 +16,74 @@ public class CategoryController : Controller
     {
         var categories = _categoryService.GetAllCategories();
         return View(categories);
+    }
+}
+
+/*public class CategoryController : Controller
+{
+    private readonly List<Category> _categories; // Replace this with your actual data source or service
+
+    public CategoryController()
+    {
+        // Initialize or fetch your category data here
+        _categories = new List<Category>
+        {
+            // Your category data goes here
+        };
+    }
+
+    public IActionResult Index()
+    {
+        var flatCategories = FlattenCategories(_categories);
+        return View(flatCategories);
+    }
+
+    private List<Category> FlattenCategories(List<Category> categories)
+    {
+        List<Category> flatCategories = new List<Category>();
+
+        foreach (var category in categories)
+        {
+            flatCategories.Add(category);
+
+            if (category.Subcategories?.Any() == true)
+            {
+                var subcategories = _categories.Where(c => category.Subcategories.Contains(c.Id)).ToList();
+                flatCategories.AddRange(FlattenCategories(subcategories));
+            }
+        }
+
+        return flatCategories;
+    }
+}
+*/
+
+/*public class CategoryController : Controller
+{
+    private readonly ICategoryService _categoryService;
+
+    public CategoryController(ICategoryService categoryService)
+    {
+        _categoryService = categoryService;
+    }
+
+    public IActionResult Index1()
+    {
+        var categories = _categoryService.GetAllCategories();
+        return View(categories);
+    }
+
+    public IActionResult Index(int page = 1, int pageSize = 5)
+    {
+        var categories = _categoryService.GetAllCategories();
+
+        // Paginate the categories
+        var paginatedCategories = categories.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+
+        ViewBag.CurrentPage = page;
+        ViewBag.TotalPages = (int)Math.Ceiling((double)categories.Count / pageSize);
+
+        return View(paginatedCategories);
     }
 
     public IActionResult Create()
@@ -77,7 +146,7 @@ public class CategoryController : Controller
     }
 }
 
-
+*/
 
 //namespace WebShop.Controllers
 //{

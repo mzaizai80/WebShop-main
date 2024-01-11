@@ -5,21 +5,16 @@ namespace WebShop.Services
 {
     public class Services : IService
     {
-        private readonly ProductService _productService;
+        private readonly IProductService _productService;
         private readonly ICategoryService _categoryService;
-private readonly IProductCategoryService _productCategoryService;
+        private readonly IProductCategoryRelationService _productCategoryService;
 
-public Services(IProductService productService, ICategoryService categoryService, IProductCategoryService productCategoryService)
-{
-    _productService = (ProductService?)(productService ?? throw new ArgumentNullException(nameof(productService)));
-    _categoryService = categoryService ?? throw new ArgumentNullException(nameof(categoryService));
-    _productCategoryService = productCategoryService ?? throw new ArgumentNullException(nameof(productCategoryService));
-}
-
-        //public Services(IProductService productService)
-        //{
-        //    _productService= productService;
-        //}
+        public Services(IProductService productService, ICategoryService categoryService, IProductCategoryRelationService productCategoryService)
+        {
+            _productService = productService ?? throw new ArgumentNullException(nameof(productService));
+            _categoryService = categoryService ?? throw new ArgumentNullException(nameof(categoryService));
+            _productCategoryService = productCategoryService ?? throw new ArgumentNullException(nameof(productCategoryService));
+        }
 
         public IEnumerable<Product> GetAllProducts()
         {
@@ -33,7 +28,13 @@ public Services(IProductService productService, ICategoryService categoryService
 
         public IEnumerable<ProductCategoryRelation> GetProductCategoryRelation()
         {
-            return _productCategoryService.GetAllProductCategoryRelation();
+            return _productCategoryService.GetAllRelations();
+        }
+
+        public IEnumerable<Product> GetProductsByCategory(int categoryId)
+        {
+            // Implement logic to retrieve products by category
+            throw new NotImplementedException();
         }
     }
 }
