@@ -1,0 +1,24 @@
+﻿@model WebShop.ViewModels.HomeViewModel
+<h2>Products By Category</h2>
+
+<div>
+    @foreach (var product in Model.Products)
+    {
+        <div>
+            <h4>@product.Name</h4>
+            <p>Price: @product.Price</p>
+        </div>
+        <div class="col-md-4 mt-4">
+            <div class="card">
+                <img src="@product.PictureUrl" class="card-img-top" alt="Product Image">
+                <div class="card-body">
+                    <h5 class="card-title">@product.Name</h5>
+                    <p class="card-text">Price: $@product.Price</p>
+                    <br />
+                    <a asp-area="" asp-controller="HomeViewModel.Product" asp-action="Details"
+                        asp-route-id="@product.Id">View Details</a>
+                </div>
+            </div>
+        </div>
+    }
+</div>

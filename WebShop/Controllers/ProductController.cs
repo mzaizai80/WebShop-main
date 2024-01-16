@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using WebShop.Models;
 using WebShop.Services;
+using WebShop.ViewModels;
 
 namespace WebShop.Controllers
 {
@@ -8,81 +9,167 @@ namespace WebShop.Controllers
     {
         private readonly IProductService _productService;
         private readonly ICategoryService _categoryService;
-        private readonly IProductCategoryRelationService _productCategoryRelationService;
 
-        public ProductController(
-            IProductService productService,
-            ICategoryService categoryService,
-            IProductCategoryRelationService productCategoryRelationService)
+        public ProductController(IProductService productService, ICategoryService categoryService)
         {
             _productService = productService;
             _categoryService = categoryService;
-            _productCategoryRelationService = productCategoryRelationService;
         }
 
         public IActionResult Index(int? categoryId)
         {
-            var productCategoryDetails = new Dictionary<int, Tuple<Product, List<int>>>();
-            var products = _productService.GetAllProducts();
-            var categories = _categoryService.GetAllCategories();
-            var PCRelation = _productCategoryRelationService.GetAllRelations();
-
-            foreach (var relation in PCRelation)
+            var model = new HomeViewModel
             {
-                foreach (var productId in relation.ProductIds)
+                Products = _productService.GetProductsByCategory(categoryId.GetValueOrDefault()),
+            };
+            return View(model);
+        }
+        
+        [HttpGet]
+        public IActionResult Create()
+        {
+            ViewBag.Categories = _categoryService.GetAllCategories();
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Create(Product product)
+        {
+            if (ModelState.IsValid)
+            {
+                _productService.AddProduct(product);
+                return RedirectToAction("Index");
+            }
+
+            ViewBag.Categories = _categoryService.GetAllCategories();
+            return View(product);
+        }
+
+        [HttpGet]
+        public IActionResult Edit(int id)
+        {
+            var product = _productService.GetProductById(id);
+            ViewBag.Categories = _categoryService.GetAllCategories();
+            return View(product);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(Product product)
+        {
+            if (ModelState.IsValid)
+            {
+                _productService.UpdateProduct(product);
+                return RedirectToAction("Index");
+            }
+
+            ViewBag.Categories = _categoryService.GetAllCategories();
+            return View(product);
+        }
+
+        [HttpGet]
+        public IActionResult Delete(int id)
+        {
+            var product = _productService.GetProductById(id);
+            return View(product);
+        }
+
+        [HttpPost]
+        public IActionResult DeleteConfirmed(int id)
+        {
+            _productService.DeleteProduct(id);
+            return RedirectToAction("Index");
+        }
+
+        public IActionResult Details(int id)
+        {
+            var product = _productService.GetProductById(id);
+
+            if (product == null)
+            {
+                return NotFound(); 
+            }
+
+            return View(product);
+        }
+    }
+}
+
+
+/*
+[HttpGet]
+        public IActionResult Manage(int productId)
+        {
+            var product = _productService.GetProductById(productId);
+            ViewBag.Categories = _categoryService.GetAllCategories();
+            return View(product);
+        }
+
+        [HttpPost]
+        public IActionResult Manage(Product product)
+        {
+            if (ModelState.IsValid)
+            {
+                if (product.Id == 0)
                 {
-                    if (!productCategoryDetails.ContainsKey(productId))
-                    {
-                        productCategoryDetails[productId] = new Tuple<Product, List<int>>(
-                            products.FirstOrDefault(p => p.Id == productId),
-                            new List<int>()
-                        );
-                    }
-
-                    productCategoryDetails[productId].Item2.AddRange(relation.CategoryIds);
-                    int a = 1;
-                    Console.WriteLine($"\nthis is productCategoryDetails {a}\n {productCategoryDetails}");
-                    a++;
+                    _productService.AddProduct(product);
                 }
-            }
-            Console.WriteLine($"\nthis is productCategoryDetails \n {productCategoryDetails}");
-
-            foreach (var kvp in productCategoryDetails)
-            {
-                var productId = kvp.Key;
-                var product = kvp.Value.Item1;
-                var categoryIds = kvp.Value.Item2;
-
-                Console.WriteLine($"Product ID: {productId}, Product Name: {product?.Name}, Category IDs: {string.Join(", ", categoryIds)}");
-            }
-
-            if (categoryId.HasValue)
-            {
-                var category = _categoryService.GetCategoryById(categoryId.Value);
-                if (category == null)
+                else
                 {
-                    // Handle the case when the category is not found
-                    return NotFound();
+                    _productService.UpdateProduct(product);
                 }
 
-                products = _productCategoryRelationService.GetRelationsByCategoryId(categoryId.Value)
-                    .SelectMany(relation => relation.ProductIds.Select(productId => _productService.GetProductById(productId)))
-                    .ToList();
-            }
-            else
-            {
-                products = _productService.GetAllProducts();
+                return RedirectToAction("Index");
             }
 
-            ViewBag.SelectedCategoryId = categoryId;
-            return View(productCategoryDetails.Values.ToList());
+            ViewBag.Categories = _categoryService.GetAllCategories();
 
-            //return View(products);
+            return View(product);
+        }
+
+        [HttpGet]
+        public IActionResult Delete(int productId)
+        {
+            var product = _productService.GetProductById(productId);
+            return View(product);
+        }
+
+        [HttpPost]
+        public IActionResult DeleteConfirmed(int productId)
+        {
+            _productService.DeleteProduct(productId);
+            return RedirectToAction("Index");
+        }
+    }
+
+
+/*using Microsoft.AspNetCore.Mvc;
+using WebShop.Models;
+using WebShop.Services;
+
+namespace WebShop.Controllers
+{
+    public class ProductController : Controller
+    {
+        private readonly IProductService _productService;
+        private readonly ICategoryService _categoryService;
+
+        public ProductController(
+            IProductService productService,
+            ICategoryService categoryService)
+        {
+            _productService = productService;
+            _categoryService = categoryService;
+        }
+
+        public IActionResult Index(int? categoryId)
+        {
+            
+            return View();
         }
 
     }
 
-}
+}*/
 
 /*           var productDetails = new Dictionary<int, List<int>>();
 

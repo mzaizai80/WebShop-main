@@ -11,7 +11,7 @@ namespace WebShop.Services
         Product GetProductById(int productId);
         List<Product> GetAllProducts();
         List<Product> GetProductById(List<int> productIds);
+        IEnumerable<Product> GetProductsByCategory(int categoryId, int page, int pageSize);
+        IEnumerable<Product> GetProductsByCategory(int categoryId);
     }
 }
-
-        //Dictionary<Product, List<Category>> GetProductCategoryAssociations();

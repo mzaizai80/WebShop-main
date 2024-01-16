@@ -1,58 +1,67 @@
-﻿using System.Diagnostics;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using WebShop.Services;
+using WebShop.ViewModels;
 
 namespace WebShop
 {
     public class HomeController : Controller
     {
-        private readonly IService _service;
         private readonly ILogger<HomeController> _logger;
+        private readonly IService _service;
+        private readonly IProductService _productService;
+        private readonly ICategoryService _categoryService;
 
-            public HomeController(ILogger<HomeController> logger, IService service)
-            {
-                _logger = logger;
-            _service = service;
-            }
-
-            public IActionResult Index(int? categoryId)
-            {
-                // Filter products by category if categoryId is provided
-                var products = categoryId.HasValue
-                    ? _service.GetProductsByCategory(categoryId.Value)
-                    : _service.GetAllProducts();
-
-                return View(products);
-            }
-
-        public IActionResult Indexa()
+        public HomeController(
+            ILogger<HomeController> logger,
+            IService service,
+            IProductService productService,
+            ICategoryService categoryService
+             )
         {
-            return View();
+            _productService = productService;
+            _categoryService = categoryService;
+            _logger = logger;
+            _service = service;
         }
+
+        public IActionResult Index()
+        {
+            var categories = _service.GetAllCategories();
+            var products = _service.GetAllProducts();
+
+            var homeViewModel = new HomeViewModel
+            {
+                Categories = categories,
+                Products = products
+            };
+            Console.WriteLine($"Products Controller{products.ToList()}");
+            //ViewData["_LayoutModel"] = homeViewModel;
+
+            return View(homeViewModel);
+        }
+
+        public IActionResult ProductsByCategory(int categoryId)
+        {
+            var products = _service.GetProductsByCategory(categoryId);
+            var categories = _service.GetAllCategories();
+
+            var homeViewModel = new HomeViewModel
+            {
+                Products = products,
+                Categories = categories
+            };
+
+            return View(homeViewModel);
+        }
+
+        public IActionResult Indexa(int? categoryId)
+        {
+            var products = categoryId.HasValue
+                ? _service.GetProductsByCategory(categoryId.Value)
+                : _service.GetAllProducts();
+
+            return View(products);
+        }
+
     }
 }
-
-        //private readonly IService _service;
-
-        //public HomeController(IService service)
-        //{
-        //    _service = service;
-        //}
-
-        ////[Route("[action]")]
-
-        ////public IActionResult Index()
-        ////{
-        ////    var products = _service.GetAllProducts();
-        ////    return View("Index", products);
-        ////    //return View("/Views/Home/Index.cshtml", products);
-        ////    //return View("/Pages/Product/Index.cshtml", products);
-        ////}
-
-        //public IActionResult Index()
-        //{
-        //    var categories = _service.GetAllCategories();
-        //    return View("Categories", categories);
-        //    //return View("/Views/Home/Index.cshtml", products);
-        //    //return View("/Pages/Product/Index.cshtml", products);
-        //}

@@ -12,11 +12,12 @@ namespace WebShop.Services
     {
         private readonly IFileService _fileService;
         private readonly string _categoriesFilePath;
-        private List<Category> _categories;
+        private readonly List<Category> _categories;
 
-        public CategoryService(IFileService fileService,   IOptions<ProductServiceOptions> options)
+        public CategoryService(IFileService fileService,   IOptions<ProductServiceOptions> options, List<Category> categories)
         {
             _fileService = fileService ?? throw new ArgumentNullException(nameof(fileService));
+            _categories = categories;
             _categoriesFilePath = options.Value.CategoriesFilePath ??
                                   throw new ArgumentNullException(nameof(options.Value.CategoriesFilePath));
         }
@@ -42,10 +43,8 @@ namespace WebShop.Services
             try
             {
                 var categoriesJson = _fileService.ReadAllText(_categoriesFilePath);
-                Console.WriteLine(categoriesJson);
                 List<Category> categories = JsonConvert.DeserializeObject<List<Category>>(categoriesJson) ??
                                             new List<Category>();
-                Console.WriteLine($"category obj {categories}");
                 return categories;
             }
             catch (Exception ex)

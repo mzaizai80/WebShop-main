@@ -10,12 +10,12 @@ namespace WebShop.Services
 {
     private readonly IFileService _fileService;
     private readonly string _productsFilePath;
-    private List<Product> _products;
+    private readonly List<Product> _products;
 
-    public ProductService(IFileService fileService, IOptions<ProductServiceOptions> options
-        )
+    public ProductService(IFileService fileService, IOptions<ProductServiceOptions> options, List<Product> products)
     {
         _fileService = fileService ?? throw new ArgumentNullException(nameof(fileService));
+        _products = products;
         _productsFilePath = options?.Value?.ProductsFilePath ??
                             throw new ArgumentNullException(nameof(options.Value.ProductsFilePath));
         
@@ -55,7 +55,6 @@ namespace WebShop.Services
         }
         catch (Exception ex)
         {
-            // Log or handle the exception as needed
             throw new ProductServiceException("Error retrieving product by ID.", ex);
         }
     }
@@ -65,16 +64,12 @@ namespace WebShop.Services
         try
         {
             var productsJson = _fileService.ReadAllText(_productsFilePath);
-            Console.WriteLine(productsJson);
-            Console.WriteLine(_productsFilePath);
-
+          
             List<Product> products = JsonConvert.DeserializeObject<List<Product>>(productsJson) ?? new List<Product>();
-            Console.WriteLine($"product obj {products}");
             return products;
         }
         catch (Exception ex)
         {
-            // Log or handle the exception as needed
             throw new ProductServiceException("Error getting all products.", ex);
         }
     }
@@ -148,6 +143,39 @@ namespace WebShop.Services
         {
             throw new NotImplementedException();
         }
+        public IEnumerable<Product> GetProductsByCategory(int categoryId, int page, int pageSize)
+        {
+            try
+            {
+                var allProducts = GetAllProducts();
+                var productsInCategory = allProducts
+                    .Where(p => p.CategoryId == categoryId)
+                    .Skip((page - 1) * pageSize)
+                    .Take(pageSize);
+
+                return productsInCategory.ToList();
+            }
+            catch (Exception ex)
+            {
+                throw new ProductServiceException($"Error getting products by category ID {categoryId}.", ex);
+            }
+        }
+
+        public IEnumerable<Product> GetProductsByCategory(int categoryId)
+        {
+            try
+            {
+                var allProducts = GetAllProducts();
+                var productsInCategory = allProducts.Where(p => p.CategoryId == categoryId);
+                return productsInCategory.ToList();
+            }
+            catch (Exception ex)
+            {
+                throw new ProductServiceException($"Error getting products by category ID {categoryId}.", ex);
+            }
+        }
+
+        
     }
 }
 

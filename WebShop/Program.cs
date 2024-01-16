@@ -1,4 +1,5 @@
 using Microsoft.Extensions.Options;
+using WebShop.Models;
 using WebShop.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -6,12 +7,13 @@ var builder = WebApplication.CreateBuilder(args);
 // Register services
 builder.Services.AddSingleton<IFileService, FileService>();
 builder.Services.Configure<ProductServiceOptions>(builder.Configuration.GetSection("ProductService"));
-builder.Services.AddScoped<IProductCategoryRelationService, ProductCategoryRelationService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IService, Services>();
 
 // Register other dependencies
+builder.Services.AddScoped<List<Category>>();
+builder.Services.AddScoped<List<Product>>();
 builder.Services.AddScoped<IOptions<ProductServiceOptions>, OptionsManager<ProductServiceOptions>>();
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();

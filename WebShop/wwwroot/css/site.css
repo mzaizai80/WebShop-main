@@ -18,5 +18,7 @@ html {
 }
 
 body {
+  margin-block-start: 80px;
   margin-bottom: 60px;
+  
 }

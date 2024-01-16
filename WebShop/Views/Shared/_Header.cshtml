@@ -1,3 +1,6 @@
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model WebShop.ViewModels.HomeViewModel
+
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-5">
             <div class="container-fluid">
@@ -13,17 +16,41 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
-@*                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
- *@                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Category" asp-action="Index">Categories</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Product" asp-action="Index">Product</a>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                3Categories
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                @if (Model != null && Model.Categories != null)
+                                {
+                                    @foreach (var category in Model.Categories)
+                                    {
+                                        <a class="dropdown-item" asp-controller="Home" asp-action="ProductsByCategory" asp-route-categoryId="@category.Id">@category.Name</a>
+                                    }
+                                }
+                            </div>
                         </li>
                     </ul>
                 </div>
             </div>
         </nav>
     </header>
+
+@*
+<li class="nav-item">
+<a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+</li>
+<li class="nav-item">
+<a class="nav-link text-dark" asp-area="" asp-controller="Category" asp-action="Index">1Categories</a>
+<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+@if (Model != null && Model.Categories != null)
+{
+@foreach (var category in Model.Categories)
+{
+<a class="dropdown-item" asp-controller="Home" asp-action="ProductsByCategory"
+asp-route-categoryId="@category.Id">@category.Name</a>
+}
+}
+</div>
+</li>
+*@

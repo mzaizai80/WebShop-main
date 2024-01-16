@@ -24,10 +24,10 @@ namespace WebShopTests
                 new Category { Id = 3, Name = "Smartphones", Subcategories = new List<int>() },
             };
 
-            _categoryService = new CategoryService(_fileServiceMock.Object, Options.Create(new ProductServiceOptions
-            {
-                CategoriesFilePath = "test_data/categories_test.json"
-            }));
+            //_categoryService = new CategoryService(_fileServiceMock.Object, Options.Create(new ProductServiceOptions
+            //{
+            //    CategoriesFilePath = "test_data/categories_test.json"
+            //}));
         }
 
         [Test]

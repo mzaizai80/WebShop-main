@@ -1,110 +1,72 @@
 [
   {
-    "Id": 101,
-    "Name": "Gaming Laptop",
-    "Price": 1499.99,
-    "PictureUrl": "gaming_laptop.jpg"
-  },
-  {
-    "Id": 102,
-    "Name": "Android Smartphone",
-    "Price": 699.99,
-    "PictureUrl": "android_smartphone.jpg"
-  },
-  {
-    "Id": 103,
-    "Name": "Wireless Headphones",
-    "Price": 129.99,
-    "PictureUrl": "wireless_headphones.jpg"
-  },
-  {
-    "Id": 201,
-    "Name": "Ultra-thin Laptop",
-    "Price": 1199.99,
-    "PictureUrl": "ultra_thin_laptop.jpg"
-  },
-  {
-    "Id": 202,
-    "Name": "Business Laptop",
-    "Price": 999.99,
-    "PictureUrl": "business_laptop.jpg"
-  },
-  {
-    "Id": 203,
-    "Name": "Convertible Laptop",
-    "Price": 1299.99,
-    "PictureUrl": "convertible_laptop.jpg"
-  },
-  {
-    "Id": 301,
-    "Name": "iOS Smartphone",
+    "Id": 1,
+    "Name": "Laptop",
     "Price": 899.99,
-    "PictureUrl": "ios_smartphone.jpg"
+    "PictureUrl": "/images/laptop.jpg",
+    "CategoryId": 1
   },
   {
-    "Id": 302,
-    "Name": "Flagship Android Phone",
-    "Price": 799.99,
-    "PictureUrl": "flagship_android_phone.jpg"
+    "Id": 2,
+    "Name": "Smartphone",
+    "Price": 599.99,
+    "PictureUrl": "/images/smartphone.jpg",
+    "CategoryId": 1
   },
   {
-    "Id": 303,
-    "Name": "Budget Smartphone",
-    "Price": 399.99,
-    "PictureUrl": "budget_smartphone.jpg"
+    "Id": 3,
+    "Name": "Headphones",
+    "Price": 99.99,
+    "PictureUrl": "/images/headphones.jpg",
+    "CategoryId": 2
   },
   {
-    "Id": 501,
-    "Name": "Over-ear Headphones",
-    "Price": 149.99,
-    "PictureUrl": "over_ear_headphones.jpg"
+    "Id": 4,
+    "Name": "Camera",
+    "Price": 499.99,
+    "PictureUrl": "/images/camera.jpg",
+    "CategoryId": 2
   },
   {
-    "Id": 502,
-    "Name": "Noise-Canceling Headphones",
-    "Price": 199.99,
-    "PictureUrl": "noise_canceling_headphones.jpg"
-  },
-  {
-    "Id": 503,
-    "Name": "Sports Earphones",
+    "Id": 5,
+    "Name": "Running Shoes",
     "Price": 79.99,
-    "PictureUrl": "sports_earphones.jpg"
+    "PictureUrl": "/images/shoes.jpg",
+    "CategoryId": 3
   },
   {
-    "Id": 701,
-    "Name": "Casual Shirt",
+    "Id": 6,
+    "Name": "Backpack",
     "Price": 39.99,
-    "PictureUrl": "casual_shirt.jpg"
+    "PictureUrl": "/images/backpack.jpg",
+    "CategoryId": 3
   },
   {
-    "Id": 702,
-    "Name": "Leather Jacket",
-    "Price": 149.99,
-    "PictureUrl": "leather_jacket.jpg"
+    "Id": 7,
+    "Name": "Desktop PC",
+    "Price": 1299.99,
+    "PictureUrl": "/images/desktop.jpg",
+    "CategoryId": 1
   },
   {
-    "Id": 703,
-    "Name": "Jeans",
-    "Price": 59.99,
-    "PictureUrl": "jeans.jpg"
+    "Id": 8,
+    "Name": "Gaming Console",
+    "Price": 399.99,
+    "PictureUrl": "/images/console.jpg",
+    "CategoryId": 1
   },
   {
-    "Id": 801,
-    "Name": "Sundress",
+    "Id": 9,
+    "Name": "Fitness Tracker",
+    "Price": 49.99,
+    "PictureUrl": "/images/FitnessTracker.jpg",
+    "CategoryId": 2
+  },
+  {
+    "Id": 10,
+    "Name": "Coffee Maker",
     "Price": 79.99,
-    "PictureUrl": "sundress.jpg"
-  },
-  {
-    "Id": 802,
-    "Name": "Winter Coat",
-    "Price": 199.99,
-    "PictureUrl": "winter_coat.jpg"
-  },
-  {
-    "Id": 803,
-    "Name": "High Heels",
-    "Price": 89.99,
-    "PictureUrl": "high_heels.jpg"
+    "PictureUrl": "/images/coffee-maker.jpg",
+    "CategoryId": 4
   }
 ]

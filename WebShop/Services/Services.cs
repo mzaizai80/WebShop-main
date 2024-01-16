@@ -7,34 +7,26 @@ namespace WebShop.Services
     {
         private readonly IProductService _productService;
         private readonly ICategoryService _categoryService;
-        private readonly IProductCategoryRelationService _productCategoryService;
 
-        public Services(IProductService productService, ICategoryService categoryService, IProductCategoryRelationService productCategoryService)
+        public Services(IProductService productService, ICategoryService categoryService)
         {
             _productService = productService ?? throw new ArgumentNullException(nameof(productService));
             _categoryService = categoryService ?? throw new ArgumentNullException(nameof(categoryService));
-            _productCategoryService = productCategoryService ?? throw new ArgumentNullException(nameof(productCategoryService));
         }
 
-        public IEnumerable<Product> GetAllProducts()
+        IEnumerable<Product> IService.GetAllProducts()
         {
             return _productService.GetAllProducts();
         }
 
-        public IEnumerable<Category> GetAllCategories()
+        IEnumerable<Category> IService.GetAllCategories()
         {
             return _categoryService.GetAllCategories();
         }
 
-        public IEnumerable<ProductCategoryRelation> GetProductCategoryRelation()
+        IEnumerable<Product> IService.GetProductsByCategory(int categoryId)
         {
-            return _productCategoryService.GetAllRelations();
-        }
-
-        public IEnumerable<Product> GetProductsByCategory(int categoryId)
-        {
-            // Implement logic to retrieve products by category
-            throw new NotImplementedException();
+            return _productService.GetProductsByCategory(categoryId);
         }
     }
 }
