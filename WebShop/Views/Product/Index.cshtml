@@ -1,9 +1,14 @@
-﻿@model List<WebShop.Models.Product>
+﻿@model WebShop.ViewModels.HomeViewModel
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
 
 <h2>Random Products</h2>
 
 <ul>
-    @foreach (var product in Model)
+    @foreach (var product in Model.Products)
     {
         <li>
             <a asp-controller="Product" asp-action="Index" asp-route-Id="@product.Id">

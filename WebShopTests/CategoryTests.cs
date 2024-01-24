@@ -19,9 +19,9 @@ namespace WebShopTests
             _fileServiceMock = new Mock<IFileService>();
             _dummyCategories = new List<Category>
             {
-                new Category { Id = 1, Name = "Electronics", Subcategories = new List<int> { 2, 3 } },
-                new Category { Id = 2, Name = "Laptops", Subcategories = new List<int>() },
-                new Category { Id = 3, Name = "Smartphones", Subcategories = new List<int>() },
+                new Category { Id = 1, Name = "Electronics" },
+                new Category { Id = 2, Name = "Laptops"},
+                new Category { Id = 3, Name = "Smartphones" },
             };
 
             //_categoryService = new CategoryService(_fileServiceMock.Object, Options.Create(new ProductServiceOptions
@@ -98,7 +98,7 @@ namespace WebShopTests
         public void DeleteCategory_WhenCategoryExists_ShouldRemoveCategory()
         {
             // Arrange - Add a category first
-            var category = new Category { Id = 3, Name = "TestCategory", Subcategories = new List<int>() };
+            var category = new Category { Id = 3, Name = "TestCategory" };
             _categoryService.AddCategory(category);
 
             // Act - Then delete the added category
@@ -113,11 +113,11 @@ namespace WebShopTests
         public void UpdateCategory_WhenCategoryExists_ShouldModifyCategoryDetails()
         {
             // Arrange - Add a category first
-            var category = new Category { Id = 2, Name = "Laptops", Subcategories = new List<int>() };
+            var category = new Category { Id = 2, Name = "Laptops" };
             _categoryService.AddCategory(category);
 
             // Act - Then update the added category
-            var categoryToUpdate = new Category { Id = 2, Name = "Updated Laptops", Subcategories = new List<int>() };
+            var categoryToUpdate = new Category { Id = 2, Name = "Updated Laptops" };
             _categoryService.UpdateCategory(categoryToUpdate);
 
             // Assert
@@ -133,19 +133,19 @@ namespace WebShopTests
             // Arrange - Create a file with dummy categories
             var dummyCategories = new List<Category>
             {
-                new Category { Id = 1, Name = "Electronics", Subcategories = new List<int> { 2, 3 } },
-                new Category { Id = 2, Name = "Laptops", Subcategories = new List<int>() },
-                new Category { Id = 3, Name = "Smartphones", Subcategories = new List<int>() },
+                new Category { Id = 1, Name = "Electronics" },
+                new Category { Id = 2, Name = "Laptops" },
+                new Category { Id = 3, Name = "Smartphones" },
             };
 
             _fileServiceMock.Setup(fs => fs.ReadAllText("test_data/categories_test.json"))
                 .Returns(JsonConvert.SerializeObject(dummyCategories));
 
             // Act - Update the category
-            var category = new Category { Id = 2, Name = "Laptops", Subcategories = new List<int>() };
+            var category = new Category { Id = 2, Name = "Laptops" };
             _categoryService.AddCategory(category);
 
-            var updatedCategory = new Category { Id = 2, Name = "Updated Laptops", Subcategories = new List<int>() };
+            var updatedCategory = new Category { Id = 2, Name = "Updated Laptops" };
             _categoryService.UpdateCategory(updatedCategory);
 
             // Assert

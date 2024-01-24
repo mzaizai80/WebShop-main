@@ -15,8 +15,7 @@
                     <h5 class="card-title">@product.Name</h5>
                     <p class="card-text">Price: $@product.Price</p>
                     <br />
-                    <a asp-area="" asp-controller="HomeViewModel.Product" asp-action="Details"
-                        asp-route-id="@product.Id">View Details</a>
+                    <a asp-area="" asp-controller="Product" asp-action="Details" asp-route-id="@product.Id">View Details</a>
                 </div>
             </div>
         </div>

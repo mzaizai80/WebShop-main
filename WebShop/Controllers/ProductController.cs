@@ -1,39 +1,52 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using WebShop.Models;
 using WebShop.Services;
-using WebShop.ViewModels;
 
 namespace WebShop.Controllers
 {
-    public class ProductController : Controller
+    [Route("products")]
+    public class ProductController : HomeController
     {
-        private readonly IProductService _productService;
-        private readonly ICategoryService _categoryService;
-
-        public ProductController(IProductService productService, ICategoryService categoryService)
+        public ProductController(ILogger<HomeController> logger,
+            IProductService productService,
+            ICategoryService categoryService, IService service) : base(
+            logger, service,
+            productService,
+            categoryService
+            )
         {
-            _productService = productService;
-            _categoryService = categoryService;
         }
 
-        public IActionResult Index(int? categoryId)
-        {
-            var model = new HomeViewModel
-            {
-                Products = _productService.GetProductsByCategory(categoryId.GetValueOrDefault()),
-            };
-            return View(model);
-        }
-        
         [HttpGet]
+        public IActionResult Index()
+        {
+            return View();
+        }
+
+        [HttpGet("{id}", Name = "GetDetails")]
+        public IActionResult Details(int id)
+        {
+            {
+                var Product = _productService.GetProductById(id);
+
+                if (Product == null)
+                {
+                    return NotFound();
+
+                }
+                //Need to be fixed Product
+                return View(Product);
+            }
+        }
+
+        [HttpGet("create")]
         public IActionResult Create()
         {
             ViewBag.Categories = _categoryService.GetAllCategories();
             return View();
         }
 
-        [HttpPost]
-        public IActionResult Create(Product product)
+        [HttpPost("create")]
+        public IActionResult Create(Models.Product product)
         {
             if (ModelState.IsValid)
             {
@@ -45,7 +58,7 @@ namespace WebShop.Controllers
             return View(product);
         }
 
-        [HttpGet]
+        [HttpGet("{id}/edit")]
         public IActionResult Edit(int id)
         {
             var product = _productService.GetProductById(id);
@@ -53,8 +66,8 @@ namespace WebShop.Controllers
             return View(product);
         }
 
-        [HttpPost]
-        public IActionResult Edit(Product product)
+        [HttpPost("{id}/edit")]
+        public IActionResult Edit(Models.Product product)
         {
             if (ModelState.IsValid)
             {
@@ -73,23 +86,11 @@ namespace WebShop.Controllers
             return View(product);
         }
 
-        [HttpPost]
+        [HttpPost("{id}/delete")]
         public IActionResult DeleteConfirmed(int id)
         {
             _productService.DeleteProduct(id);
             return RedirectToAction("Index");
-        }
-
-        public IActionResult Details(int id)
-        {
-            var product = _productService.GetProductById(id);
-
-            if (product == null)
-            {
-                return NotFound(); 
-            }
-
-            return View(product);
         }
     }
 }

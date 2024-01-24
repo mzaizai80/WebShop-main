@@ -1,0 +1,23 @@
+﻿@model WebShop.Models.Product
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+
+
+<h2>Product Details</h2>
+
+<div>
+    <div class="col-md-4 mt-4">
+        <div class="card">
+            <img src="@Model.PictureUrl" class="card-img-top" alt="Product Image">
+            <div class="card-body">
+                <h5 class="card-title">@Model.Name</h5>
+                <p class="card-text">Price: $@Model.Price</p>
+                <br />
+                <p class="card-text">Description: @Model.Product_Discription</p>
+            </div>
+        </div>
+    </div>
+</div>

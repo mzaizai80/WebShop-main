@@ -43,8 +43,8 @@ namespace WebShop.Services
             try
             {
                 var categoriesJson = _fileService.ReadAllText(_categoriesFilePath);
-                List<Category> categories = JsonConvert.DeserializeObject<List<Category>>(categoriesJson) ??
-                                            new List<Category>();
+                List<Category> categories = JsonConvert.DeserializeObject<List<Category>>(categoriesJson) ?? new List<Category>();
+                Console.WriteLine(categories);
                 return categories;
             }
             catch (Exception ex)
@@ -80,8 +80,6 @@ namespace WebShop.Services
             if (existingCategory != null)
             {
                 existingCategory.Name = updatedCategory.Name;
-                existingCategory.Subcategories =
-                    updatedCategory.Subcategories; // Assuming you are updating subcategories too
                 SaveCategories(categories);
             }
         }
@@ -101,20 +99,8 @@ namespace WebShop.Services
                     return category;
                 }
             }
-            return null;
-        }
 
-        private void GetSubcategoriesRecursive(List<Category> categories, int categoryId, List<int> subcategories)
-        {
-            var category = categories.FirstOrDefault(c => c.Id == categoryId);
-            if (category != null)
-            {
-                subcategories.Add(categoryId);
-                foreach (var subcategoryId in category.Subcategories)
-                {
-                    GetSubcategoriesRecursive(categories, subcategoryId, subcategories);
-                }
-            }
+            return null;
         }
     }
 }

@@ -2,7 +2,9 @@
 using WebShop.Models;
 using WebShop.Services;
 
-
+namespace WebShop.Controllers
+{
+    [Route("categories")]
 public class CategoryController : Controller 
 {
     private readonly ICategoryService _categoryService;
@@ -12,19 +14,21 @@ public class CategoryController : Controller
         _categoryService = categoryService;
     }
 
+    [HttpGet]
     public IActionResult Index()
     {
         var categories = _categoryService.GetAllCategories();
+        System.Console.WriteLine($"Categories  = {categories}");
         return View(categories);
     }
 
-    [HttpGet]
+    [HttpGet("create")]
     public IActionResult Create()
     {
         return View();
     }
-
-    [HttpPost]
+    
+    [HttpPost("create")]
     public IActionResult Create(Category category)
     {
         if (ModelState.IsValid)
@@ -69,6 +73,9 @@ public class CategoryController : Controller
         return RedirectToAction("Index");
     }
 }
+}
+
+
 
 /*public class CategoryController : Controller
 {

@@ -1,26 +1,93 @@
 [
   {
-    "Id": 1,
-    "Name": "Electronics",
-    "Description": "Electronic Devices",
-    "Subcategories": [2]
+    "Id": 11,
+    "Name": "Smartphones",
+    "Description": "Stay connected with the latest smartphones.",
+    "Products": [101, 102, 103]
   },
   {
-    "Id": 2,
-    "Name": "Gadgets",
-    "Description": "Tech Gadgets",
-    "Subcategories": []
+    "Id": 12,
+    "Name": "Laptops",
+    "Description": "Powerful laptops for work and play.",
+    "Products": [1, 201, 202, 203]
   },
   {
-    "Id": 3,
-    "Name": "Apparel",
-    "Description": "Clothing and Accessories",
-    "Subcategories": []
+    "Id": 13,
+    "Name": "Men's Clothing",
+    "Description": "Upgrade your wardrobe with our men's clothing collection.",
+    "Products": [701, 702, 703]
   },
   {
-    "Id": 4,
-    "Name": "Home Appliances",
-    "Description": "Household Appliances",
-    "Subcategories": []
+    "Id": 14,
+    "Name": "Women's Clothing",
+    "Description": "Explore the latest trends in women's fashion.",
+    "Products": [801, 802, 803]
+  },
+  {
+    "Id": 15,
+    "Name": "Bedroom Furniture",
+    "Description": "Create a cozy retreat with our bedroom furniture.",
+    "Products": []
+  },
+  {
+    "Id": 16,
+    "Name": "Kitchen Appliances",
+    "Description": "Efficient and stylish kitchen appliances for modern homes.",
+    "Products": [10]
+  },
+  {
+    "Id": 17,
+    "Name": "Notebooks",
+    "Description": "Jot down your thoughts with our diverse range of notebooks.",
+    "Products": [7, 8]
+  },
+  {
+    "Id": 18,
+    "Name": "Stationery Sets",
+    "Description": "Elevate your desk with our beautifully crafted stationery sets.",
+    "Products": [501, 502]
+  },
+  {
+    "Id": 19,
+    "Name": "Outdoor Gear",
+    "Description": "Gear up for outdoor adventures with our quality outdoor equipment.",
+    "Products": [5]
+  },
+  {
+    "Id": 20,
+    "Name": "Sports Apparel",
+    "Description": "Achieve peak performance with our comfortable sports apparel.",
+    "Products": [503]
+  },
+  {
+    "Id": 21,
+    "Name": "Skincare",
+    "Description": "Revitalize your skin with our curated selection of skincare products.",
+    "Products": []
+  },
+  {
+    "Id": 22,
+    "Name": "Haircare",
+    "Description": "Nourish your hair with our premium haircare solutions.",
+    "Products": []
+  },
+  {
+    "Id": 23,
+    "Name": "Educational Toys",
+    "Description": "Inspire learning through play with our educational toys.",
+    "Products": []
+  },
+  {
+    "Id": 24,
+    "Name": "Board Games",
+    "Description": "Gather friends and family for endless fun with our board games.",
+    "Products": []
+  },
+  {
+    "Id": 25,
+    "Name": "Earrings",
+    "Description": "Adorn yourself with our elegant and stylish earrings.",
+    "Products": []
+    
   }
 ]

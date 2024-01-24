@@ -1,11 +1,11 @@
 ﻿@{
     ViewData["Title"] = "Welcome to Our Web Shop";
 }
-@model WebShop.ViewModels.HomeViewModel
+@model WebShop.ViewModels.HomeViewModel;
 
 <div class="container">
     <div>
-        <h1 style="mt-5">Welcome to Our Web Shop</h1>
+        <h1 style="margin-top:5px">Welcome to Our Web Shop</h1>
         <p>
             Thank you for visiting our online store. Explore our wide range of products and find the perfect items for
             you.
@@ -16,37 +16,37 @@
             Enjoy a seamless shopping experience and discover the best deals on quality products. Happy shopping!
         </p>
     </div>
-<div class="container mt-5">
-    @foreach (var category in Model.Categories)
-    {
-        <div class="" style="margin: 2rem;">
-            <h2>@category.Name</h2>
-            <div class="row mt-4">
-                    @foreach (var product in Model.Products)
+    <div class="container mt-5">
+        @foreach (var category in Model.Categories)
+        {
+            <div class="" style="margin: 2rem;">
+                <h2>@category.Name</h2>
+
+                <div class="row mt-4">
+                    @foreach (var product in Model.Products.Where(p => p.CategoryId == category.Id))
                     {
-                        if (product.CategoryId == category.Id)
-                        {
-                            <div class="col-md-4 mt-4">
-                                <div class="card">
-                                    <img src="@product.PictureUrl" class="card-img-top" alt="Product Image">
-                                    <div class="card-body">
-                                        <h5 class="card-title">@product.Name</h5>
-                                        <p class="card-text">Price: $@product.Price</p>
-                                        <br/>
-                                        <a asp-area="" asp-controller="Product" asp-action="Details" asp-route-id="@product.Id">View Details</a>
-                                    </div>
+                        <div class="col-md-4 mt-4">
+                            <div class="card">
+                                <img src="@product.PictureUrl" class="card-img-top" alt="Product Image">
+                                <div class="card-body">
+                                    <h5 class="card-title">@product.Name</h5>
+                                    <p class="card-text">Price: $@product.Price</p>
+                                    <br />
+                                    <p class="card-text">Discription: @product.Product_Discription</p>
+                                    <br />
+                                    <a asp-area="" asp-controller="Product" asp-action="Details" asp-route-id="@product.Id">View Details</a>
                                 </div>
                             </div>
-                        }
+                        </div>
                     }
+                </div>
             </div>
-        </div>
-    }
+        }
+    </div>
 </div>
 
 
-
-@* 
+@*
 <!DOCTYPE html>
 <html>
 

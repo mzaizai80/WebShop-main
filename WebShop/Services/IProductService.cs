@@ -10,7 +10,7 @@ namespace WebShop.Services
         void SaveProducts(Product product);
         Product GetProductById(int productId);
         List<Product> GetAllProducts();
-        List<Product> GetProductById(List<int> productIds);
+        //List<Product> GetProductById(List<int> productIds);
         IEnumerable<Product> GetProductsByCategory(int categoryId, int page, int pageSize);
         IEnumerable<Product> GetProductsByCategory(int categoryId);
     }
