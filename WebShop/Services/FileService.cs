@@ -13,7 +13,6 @@ namespace WebShop.Services
             }
             catch (Exception ex)
             {
-                // Log or handle the exception as needed
                 throw new FileServiceException($"Error checking file existence at path: {path}. {ex.Message}", ex);
             }
         }
@@ -26,11 +25,10 @@ namespace WebShop.Services
                 {
                     return File.ReadAllText(path);
                 }
-                return ""; // Return an empty string if the file does not exist
+                return "";
             }
             catch (Exception ex)
             {
-                // Log or handle the exception as needed
                 throw new FileServiceException($"Error reading file at path: {path}. {ex.Message}", ex);
             }
         }
@@ -43,7 +41,6 @@ namespace WebShop.Services
             }
             catch (Exception ex)
             {
-                // Log or handle the exception as needed
                 throw new FileServiceException($"Error writing file at path: {path}. {ex.Message}", ex);
             }
         }
