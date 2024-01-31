@@ -1,89 +1,129 @@
-﻿using WebShop.Models;
+﻿using Microsoft.Extensions.Options;
+using Moq;
+using Newtonsoft.Json;
+using WebShop.Models;
+using WebShop.Services;
 
 namespace WebShopTests
 {
     [TestFixture]
-    public class CategoryTests
+    public class CategoryServiceTests
     {
-        [Test]
-        public void Category_Should_Have_Default_Values()
+        private Mock<IFileService> _fileServiceMock;
+        private CategoryService _categoryService;
+        private List<Category> _dummyCategories;
+
+        [SetUp]
+        public void Setup()
         {
-            // Arrange
-            Category category = new Category();
+            _fileServiceMock = new Mock<IFileService>();
+            _dummyCategories = new List<Category>
+            {
+                new Category { Id = 1, Name = "Electronics" },
+                new Category { Id = 2, Name = "Laptops" },
+                new Category { Id = 3, Name = "Smartphones" },
+            };
 
-            // Assert
-            Assert.That(category.Id, Is.EqualTo(0));
-            Assert.That(category.Name, Is.EqualTo(""));
-                    }
+            var categoriesFilePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "test_data/categories_test.json");
 
-        [Test]
-        public void Category_Should_Allow_Setting_Properties()
-        {
-            // Arrange
-            Category category = new Category();
-
-            // Act
-            category.Id = 1;
-            category.Name = "Test Category";
-
-            // Assert
-            Assert.That(category.Id, Is.EqualTo(1));
-            Assert.That(category.Name, Is.EqualTo("Test Category"));
+            _categoryService = new CategoryService(
+                _fileServiceMock.Object,
+                Options.Create(new WebShopFileServiceOptions
+                {
+                    CategoriesFilePath = categoriesFilePath
+                }),
+                new List<Category>()
+            );
         }
 
         [Test]
-        public void Category_Should_Allow_Adding_Subcategories()
+        public void GetAllCategories_ReturnsAllCategories()
         {
-            // Arrange
-            Category parentCategory = new Category();
-            Category subcategory = new Category();
 
-            // Act
-            parentCategory.Subcategories.Add(subcategory);
-
-            // Assert
-            Assert.That(parentCategory.Subcategories.Count, Is.EqualTo(1));
-            Assert.That(parentCategory.Subcategories[0], Is.SameAs(subcategory));
-
-        }
+            _fileServiceMock.Setup(fs => fs.ReadAllText(It.IsAny<string>()))
+                .Returns(JsonConvert.SerializeObject(_dummyCategories));
 
 
-        [Test]
-        public void Category_Subcategories_Should_Allow_Setting_Properties()
-        {
-            // Arrange
-            Category category = new Category();
-            Category subcategory = new Category();
+            var result = _categoryService.GetAllCategories();
 
-            // Act
-            subcategory.Id = 2;
-            subcategory.Name = "Subcategory";
 
-            category.Subcategories.Add(subcategory);
-
-            // Assert
-            Assert.That(category.Subcategories.Count, Is.EqualTo(1));
-            Assert.That(category.Subcategories[0].Id, Is.EqualTo(2));
-            Assert.That(category.Subcategories[0].Name, Is.EqualTo("Subcategory"));
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result.Count(), Is.EqualTo(_dummyCategories.Count));
         }
 
         [Test]
-        public void Category_Subcategories_Should_Allow_Adding_Subsubcategories()
+        public void GetCategoryById_ExistingCategory_ReturnsCategory()
+        {
+
+            _fileServiceMock.Setup(fs => fs.ReadAllText(It.IsAny<string>()))
+                .Returns(JsonConvert.SerializeObject(_dummyCategories));
+
+
+            var categoryIdToFind = 2;
+            var result = _categoryService.GetCategoryById(categoryIdToFind);
+
+
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result.Id, Is.EqualTo(categoryIdToFind));
+            Assert.That(result.Name, Is.EqualTo("Laptops"));
+        }
+
+        [Test]
+        public void GetCategoryById_NonExistingCategory_ReturnsNull()
+        {
+
+            _fileServiceMock.Setup(fs => fs.ReadAllText(It.IsAny<string>()))
+                .Returns(JsonConvert.SerializeObject(_dummyCategories));
+
+
+            var categoryIdToFind = 99;
+            var result = _categoryService.GetCategoryById(categoryIdToFind);
+
+
+            Assert.That(result, Is.Null);
+        }
+
+        [Test]
+        public void AddCategory_ValidCategory_AddsCategory()
+        {
+
+            var categoryToAdd = new Category { Id = 100, Name = "TestCategory" };
+            _fileServiceMock.Setup(fs => fs.ReadAllText(It.IsAny<string>()))
+                .Returns(JsonConvert.SerializeObject(_dummyCategories));
+
+
+            _categoryService.AddCategory(categoryToAdd);
+
+            _fileServiceMock.Verify(fs => fs.WriteAllText(It.IsAny<string>(), It.IsAny<string>()), Times.Once);
+        }
+
+        [Test]
+        public void DeleteCategory_WhenCategoryExists_ShouldRemoveCategory()
+        {
+            var category = new Category { Id = 123, Name = "TestCategory" };
+            _fileServiceMock.Setup(fs => fs.ReadAllText(It.IsAny<string>()))
+                .Returns(JsonConvert.SerializeObject(_dummyCategories));
+            _categoryService.AddCategory(category);
+
+            _categoryService.DeleteCategory(123);
+
+
+            var deletedCategory = _categoryService.GetCategoryById(123);
+            Assert.That(deletedCategory, Is.Null);
+        }
+
+        [Test]
+        public void UpdateCategory_ShouldThrowExceptionIfCategoryNotFound()
         {
             // Arrange
-            Category category = new Category();
-            Category subcategory = new Category();
-            Category subsubcategory = new Category();
+            var updatedCategory = new Category { Id = 4, Name = "New Category" };
 
-            // Act
-            subcategory.Subcategories.Add(subsubcategory);
-            category.Subcategories.Add(subcategory);
+            _fileServiceMock.Setup(mock => mock.ReadAllText(It.IsAny<string>()))
+                .Returns("[{ \"Id\": 1, \"Name\": \"Electronics\" }, { \"Id\": 2, \"Name\": \"Laptops\" }, { \"Id\": 3, \"Name\": \"Smartphones\" }]");
 
-            // Assert
-            Assert.That(category.Subcategories.Count, Is.EqualTo(1));
-            Assert.That(category.Subcategories[0].Subcategories.Count, Is.EqualTo(1));
-            Assert.That(category.Subcategories[0].Subcategories[0], Is.SameAs(subsubcategory));
+            // Act & Assert
+            Assert.Throws<CategoryServiceException>(() => _categoryService.UpdateCategory(updatedCategory));
+            _fileServiceMock.Verify(mock => mock.WriteAllText(It.IsAny<string>(), It.IsAny<string>()), Times.Never);
         }
     }
 }
-

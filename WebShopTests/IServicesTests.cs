@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
 using Moq;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using WebShop.Models;
@@ -11,13 +12,16 @@ namespace WebShopTests
     public class IServicesTests
     {
         private Services _services;
-        private Mock<ProductService> _mockProductService;
+        private Mock<IProductService> _mockProductService;
+        private Mock<ICategoryService> _mockCategoryService;
 
         [SetUp]
         public void Setup()
         {
-            _mockProductService = new Mock<ProductService>(MockBehavior.Strict);
-            _services = new Services(_mockProductService.Object);
+            _mockProductService = new Mock<IProductService>(MockBehavior.Strict);
+            _mockCategoryService = new Mock<ICategoryService>(MockBehavior.Strict);
+
+            _services = new Services(_mockProductService.Object, _mockCategoryService.Object);
         }
 
         [Test]
@@ -34,14 +38,14 @@ namespace WebShopTests
             _mockProductService.Setup(s => s.GetAllProducts()).Returns(expectedProducts);
 
             // Act
-            var result = _services.GetAllProducts();
+            var result = ((IService)_services).GetAllProducts();
 
             // Assert
-            Assert.AreEqual(expectedProducts.Count(), result.Count());
+            Assert.That(result.Count(), Is.EqualTo(expectedProducts.Count));
         }
 
         [Test]
-        public void GetAllCategories_Returns_Categories_From_ProductService()
+        public void GetAllCategories_Returns_Categories_From_CategoryService()
         {
             // Arrange
             var expectedCategories = new List<Category>
@@ -50,14 +54,13 @@ namespace WebShopTests
                 new Category { Id = 2, Name = "Accessories" }
             };
 
-            _mockProductService.Setup(s => s.GetAllCategories()).Returns(expectedCategories);
+            _mockCategoryService.Setup(s => s.GetAllCategories()).Returns(expectedCategories);
 
             // Act
-            var result = _services.GetAllCategories();
+            var result = ((IService)_services).GetAllCategories();
 
             // Assert
-            Assert.That(result.Count(), Is.EqualTo(expectedCategories.Count()));
+            Assert.That(result.Count(), Is.EqualTo(expectedCategories.Count));
         }
-
     }
 }

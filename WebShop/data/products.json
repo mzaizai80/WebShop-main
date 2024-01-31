@@ -2,19 +2,233 @@
   {
     "Id": 1,
     "Name": "Laptop",
-    "Price": 999.99,
-    "PictureUrl": "laptop.jpg"
+    "Price": 899.99,
+    "PictureUrl": "/images/laptop.jpg",
+    "Product_Discription": "",
+    "ReverseLookupOfCategoryIds": 12
   },
   {
     "Id": 2,
     "Name": "Smartphone",
-    "Price": 499.99,
-    "PictureUrl": "smartphone.jpg"
+    "Price": 599.99,
+    "PictureUrl": "/images/smartphone.jpg",
+    "Product_Discription": "",
+    "ReverseLookupOfCategoryIds": 11
   },
   {
     "Id": 3,
     "Name": "Headphones",
+    "Price": 99.99,
+    "PictureUrl": "/images/headphones.jpg",
+    "Product_Discription": "",
+    "ReverseLookupOfCategoryIds": 13
+  },
+  {
+    "Id": 4,
+    "Name": "Camera",
+    "Price": 499.99,
+    "PictureUrl": "/images/camera.jpg",
+    "Product_Discription": "",
+    "ReverseLookupOfCategoryIds": 13
+  },
+  {
+    "Id": 5,
+    "Name": "Running Shoes",
     "Price": 79.99,
-    "PictureUrl": "headphones.jpg"
+    "PictureUrl": "/images/shoes.jpg",
+    "Product_Discription": "",
+    "ReverseLookupOfCategoryIds": 15
+  },
+  {
+    "Id": 6,
+    "Name": "Backpack",
+    "Price": 39.99,
+    "PictureUrl": "/images/backpack.jpg",
+    "Product_Discription": "",
+    "ReverseLookupOfCategoryIds": 15
+  },
+  {
+    "Id": 7,
+    "Name": "Desktop PC",
+    "Price": 1299.99,
+    "PictureUrl": "/images/desktop.jpg",
+    "Product_Discription": "",
+    "ReverseLookupOfCategoryIds": 12
+  },
+  {
+    "Id": 8,
+    "Name": "Gaming Console",
+    "Price": 399.99,
+    "PictureUrl": "/images/console.jpg",
+    "Product_Discription": "",
+    "ReverseLookupOfCategoryIds": 12
+  },
+  {
+    "Id": 9,
+    "Name": "Fitness Tracker",
+    "Price": 49.99,
+    "PictureUrl": "/images/FitnessTracker.jpg",
+    "Product_Discription": "",
+    "ReverseLookupOfCategoryIds": 13
+  },
+  {
+    "Id": 10,
+    "Name": "Coffee Maker",
+    "Price": 79.99,
+    "PictureUrl": "/images/coffee-maker.jpg",
+    "Product_Discription": "",
+    "ReverseLookupOfCategoryIds": 16
+  },
+  {
+    "Id": 101,
+    "Name": "Gaming Laptop",
+    "Price": 1499.99,
+    "PictureUrl": "gaming_laptop.jpg",
+    "Product_Discription": "",
+    "ReverseLookupOfCategoryIds": 12
+  },
+  {
+    "Id": 102,
+    "Name": "Android Smartphone",
+    "Price": 699.99,
+    "PictureUrl": "android_smartphone.jpg",
+    "Product_Discription": "",
+    "ReverseLookupOfCategoryIds": 11
+  },
+  {
+    "Id": 103,
+    "Name": "Wireless Headphones",
+    "Price": 129.99,
+    "PictureUrl": "wireless_headphones.jpg",
+    "Product_Discription": "",
+    "ReverseLookupOfCategoryIds": 13
+  },
+  {
+    "Id": 201,
+    "Name": "Ultra-thin Laptop",
+    "Price": 1199.99,
+    "PictureUrl": "ultra_thin_laptop.jpg",
+    "Product_Discription": "",
+    "ReverseLookupOfCategoryIds": 12
+  },
+  {
+    "Id": 202,
+    "Name": "Business Laptop",
+    "Price": 999.99,
+    "PictureUrl": "business_laptop.jpg",
+    "Product_Discription": "",
+    "ReverseLookupOfCategoryIds": 12
+  },
+  {
+    "Id": 203,
+    "Name": "Convertible Laptop",
+    "Price": 1299.99,
+    "PictureUrl": "convertible_laptop.jpg",
+    "Product_Discription": "",
+    "ReverseLookupOfCategoryIds": 12
+  },
+  {
+    "Id": 301,
+    "Name": "iOS Smartphone",
+    "Price": 899.99,
+    "PictureUrl": "ios_smartphone.jpg",
+    "Product_Discription": "",
+    "ReverseLookupOfCategoryIds": 11
+  },
+  {
+    "Id": 302,
+    "Name": "Flagship Android Phone",
+    "Price": 799.99,
+    "PictureUrl": "flagship_android_phone.jpg",
+    "Product_Discription": "",
+    "ReverseLookupOfCategoryIds": 11
+  },
+  {
+    "Id": 303,
+    "Name": "Budget Smartphone",
+    "Price": 399.99,
+    "PictureUrl": "budget_smartphone.jpg",
+    "Product_Discription": "",
+    "ReverseLookupOfCategoryIds": 11
+  },
+  {
+    "Id": 501,
+    "Name": "Over-ear Headphones",
+    "Price": 149.99,
+    "PictureUrl": "over_ear_headphones.jpg",
+    "Product_Discription": "",
+    "ReverseLookupOfCategoryIds": 13
+  },
+  {
+    "Id": 502,
+    "Name": "Noise-Canceling Headphones",
+    "Price": 199.99,
+    "PictureUrl": "noise_canceling_headphones.jpg",
+    "Product_Discription": "",
+    "ReverseLookupOfCategoryIds": 13
+  },
+  {
+    "Id": 503,
+    "Name": "Sports Earphones",
+    "Price": 79.99,
+    "PictureUrl": "sports_earphones.jpg",
+    "Product_Discription": "",
+    "ReverseLookupOfCategoryIds": 13
+  },
+  {
+    "Id": 701,
+    "Name": "Casual Shirt",
+    "Price": 39.99,
+    "PictureUrl": "casual_shirt.jpg",
+    "Product_Discription": "",
+    "ReverseLookupOfCategoryIds": 13
+  },
+  {
+    "Id": 702,
+    "Name": "Leather Jacket",
+    "Price": 149.99,
+    "PictureUrl": "leather_jacket.jpg",
+    "Product_Discription": "",
+    "ReverseLookupOfCategoryIds": 14
+  },
+  {
+    "Id": 703,
+    "Name": "Jeans",
+    "Price": 59.99,
+    "PictureUrl": "jeans.jpg",
+    "Product_Discription": "",
+    "ReverseLookupOfCategoryIds": 14
+  },
+  {
+    "Id": 801,
+    "Name": "Gaming PC",
+    "Price": 1799.99,
+    "PictureUrl": "gaming_pc.jpg",
+    "Product_Discription": "",
+    "ReverseLookupOfCategoryIds": 12
+  },
+  {
+    "Id": 802,
+    "Name": "Gaming Laptop",
+    "Price": 1499.99,
+    "PictureUrl": "gaming_laptop.jpg",
+    "Product_Discription": "",
+    "ReverseLookupOfCategoryIds": 12
+  },
+  {
+    "Id": 803,
+    "Name": "Gaming Console",
+    "Price": 399.99,
+    "PictureUrl": "gaming_console.jpg",
+    "Product_Discription": "",
+    "ReverseLookupOfCategoryIds": 12
+  },
+  {
+    "Id": 804,
+    "Name": "asdfasdfasdfasdfasdfadsfas",
+    "Price": 21546541651.0,
+    "PictureUrl": "Camera.jpg",
+    "Product_Discription": "",
+    "ReverseLookupOfCategoryIds": 25
   }
 ]

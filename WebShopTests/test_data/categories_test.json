@@ -1,0 +1,30 @@
+[
+  {
+    "Id": 1,
+    "Name": "Electronics",
+    "Subcategories": [
+      {
+        "Id": 2,
+        "Name": "Laptops"
+      },
+      {
+        "Id": 3,
+        "Name": "Smartphones"
+      }
+    ]
+  },
+  {
+    "Id": 4,
+    "Name": "Accessories",
+    "Subcategories": [
+      {
+        "Id": 5,
+        "Name": "Headphones"
+      }
+    ]
+  },
+  {
+    "Id": 6,
+    "Name": "Clothing"
+  }
+]

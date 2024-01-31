@@ -1,176 +1,288 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.Extensions.Options;
+﻿using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
+using System.Collections;
 using WebShop.Models;
-using WebShop.Services;
 
-public class ProductService : IProductService
+namespace WebShop.Services
 {
-    private readonly IFileReader _fileReader;
-    private readonly string _productsFilePath;
-    private readonly ICategoryService _categoryService;
-    private readonly IProductCategoryService _productCategoryService;
-    private readonly IFileWriter _fileWriter;
 
-
-    //public ProductService(IFileReader fileReader, IFileWriter fileWriter, IOptions<ProductServiceOptions> options, ICategoryService categoryService, IProductCategoryService productCategoryService)
-    //{
-    //    _fileReader = fileReader ?? throw new ArgumentNullException(nameof(fileReader));
-    //    _fileWriter = fileWriter ?? throw new ArgumentNullException(nameof(fileWriter));
-    //    _productsFilePath = options.Value.ProductsFilePath ??
-    //                        throw new ArgumentNullException(nameof(options.Value.ProductsFilePath));
-    //    _categoryService = categoryService ?? throw new ArgumentNullException(nameof(categoryService));
-    //    _productCategoryService = productCategoryService ?? throw new ArgumentNullException(nameof(productCategoryService));
-    //}
-
-    public ProductService(IFileReader fileReader, IFileWriter fileWriter, IOptions<ProductServiceOptions> options, ICategoryService categoryService, IProductCategoryService productCategoryService)
+    public class ProductService : IProductService, IEnumerable<Product>
     {
-        _fileReader = fileReader ?? throw new ArgumentNullException(nameof(fileReader));
-        _fileWriter = fileWriter ?? throw new ArgumentNullException(nameof(fileWriter));
-        _productsFilePath = options.Value.ProductsFilePath ??
-                            throw new ArgumentNullException(nameof(options.Value.ProductsFilePath));
-        _categoryService = categoryService ?? throw new ArgumentNullException(nameof(categoryService));
-        _productCategoryService = productCategoryService ?? throw new ArgumentNullException(nameof(productCategoryService));
-    }
+        private readonly IFileService _fileService;
+        private readonly string _productsFilePath;
+        private readonly List<Product> _products;
+        private readonly ICategoryService _categoryService;
 
-
-    //public ProductService()
-    //{
-    //    // Default constructor implementation for Moq Tests only
-    //}
-
-    public void AddProduct(Product product)
-    {
-        var products = GetAllProducts();
-        products.Add(product);
-        SaveProducts(products);
-    }
-
-    public void UpdateProduct(Product updatedProduct)
-    {
-        var products = GetAllProducts();
-        var existingProduct = products.FirstOrDefault(p => p.Id == updatedProduct.Id);
-
-        if (existingProduct != null)
+        public ProductService(IFileService fileService, IOptions<WebShopFileServiceOptions> options, List<Product> products, ICategoryService categoryService)
         {
-            existingProduct.Name = updatedProduct.Name;
-            existingProduct.PictureUrl = updatedProduct.PictureUrl;
-
-            SaveProducts(products);
-        }
-    }
-
-    public void DeleteProduct(int productId)
-    {
-        var products = GetAllProducts();
-        var productToRemove = products.FirstOrDefault(p => p.Id == productId);
-
-        if (productToRemove != null)
-        {
-            products.Remove(productToRemove);
-            SaveProducts(products);
-        }
-    }
-
-
-    public List<Product> GetAllProducts()
-    {
-        var productsJson = _fileReader.ReadAllText(_productsFilePath);
-        var products = JsonConvert.DeserializeObject<List<Product>>(productsJson) ?? new List<Product>();
-        return products;
-    }
-
-    private void SaveProducts(List<Product> products)
-    {
-        var productsJson = JsonConvert.SerializeObject(products);
-        _fileWriter.WriteAllText(_productsFilePath, productsJson);
-    }
-
-    public List<Category> GetAllCategories()
-    {
-        return _categoryService.GetAllCategories();
-    }
-
-    
-    /*
-    public List<ProductCategoryRelation> GetAllProductCategoryRelation()
-    {
-        return _productCategoryService.GetAllProductCategoryRelation();
-    }
-    
-
-    public Dictionary<Product, List<Category>> GetProductCategoryAssociations()
-    {
-        var products = GetAllProducts();
-        var categories = GetAllCategories();
-        var productCategoryRelation = GetAllProductCategoryRelation();
-
-        return GenerateProductCategoryMap(products, categories, productCategoryRelation);
-    }
-
-    private Dictionary<Product, List<Category>> GenerateProductCategoryMap(
-        List<Product> products,
-        List<Category> categories,
-        List<ProductCategoryRelation> productCategoryRelation)
-    {
-        var productCategoryMap = new Dictionary<Product, List<Category>>();
-
-        foreach (var relation in productCategoryRelation)
-        {
-            var product = products.FirstOrDefault(p => p.Id == relation.ProductId);
-            var category = FindCategory(categories, relation.CategoryId);
-
-            AddProductCategoryToMap(product, category, productCategoryMap);
+            _fileService = fileService ?? throw new ArgumentNullException(nameof(fileService));
+            _products = products;
+            _productsFilePath = options?.Value?.ProductsFilePath ??
+                                throw new ArgumentNullException(nameof(options.Value.ProductsFilePath));
+            _categoryService = categoryService ?? throw new ArgumentNullException(nameof(categoryService));
         }
 
-        return productCategoryMap;
-    }
-
-    private void AddProductCategoryToMap(
-        Product product,
-        Category category,
-        Dictionary<Product, List<Category>> productCategoryMap)
-    {
-        if (product != null && category != null)
+        public IEnumerator<Product> GetEnumerator()
         {
-            if (!productCategoryMap.ContainsKey(product))
+            return _products.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+
+        public void AddProduct(Product product)
+        {
+            try
             {
-                productCategoryMap[product] = new List<Category>();
-            }
-
-            productCategoryMap[product].Add(category);
-        }
-    }
-    */
-
-    
-    /*
-    public Dictionary<Product, List<Category>> GetProductCategoryAssociations()
-    {
-        var products = GetAllProducts();
-        var categories = GetAllCategories();
-        var productCategoryRelation = GetAllProductCategoryRelation();
-
-        var productCategoryMap = new Dictionary<Product, List<Category>>();
-
-        foreach (var relation in productCategoryRelation)
-        {
-            var product = products.FirstOrDefault(p => p.Id == relation.ProductId);
-            var category = FindCategory(categories, relation.CategoryId);
-
-            if (product != null && category != null)
-            {
-                if (!productCategoryMap.ContainsKey(product))
+                var products = GetAllProducts();
+                if (products.Any())
                 {
-                    productCategoryMap[product] = new List<Category>();
+                    product.Id = products.Max(p => p.Id) + 1;
                 }
-
-                productCategoryMap[product].Add(category);
+                else
+                {
+                    product.Id = 10;
+                }
+                products.Add(product);
+                SaveProducts(products);
+            }
+            catch (Exception ex)
+            {
+                throw new ProductServiceException("Error adding product.", ex);
             }
         }
 
-        return productCategoryMap;
+        public Product GetProductById(int productId)
+        {
+            try
+            {
+                var products = GetAllProducts();
+                return products.SingleOrDefault(p => p.Id == productId);
+            }
+            catch (Exception ex)
+            {
+                throw new ProductServiceException("Error retrieving product by ID.", ex);
+            }
+        }
+
+        public List<Product> GetAllProducts()
+        {
+            try
+            {
+                var productsJson = _fileService.ReadAllText(_productsFilePath);
+
+                List<Product> products = JsonConvert.DeserializeObject<List<Product>>(productsJson) ?? new List<Product>();
+                return products;
+            }
+            catch (Exception ex)
+            {
+                throw new ProductServiceException("Error getting all products.", ex);
+            }
+        }
+
+        public void UpdateProduct(Product updatedProduct)
+        {
+            try
+            {
+                var products = GetAllProducts();
+                System.Console.WriteLine(updatedProduct);
+                var existingProduct = products.FirstOrDefault(p => p.Id == updatedProduct.Id);
+                System.Console.WriteLine(existingProduct);
+                if (existingProduct != null)
+                {
+                    existingProduct.Name = updatedProduct.Name;
+                    existingProduct.Price = updatedProduct.Price;
+                    existingProduct.PictureUrl = updatedProduct.PictureUrl;
+                    existingProduct.Product_Discription = updatedProduct.Product_Discription;
+                    existingProduct.ReverseLookupOfCategoryIds = updatedProduct.ReverseLookupOfCategoryIds;
+
+                    _categoryService.UpdateAssociationOfCategoryWithProducts(existingProduct.Id, existingProduct.ReverseLookupOfCategoryIds);
+
+                    SaveProducts(products);
+                }
+                else
+                {
+                    throw new ProductServiceException($"Product with ID {updatedProduct.Id} not found for update.");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new ProductServiceException("Error updating product.", ex);
+            }
+        }
+
+        public void DeleteProduct(int productId)
+        {
+            try
+            {
+                var products = GetAllProducts();
+                var productToRemove = products.FirstOrDefault(p => p.Id == productId);
+
+                if (productToRemove != null)
+                {
+                    products.Remove(productToRemove);
+                    SaveProducts(products);
+                }
+                else
+                {
+                    throw new ProductServiceException($"Product with ID {productId} not found for deletion.");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new ProductServiceException("Error deleting product.", ex);
+            }
+        }
+
+        private void SaveProducts(List<Product> products)
+        {
+            try
+            {
+                var productsJson = JsonConvert.SerializeObject(products);
+                _fileService.WriteAllText(_productsFilePath, productsJson);
+            }
+            catch (Exception ex)
+            {
+                throw new ProductServiceException("Error saving products.", ex);
+            }
+        }
+
+        public void SaveProducts(Product product)
+        {
+            try
+            {
+                var products = GetAllProducts();
+                products.Add(product);
+                SaveProducts(products);
+            }
+            catch (Exception ex)
+            {
+                throw new ProductServiceException("Error saving product.", ex);
+            }
+        }
+
+        public IEnumerable<Product> GetProductsByCategory(int categoryId, int page, int pageSize)
+        {
+            try
+            {
+                var allProducts = GetAllProducts();
+                var productsInCategory = allProducts
+                    .Where(p => p.ReverseLookupOfCategoryIds == categoryId)
+                    .Skip((page - 1) * pageSize)
+                    .Take(pageSize);
+
+                return productsInCategory.ToList();
+            }
+            catch (Exception ex)
+            {
+                throw new ProductServiceException($"Error getting products by category ID {categoryId}.", ex);
+            }
+        }
+
+        public IEnumerable<Product> GetProductsByCategory(int categoryId)
+        {
+            try
+            {
+                var allProducts = GetAllProducts();
+                var productsInCategory = allProducts.Where(p => p.ReverseLookupOfCategoryIds == categoryId);
+                return productsInCategory.ToList();
+            }
+            catch (Exception ex)
+            {
+                throw new ProductServiceException($"Error getting products by category ID {categoryId}.", ex);
+            }
+        }
     }
-    */
 }
+
+
+/*public IEnumerable<Product> GetProductsByCategory(int categoryId, int page, int pageSize)
+   {
+       try
+       {
+           var allProducts = GetAllProducts();
+           var productsInCategory = allProducts
+               .Where(p => p.CategoryId == categoryId)
+               .Skip((page - 1) * pageSize)
+               .Take(pageSize);
+
+           return productsInCategory.ToList();
+       }
+       catch (Exception ex)
+       {
+           throw new ProductServiceException($"Error getting products by category ID {categoryId}.", ex);
+       }
+   }
+
+   public IEnumerable<Product> GetProductsByCategory(int categoryId)
+   {
+       try
+       {
+           var allProducts = GetAllProducts();
+           var productsInCategory = allProducts.Where(p => p.CategoryId == categoryId);
+           return productsInCategory.ToList();
+       }
+       catch (Exception ex)
+       {
+           throw new ProductServiceException($"Error getting products by category ID {categoryId}.", ex);
+       }
+   }
+*/
+
+
+//    public void UpdateProduct(Product updatedProduct)
+//    {
+//        try
+//        {
+//            var products = GetAllProducts();
+//            var existingProduct = products.FirstOrDefault(p => p.Id == updatedProduct.Id);
+
+//            if (existingProduct != null)
+//            {
+//                existingProduct.Name = updatedProduct.Name;
+//                existingProduct.Price= updatedProduct.Price;
+//                existingProduct.PictureUrl = updatedProduct.PictureUrl;
+//existingProduct.Product_Discription = updatedProduct.Product_Discription;
+
+//                _categoryService.UpdateCategoryForProduct(existingProduct, updatedProduct.CategoryId);
+
+//                SaveProducts(products);
+//            }
+//            else
+//            {
+//                throw new ProductServiceException($"Product with ID {updatedProduct.Id} not found for update.");
+//            }
+//        }
+//        catch (Exception ex)
+//        {
+//            throw new ProductServiceException("Error updating product.", ex);
+//        }
+//    }
+
+
+
+//public void UpdateProduct(Product updatedProduct)
+//{
+//    try
+//    {
+//        var products = GetAllProducts();
+//        var existingProduct = products.FirstOrDefault(p => p.Id == updatedProduct.Id);
+
+//        if (existingProduct != null)
+//        {
+//            existingProduct.Name = updatedProduct.Name;
+//            existingProduct.PictureUrl = updatedProduct.PictureUrl;
+//            SaveProducts(products);
+//        }
+//        else
+//        {
+//            throw new ProductServiceException($"Product with ID {updatedProduct.Id} not found for update.");
+//        }
+//    }
+//    catch (Exception ex)
+//    {
+//        throw new ProductServiceException("Error updating product.", ex);
+//    }
+//}

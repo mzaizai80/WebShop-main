@@ -4,12 +4,7 @@
     {
         public int Id { get; set; }
         public string Name { get; set; } = "";
-        public List<Category>? Subcategories { get; set; }
-
-
-        public Category()
-        {
-            Subcategories = new List<Category>();
-        }
+        public string Description { get; set; } = "";
+        public List<int>? AssociatedProductIds { get; set; }
     }
 }

@@ -1,26 +1,32 @@
 ﻿using WebShop.Models;
-using WebShopTests;
 
 
 namespace WebShop.Services
 {
     public class Services : IService
     {
-        private readonly ProductService _productService;
+        private readonly IProductService _productService;
+        private readonly ICategoryService _categoryService;
 
-        public Services(ProductService productService)
+        public Services(IProductService productService, ICategoryService categoryService)
         {
-            _productService= productService;
+            _productService = productService ?? throw new ArgumentNullException(nameof(productService));
+            _categoryService = categoryService ?? throw new ArgumentNullException(nameof(categoryService));
         }
 
-        public IEnumerable<Product> GetAllProducts()
+        IEnumerable<Product> IService.GetAllProducts()
         {
             return _productService.GetAllProducts();
         }
 
-        public IEnumerable<Category> GetAllCategories()
+        IEnumerable<Category> IService.GetAllCategories()
         {
-            return _productService.GetAllCategories();
+            return _categoryService.GetAllCategories();
+        }
+
+        IEnumerable<Product> IService.GetProductsByCategory(int categoryId)
+        {
+            return _productService.GetProductsByCategory(categoryId);
         }
     }
 }

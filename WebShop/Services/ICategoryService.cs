@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using WebShop.Models;
+﻿using WebShop.Models;
 
 namespace WebShop.Services
 {
@@ -10,5 +9,12 @@ namespace WebShop.Services
         void DeleteCategory(int categoryId);
         List<Category> GetAllCategories();
         void SaveCategories(List<Category> categories);
+        Category GetCategoryById(int categoryId);
+        Category GetCategoryById(List<Category> categories, int categoryId); 
+        void UpdateAssociationOfCategoryWithProducts(int categoryId, int updatedProductId);
     }
 }
+
+
+        //void UpdateCategoryForProduct(Product existingProduct, List<int> categoryIds);
+        //void UpdateCategoryForProduct(Product existingProduct, int categoryId);

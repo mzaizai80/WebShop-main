@@ -1,27 +1,59 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using WebShop.Services;
+using WebShop.ViewModels;
 
-namespace WebShopTests
+namespace WebShop
 {
-    //[Route("[controller]")]
-
     public class HomeController : Controller
     {
-        private readonly IService _service;
+        protected readonly ILogger<HomeController> _logger;
+        protected readonly IService _service;
+        protected readonly IProductService _productService;
+        protected readonly ICategoryService _categoryService;
 
-        public HomeController(IService service)
+        public HomeController(
+            ILogger<HomeController> logger,
+            IService service,
+            IProductService productService,
+            ICategoryService categoryService
+             )
         {
+            _logger = logger;
             _service = service;
-        } 
-        
-        //[Route("[action]")]
+            _productService = productService;
+            _categoryService = categoryService;
+        }
 
+        [HttpGet]
         public IActionResult Index()
         {
+            var categories = _service.GetAllCategories();
             var products = _service.GetAllProducts();
-            return View("Index",products);
-            //return View("/Views/Home/Index.cshtml", products);
-            //return View("/Pages/Product/Index.cshtml", products);
+
+            var homeViewModel = new HomeViewModel
+            {
+                Categories = categories,
+                Products = products
+            };
+
+            return View(homeViewModel);
         }
+
+
+        [HttpGet]
+        public IActionResult ProductsByCategory(int categoryId)
+        {
+            var products = _service.GetProductsByCategory(categoryId);
+            var categories = _service.GetAllCategories();
+
+            var homeViewModel = new HomeViewModel
+            {
+                Products = products,
+                Categories = categories
+            };
+
+            return View(homeViewModel);
+        }
+
     }
 }

@@ -1,0 +1,203 @@
+﻿@model WebShop.ViewModels.HomeViewModel
+
+<h2>Edit Product</h2>
+
+<form asp-action="Edit" method="post" >
+
+    @if (Model.Products != null && Model.Products.Any())
+    {
+        var product = Model.Products.First();
+
+        <div class="form-group">
+            <input type="hidden" asp-for="Products.First().Id" />
+            <label asp-for="Products.First().Name"></label>
+            <input asp-for="Products.First().Name" class="form-control" />
+            <span asp-validation-for="Products.First().Name" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Products.First().Price"></label>
+            <input asp-for="Products.First().Price" class="form-control" />
+            <span asp-validation-for="Products.First().Price" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Products.First().PictureUrl"></label>
+            <input asp-for="Products.First().PictureUrl" class="form-control" />
+            <span asp-validation-for="Products.First().PictureUrl" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Products.First().Product_Discription"></label>
+            <textarea asp-for="Products.First().Product_Discription" class="form-control"></textarea>
+            <span asp-validation-for="Products.First().Product_Discription" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Products.First().ReverseLookupOfCategoryIds"></label>
+            <select asp-for="Products.First().ReverseLookupOfCategoryIds"
+                    asp-items="@(new SelectList(Model.Categories, "Id", "Name", product.ReverseLookupOfCategoryIds))"
+                    class="form-control">
+                <option value="">Select a Category</option>
+            </select>
+            <span asp-validation-for="Products.First().ReverseLookupOfCategoryIds" class="text-danger"></span>
+        </div>
+        <br />
+    }
+
+    <button type="submit" class="btn btn-primary">Save</button>
+</form>
+
+
+
+
+
+
+@* @model WebShop.ViewModels.HomeViewModel
+
+<h2>Edit Product</h2>
+
+<form asp-action="Edit" method="post">
+    <div>
+        @if (Model.Products != null && Model.Products.Any())
+        {
+            var product = Model.Products.First();
+
+            <div class="form-group">
+                <input type="hidden" asp-for="Products.First().Id" />
+
+                <label asp-for="Products.First().Name"></label>
+                <input asp-for="Products.First().Name" class="form-control" />
+                <span asp-validation-for="Products.First().Name" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Products.First().Price"></label>
+                <input asp-for="Products.First().Price" class="form-control" />
+                <span asp-validation-for="Products.First().Price" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Products.First().PictureUrl"></label>
+                <input asp-for="Products.First().PictureUrl" class="form-control" />
+                <span asp-validation-for="Products.First().PictureUrl" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Products.First().Product_Discription"></label>
+                <textarea asp-for="Products.First().Product_Discription" class="form-control"></textarea>
+                <span asp-validation-for="Products.First().Product_Discription" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Products.First().ReverseLookupOfCategoryIds"></label>
+                <select asp-for="Products.First().ReverseLookupOfCategoryIds" asp-items="@(new SelectList(ViewBag.Categories, "Id", "Name", product.ReverseLookupOfCategoryIds))" class="form-control">
+                    <option value="">Select a Category</option>
+                </select>
+                <span asp-validation-for="Products.First().ReverseLookupOfCategoryIds" class="text-danger"></span>
+            </div>
+            <br/>
+        }
+    </div>
+    <button type="submit" class="btn btn-primary">Save</button>
+</form>
+
+
+ *@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@* @model WebShop.ViewModels.HomeViewModel
+
+<h2>Edit Product</h2>
+
+<form asp-action="Edit" method="post">
+    <div>
+        @if (Model.Products != null && Model.Products.Any())
+        {
+            <div class="form-group">
+                <input type="hidden" asp-for="Products[0].Id" />
+
+                <label asp-for="Products[0].Name"></label>
+                <input asp-for="Products[0].Name" class="form-control" />
+                <span asp-validation-for="Products[0].Name" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Products[0].Price"></label>
+                <input asp-for="Products[0].Price" class="form-control" />
+                <span asp-validation-for="Products[0].Price" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Products[0].PictureUrl"></label>
+                <input asp-for="Products[0].PictureUrl" class="form-control" />
+                <span asp-validation-for="Products[0].PictureUrl" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Products[0].CategoryId"></label>
+                <select asp-for="Products[0].CategoryId" asp-items="@(ViewBag.Categories)" class="form-control">
+                    <option value="">Select a Category</option>
+                </select>
+                <span asp-validation-for="Products[0].CategoryId" class="text-danger"></span>
+            </div>
+        }
+    </div>
+    <button type="submit" class="btn btn-primary">Save</button>
+</form>
+ *@
+
+
+
+
+
+
+@*
+@model WebShop.Models.Product
+
+<h2>Edit Product</h2>
+
+<form asp-action="Edit" method="post">
+    <div class="form-group">
+        <input type="hidden" asp-for="Id" />
+
+        <label asp-for="Name"></label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Price"></label>
+        <input asp-for="Price" class="form-control" />
+        <span asp-validation-for="Price" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="PictureUrl"></label>
+        <input asp-for="PictureUrl" class="form-control" />
+        <span asp-validation-for="PictureUrl" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="CategoryId"></label>
+        <select asp-for="CategoryId" asp-items="@(ViewBag.Categories)" class="form-control">
+            <option value="">Select a Category</option>
+        </select>
+        <span asp-validation-for="CategoryId" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save</button>
+</form>
+*@

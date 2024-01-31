@@ -1,40 +1,50 @@
-@using WebShop.Models
-@model IEnumerable<Product>
+﻿@model WebShop.ViewModels.HomeViewModel;
 
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Product List</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-</head>
-<body>
-
-    <div class="container mt-5">
-        <h1>Product List</h1>
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Price</th>
-                    <th>Categories</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var product in Model)
-                {
-                    <tr>
-                        <td>@product.Id</td>
-                        <td>@product.Name</td>
-                        <td>@product.Price</td>
-                    </tr>
-                }
-            </tbody>
-        </table>
+<div class="container">
+    <div>
+        <h1 style="margin-top:5px">Welcome to Our Web Shop</h1>
+        <p>
+            Thank you for visiting our online store. Explore our wide range of products and find the perfect items for
+            you.
+            Whether you are looking for the latest gadgets, fashionable clothing, or accessories, we have something for
+            everyone.
+        </p>
+        <p>
+            Enjoy a seamless shopping experience and discover the best deals on quality products. Happy shopping!
+        </p>
     </div>
+    <div class="container mt-5">
+        @foreach (var category in Model.Categories)
+        {
+            <div class="" style="margin: 2rem;">
+                <h2>@category.Name</h2>
 
-</body>
-</html>
+                <div class="row mt-4">
+                    @foreach (var product in Model.Products)
+                    {
+                        if (product != null)
+                        {
+                            <div class="col-md-4 mt-4">
+                                <div class="card">
+                                    <img src="@product.PictureUrl" class="card-img-top" alt="Product Image">
+                                    <div class="card-body">
+                                        <h5 class="card-title">@product.Name</h5>
+                                        <p class="card-text">Price: $@product.Price</p>
+                                        <br />
+                                        <p class="card-text">Description: @product.Product_Discription</p>
+                                        <br />
+                                        <a asp-area="" asp-controller="Product" asp-action="Details"
+                                           asp-route-id="@product.Id">View Details</a>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+        }
+    </div>
+</div>
 
 
 
@@ -52,30 +62,57 @@
 
 
 
-@*
-@foreach (var product in Model)
-{
-    // Access the 'Categories' property on each product
-    foreach (var category in product.Categories)
-    {
-        // Display category information
-        <p>@category.Name</p>
-    }
+
+
+
+
+
+
+
+@* @{
+    ViewData["Title"] = "Welcome to Our Web Shop";
 }
+@model WebShop.ViewModels.HomeViewModel;
 
+<div class="container">
+    <div>
+        <h1 style="margin-top:5px">Welcome to Our Web Shop</h1>
+        <p>
+            Thank you for visiting our online store. Explore our wide range of products and find the perfect items for
+            you.
+            Whether you are looking for the latest gadgets, fashionable clothing, or accessories, we have something for
+            everyone.
+        </p>
+        <p>
+            Enjoy a seamless shopping experience and discover the best deals on quality products. Happy shopping!
+        </p>
+    </div>
+    <div class="container mt-5">
+        @foreach (var category in Model.Categories)
+        {
+            <div class="" style="margin: 2rem;">
+                <h2>@category.Name</h2>
 
-
-
-    @model List<Product>
-
-<h2>Products</h2>
-
-<ul>
-    @foreach (var product in Model)
-    {
-        <li>@product.Name - $@product.Price</li>
-    }
-</ul>
-
-
+                <div class="row mt-4">
+                    @foreach (var product in Model.Products.Where(p => p.ReverseLookupOfCategoryIds==category.Id))
+                    {
+                        <div class="col-md-4 mt-4">
+                            <div class="card">
+                                <img src="@product.PictureUrl" class="card-img-top" alt="Product Image">
+                                <div class="card-body">
+                                    <h5 class="card-title">@product.Name</h5>
+                                    <p class="card-text">Price: $@product.Price</p>
+                                    <br />
+                                    <p class="card-text">Description: @product.Product_Discription</p>
+                                    <br />
+                                    <a asp-area="" asp-controller="Product" asp-action="Details" asp-route-id="@product.Id">View Details</a>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+    </div>
+</div>
  *@
