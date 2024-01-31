@@ -9,12 +9,12 @@ namespace WebShopTests
     //[TestFixture]
     //public class DependencyInjectionTests
     //{
-    //       private Mock<IOptions<ProductServiceOptions>> optionsMock;
+    //       private Mock<IOptions<WebShopFileServiceOptions>> optionsMock;
         
     //       [SetUp]
     //    public void Setup()
     //    {
-    //        optionsMock = new Mock<IOptions<ProductServiceOptions>>();
+    //        optionsMock = new Mock<IOptions<WebShopFileServiceOptions>>();
         
     //    }
 
@@ -25,7 +25,7 @@ namespace WebShopTests
     //        var services = new ServiceCollection();
 
     //        // Create options for ProductService
-    //        var productServiceOptions = Options.Create(new ProductServiceOptions
+    //        var productServiceOptions = Options.Create(new WebShopFileServiceOptions
     //        {
     //            ProductsFilePath = "test_data/products_test.json",
     //            CategoriesFilePath = "test_data/categories.json",
@@ -34,7 +34,7 @@ namespace WebShopTests
 
     //        // Act
     //        services.AddSingleton<IFileService, FileService>();
-    //        services.AddSingleton<IOptions<ProductServiceOptions>>(productServiceOptions);
+    //        services.AddSingleton<IOptions<WebShopFileServiceOptions>>(productServiceOptions);
     //        services.AddScoped<IProductCategoryRelationService, ProductCategoryRelationService>();
     //        services.AddScoped<ICategoryService, CategoryService>();
     //        services.AddTransient<ProductService>();

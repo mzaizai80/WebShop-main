@@ -14,7 +14,8 @@ namespace WebShop.Services
         private readonly string _categoriesFilePath;
         private readonly List<Category> _categories;
 
-        public CategoryService(IFileService fileService,   IOptions<ProductServiceOptions> options, List<Category> categories)
+        public CategoryService(IFileService fileService, IOptions<WebShopFileServiceOptions> options,
+            List<Category> categories)
         {
             _fileService = fileService ?? throw new ArgumentNullException(nameof(fileService));
             _categories = categories;
@@ -43,8 +44,8 @@ namespace WebShop.Services
             try
             {
                 var categoriesJson = _fileService.ReadAllText(_categoriesFilePath);
-                List<Category> categories = JsonConvert.DeserializeObject<List<Category>>(categoriesJson) ?? new List<Category>();
-                Console.WriteLine(categories);
+                List<Category> categories = JsonConvert.DeserializeObject<List<Category>>(categoriesJson) ??
+                                            new List<Category>();
                 return categories;
             }
             catch (Exception ex)
@@ -72,17 +73,31 @@ namespace WebShop.Services
             }
         }
 
+
         public void UpdateCategory(Category updatedCategory)
         {
+            if (updatedCategory == null)
+            {
+                throw new ArgumentNullException(nameof(updatedCategory));
+            }
+
             var categories = GetAllCategories();
-            var existingCategory = GetCategoryById(updatedCategory.Id);
+            var existingCategory = GetCategoryById(categories, updatedCategory.Id);
 
             if (existingCategory != null)
             {
                 existingCategory.Name = updatedCategory.Name;
+                existingCategory.Description = updatedCategory.Description;
+                existingCategory.AssociatedProductIds = updatedCategory.AssociatedProductIds;
+
                 SaveCategories(categories);
             }
+            else
+            {
+                throw new CategoryServiceException($"Category with ID {updatedCategory.Id} not found.");
+            }
         }
+
 
         public Category GetCategoryById(int categoryId)
         {
@@ -102,5 +117,104 @@ namespace WebShop.Services
 
             return null;
         }
+
+        public void UpdateAssociationOfCategoryWithProducts(int  updatedProductId, int categoryId)
+        {
+            if (updatedProductId == null)
+            {
+                throw new ArgumentNullException(nameof(updatedProductId));
+            }
+
+            var categories = GetAllCategories();
+            var existingCategory = GetCategoryById(categories, categoryId);
+
+            if (existingCategory != null)
+            {
+                SaveCategories(categories);
+            }
+            else
+            {
+                throw new CategoryServiceException($"Category with ID {categoryId} not found.");
+            }
+        }
     }
 }
+
+
+//public void UpdateReverseLookUpCategoryForProduct(Product existingProduct, int categoryId)
+        //public void UpdateCategoryForProduct(Product existingProduct, List<int> ListOfProductIdsIncategory)
+        //{
+        //    try
+        //    {
+        //        if (existingProduct == null)
+        //        {
+        //            throw new ArgumentNullException(nameof(existingProduct));
+        //        }
+
+        //        // Remove the product from the old categories
+        //        foreach (var oldCategoryId in existingProduct.ReverseLookupOfCategoryIds)
+        //        {
+        //            var oldCategory = GetCategoryById(oldCategoryId);
+        //            oldCategory?.AssociatedProductIds?.Remove(existingProduct.Id);
+        //            UpdateCategory(oldCategory);
+        //        }
+
+        //        // Add the product to the new categories
+        //        foreach (var newProductIdsIncategory in ListOfProductIdsIncategory)
+        //        {
+        //            var newCategory = GetCategoryById(newProductIdsIncategory);
+        //            if (newCategory != null)
+        //            {
+        //                if (newCategory.AssociatedProductIds == null)
+        //                {
+        //                    newCategory.AssociatedProductIds = new List<int>();
+        //                }
+
+        //                newCategory.AssociatedProductIds.Add(existingProduct.Id);
+        //                UpdateCategory(newCategory);
+        //            }
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw new CategoryServiceException($"Error updating category for product. {ex.Message}", ex);
+        //    }
+        //}
+
+
+
+
+
+
+
+
+
+//public void UpdateCategoryForProduct(Product existingProduct, int categoryId)
+//{
+//    if (existingProduct == null)
+//    {
+//        throw new ArgumentNullException(nameof(existingProduct));
+//    }
+
+//    var oldCategory = GetCategoryById(existingProduct.CategoryId);
+//    if (oldCategory != null)
+//    {
+//        oldCategory.ReverseLookutOfCategoryIds?.Remove(existingProduct.Id);
+//        UpdateCategory(oldCategory);
+//    }
+
+//    if (!categoryId.Equals(null) )
+//    {
+//        var newCategory = GetCategoryById(categoryId);
+//        if (newCategory != null)
+//        {
+//            if (newCategory.ReverseLookutOfCategoryIds == null)
+//            {
+//                newCategory.ReverseLookutOfCategoryIds = new List<int>();
+//            }
+
+//            newCategory.ReverseLookutOfCategoryIds.Add(existingProduct.Id);
+//            UpdateCategory(newCategory);
+//        }
+//    }
+//}

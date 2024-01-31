@@ -2,7 +2,7 @@
 
 namespace WebShopTests
 {
-    internal class ProductTests
+    public class ProductTests
     {
         [SetUp]
         public void Setup()

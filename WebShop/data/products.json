@@ -4,223 +4,231 @@
     "Name": "Laptop",
     "Price": 899.99,
     "PictureUrl": "/images/laptop.jpg",
-    "CategoryId": 12,
-    "Description": "High-performance laptop for work and entertainment."
+    "Product_Discription": "",
+    "ReverseLookupOfCategoryIds": 12
   },
   {
     "Id": 2,
     "Name": "Smartphone",
     "Price": 599.99,
     "PictureUrl": "/images/smartphone.jpg",
-    "CategoryId": 11,
-    "Description": "Feature-packed smartphone with a sleek design."
+    "Product_Discription": "",
+    "ReverseLookupOfCategoryIds": 11
   },
   {
     "Id": 3,
     "Name": "Headphones",
     "Price": 99.99,
     "PictureUrl": "/images/headphones.jpg",
-    "CategoryId": 13,
-    "Description": "Quality headphones for immersive audio experiences."
+    "Product_Discription": "",
+    "ReverseLookupOfCategoryIds": 13
   },
   {
     "Id": 4,
     "Name": "Camera",
     "Price": 499.99,
     "PictureUrl": "/images/camera.jpg",
-    "CategoryId": 13,
-    "Description": "Advanced camera for capturing memorable moments."
+    "Product_Discription": "",
+    "ReverseLookupOfCategoryIds": 13
   },
   {
     "Id": 5,
     "Name": "Running Shoes",
     "Price": 79.99,
     "PictureUrl": "/images/shoes.jpg",
-    "CategoryId": 15,
-    "Description": "Comfortable running shoes for an active lifestyle."
+    "Product_Discription": "",
+    "ReverseLookupOfCategoryIds": 15
   },
   {
     "Id": 6,
     "Name": "Backpack",
     "Price": 39.99,
     "PictureUrl": "/images/backpack.jpg",
-    "CategoryId": 15,
-    "Description": "Durable and spacious backpack for daily use."
+    "Product_Discription": "",
+    "ReverseLookupOfCategoryIds": 15
   },
   {
     "Id": 7,
     "Name": "Desktop PC",
     "Price": 1299.99,
     "PictureUrl": "/images/desktop.jpg",
-    "CategoryId": 12,
-    "Description": "Powerful desktop PC for multitasking and gaming."
+    "Product_Discription": "",
+    "ReverseLookupOfCategoryIds": 12
   },
   {
     "Id": 8,
     "Name": "Gaming Console",
     "Price": 399.99,
     "PictureUrl": "/images/console.jpg",
-    "CategoryId": 12,
-    "Description": "Gaming console for an immersive gaming experience."
+    "Product_Discription": "",
+    "ReverseLookupOfCategoryIds": 12
   },
   {
     "Id": 9,
     "Name": "Fitness Tracker",
     "Price": 49.99,
     "PictureUrl": "/images/FitnessTracker.jpg",
-    "CategoryId": 13,
-    "Description": "Fitness tracker to monitor your health and activities."
+    "Product_Discription": "",
+    "ReverseLookupOfCategoryIds": 13
   },
   {
     "Id": 10,
     "Name": "Coffee Maker",
     "Price": 79.99,
     "PictureUrl": "/images/coffee-maker.jpg",
-    "CategoryId": 20,
-    "Description": "Coffee maker for brewing your favorite beverages."
+    "Product_Discription": "",
+    "ReverseLookupOfCategoryIds": 16
   },
   {
     "Id": 101,
     "Name": "Gaming Laptop",
     "Price": 1499.99,
     "PictureUrl": "gaming_laptop.jpg",
-    "CategoryId": 12,
-    "Description": "High-performance gaming laptop with advanced graphics and processing capabilities."
+    "Product_Discription": "",
+    "ReverseLookupOfCategoryIds": 12
   },
   {
     "Id": 102,
     "Name": "Android Smartphone",
     "Price": 699.99,
     "PictureUrl": "android_smartphone.jpg",
-    "CategoryId": 11,
-    "Description": "Feature-packed Android smartphone with a sleek design and powerful specifications."
+    "Product_Discription": "",
+    "ReverseLookupOfCategoryIds": 11
   },
   {
     "Id": 103,
     "Name": "Wireless Headphones",
     "Price": 129.99,
     "PictureUrl": "wireless_headphones.jpg",
-    "CategoryId": 13,
-    "Description": "Premium wireless headphones providing high-quality audio and comfortable fit."
+    "Product_Discription": "",
+    "ReverseLookupOfCategoryIds": 13
   },
   {
     "Id": 201,
     "Name": "Ultra-thin Laptop",
     "Price": 1199.99,
     "PictureUrl": "ultra_thin_laptop.jpg",
-    "CategoryId": 12,
-    "Description": "Ultra-thin and lightweight laptop for professionals and students seeking portability."
+    "Product_Discription": "",
+    "ReverseLookupOfCategoryIds": 12
   },
   {
     "Id": 202,
     "Name": "Business Laptop",
     "Price": 999.99,
     "PictureUrl": "business_laptop.jpg",
-    "CategoryId": 12,
-    "Description": "Powerful business laptop with robust security features and business-oriented functionalities."
+    "Product_Discription": "",
+    "ReverseLookupOfCategoryIds": 12
   },
   {
     "Id": 203,
     "Name": "Convertible Laptop",
     "Price": 1299.99,
     "PictureUrl": "convertible_laptop.jpg",
-    "CategoryId": 12,
-    "Description": "Versatile convertible laptop with a 360-degree hinge for multiple usage modes."
+    "Product_Discription": "",
+    "ReverseLookupOfCategoryIds": 12
   },
   {
     "Id": 301,
     "Name": "iOS Smartphone",
     "Price": 899.99,
     "PictureUrl": "ios_smartphone.jpg",
-    "CategoryId": 11,
-    "Description": "Sleek and stylish iOS smartphone with a user-friendly interface and top-notch camera."
+    "Product_Discription": "",
+    "ReverseLookupOfCategoryIds": 11
   },
   {
     "Id": 302,
     "Name": "Flagship Android Phone",
     "Price": 799.99,
     "PictureUrl": "flagship_android_phone.jpg",
-    "CategoryId": 11,
-    "Description": "Flagship Android phone with cutting-edge features and a premium build."
+    "Product_Discription": "",
+    "ReverseLookupOfCategoryIds": 11
   },
   {
     "Id": 303,
     "Name": "Budget Smartphone",
     "Price": 399.99,
     "PictureUrl": "budget_smartphone.jpg",
-    "CategoryId": 11,
-    "Description": "Budget-friendly smartphone with essential features and reliable performance."
+    "Product_Discription": "",
+    "ReverseLookupOfCategoryIds": 11
   },
   {
     "Id": 501,
     "Name": "Over-ear Headphones",
     "Price": 149.99,
     "PictureUrl": "over_ear_headphones.jpg",
-    "CategoryId": 13,
-    "Description": "High-quality over-ear headphones for immersive audio experiences and noise isolation."
+    "Product_Discription": "",
+    "ReverseLookupOfCategoryIds": 13
   },
   {
     "Id": 502,
     "Name": "Noise-Canceling Headphones",
     "Price": 199.99,
     "PictureUrl": "noise_canceling_headphones.jpg",
-    "CategoryId": 13,
-    "Description": "Advanced noise-canceling headphones offering a peaceful and focused listening environment."
+    "Product_Discription": "",
+    "ReverseLookupOfCategoryIds": 13
   },
   {
     "Id": 503,
     "Name": "Sports Earphones",
     "Price": 79.99,
     "PictureUrl": "sports_earphones.jpg",
-    "CategoryId": 13,
-    "Description": "Sports earphones designed for an active lifestyle, providing comfort and secure fit."
+    "Product_Discription": "",
+    "ReverseLookupOfCategoryIds": 13
   },
   {
     "Id": 701,
     "Name": "Casual Shirt",
     "Price": 39.99,
     "PictureUrl": "casual_shirt.jpg",
-    "CategoryId": 14,
-    "Description": "Casual and comfortable shirt suitable for various occasions and everyday wear."
+    "Product_Discription": "",
+    "ReverseLookupOfCategoryIds": 13
   },
   {
     "Id": 702,
     "Name": "Leather Jacket",
     "Price": 149.99,
     "PictureUrl": "leather_jacket.jpg",
-    "CategoryId": 14,
-    "Description": "Stylish leather jacket for a fashionable and edgy look, perfect for colder seasons."
+    "Product_Discription": "",
+    "ReverseLookupOfCategoryIds": 14
   },
   {
     "Id": 703,
     "Name": "Jeans",
     "Price": 59.99,
     "PictureUrl": "jeans.jpg",
-    "CategoryId": 14,
-    "Description": "Classic pair of jeans for a timeless and versatile wardrobe staple."
+    "Product_Discription": "",
+    "ReverseLookupOfCategoryIds": 14
   },
   {
     "Id": 801,
-    "Name": "Sundress",
-    "Price": 79.99,
-    "PictureUrl": "sundress.jpg",
-    "CategoryId": 14,
-    "Description": "Light and breezy sundress, ideal for warm weather and casual outings."
+    "Name": "Gaming PC",
+    "Price": 1799.99,
+    "PictureUrl": "gaming_pc.jpg",
+    "Product_Discription": "",
+    "ReverseLookupOfCategoryIds": 12
   },
   {
     "Id": 802,
-    "Name": "Winter Coat",
-    "Price": 199.99,
-    "PictureUrl": "winter_coat.jpg",
-    "CategoryId": 14,
-    "Description": "Warm and stylish winter coat to keep you cozy during cold seasons."
+    "Name": "Gaming Laptop",
+    "Price": 1499.99,
+    "PictureUrl": "gaming_laptop.jpg",
+    "Product_Discription": "",
+    "ReverseLookupOfCategoryIds": 12
   },
   {
     "Id": 803,
-    "Name": "High Heels",
-    "Price": 89.99,
-    "PictureUrl": "high_heels.jpg",
-    "CategoryId": 14,
-    "Description": "Elegant high heels to complement your stylish look on special occasions."
+    "Name": "Gaming Console",
+    "Price": 399.99,
+    "PictureUrl": "gaming_console.jpg",
+    "Product_Discription": "",
+    "ReverseLookupOfCategoryIds": 12
+  },
+  {
+    "Id": 804,
+    "Name": "asdfasdfasdfasdfasdfadsfas",
+    "Price": 21546541651.0,
+    "PictureUrl": "Camera.jpg",
+    "Product_Discription": "",
+    "ReverseLookupOfCategoryIds": 25
   }
 ]

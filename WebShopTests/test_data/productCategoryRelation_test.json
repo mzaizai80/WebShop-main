@@ -1,0 +1,14 @@
+[
+  {
+    "ProductId": 1,
+    "CategoryId": 2
+  },
+  {
+    "ProductId": 2,
+    "CategoryId": 3
+  },
+  {
+    "ProductId": 3,
+    "CategoryId": 5
+  }
+]

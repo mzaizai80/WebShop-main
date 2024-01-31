@@ -10,6 +10,11 @@ namespace WebShop.Services
         List<Category> GetAllCategories();
         void SaveCategories(List<Category> categories);
         Category GetCategoryById(int categoryId);
-        Category GetCategoryById(List<Category> categories, int categoryId);
+        Category GetCategoryById(List<Category> categories, int categoryId); 
+        void UpdateAssociationOfCategoryWithProducts(int categoryId, int updatedProductId);
     }
 }
+
+
+        //void UpdateCategoryForProduct(Product existingProduct, List<int> categoryIds);
+        //void UpdateCategoryForProduct(Product existingProduct, int categoryId);

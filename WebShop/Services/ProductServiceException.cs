@@ -1,7 +1,7 @@
 ﻿using System.Runtime.Serialization;
 
 [Serializable]
-internal class ProductServiceException : Exception
+public class ProductServiceException : Exception
 {
     public ProductServiceException()
     {
@@ -15,7 +15,7 @@ internal class ProductServiceException : Exception
     {
     }
 
-    protected ProductServiceException(SerializationInfo info, StreamingContext context) : base(info, context)
+    public ProductServiceException(SerializationInfo info, StreamingContext context) : base(info, context)
     {
     }
 }
