@@ -1,75 +1,4 @@
-﻿@model WebShop.ViewModels.HomeViewModel;
-
-<div class="container">
-    <div>
-        <h1 style="margin-top:5px">Welcome to Our Web Shop</h1>
-        <p>
-            Thank you for visiting our online store. Explore our wide range of products and find the perfect items for
-            you.
-            Whether you are looking for the latest gadgets, fashionable clothing, or accessories, we have something for
-            everyone.
-        </p>
-        <p>
-            Enjoy a seamless shopping experience and discover the best deals on quality products. Happy shopping!
-        </p>
-    </div>
-    <div class="container mt-5">
-        @foreach (var category in Model.Categories)
-        {
-            <div class="" style="margin: 2rem;">
-                <h2>@category.Name</h2>
-
-                <div class="row mt-4">
-                    @foreach (var product in Model.Products)
-                    {
-                        if (product != null)
-                        {
-                            <div class="col-md-4 mt-4">
-                                <div class="card">
-                                    <img src="@product.PictureUrl" class="card-img-top" alt="Product Image">
-                                    <div class="card-body">
-                                        <h5 class="card-title">@product.Name</h5>
-                                        <p class="card-text">Price: $@product.Price</p>
-                                        <br />
-                                        <p class="card-text">Description: @product.Product_Discription</p>
-                                        <br />
-                                        <a asp-area="" asp-controller="Product" asp-action="Details"
-                                           asp-route-id="@product.Id">View Details</a>
-                                    </div>
-                                </div>
-                            </div>
-                        }
-                    }
-                </div>
-            </div>
-        }
-    </div>
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-@* @{
+﻿@{
     ViewData["Title"] = "Welcome to Our Web Shop";
 }
 @model WebShop.ViewModels.HomeViewModel;
@@ -91,19 +20,20 @@
         @foreach (var category in Model.Categories)
         {
             <div class="" style="margin: 2rem;">
-                <h2>@category.Name</h2>
-
+                <a asp-area="" asp-controller="Category" asp-action="Details" asp-route-id="@category.Id">
+                    <h2>@category.Name</h2>
+                </a>
                 <div class="row mt-4">
-                    @foreach (var product in Model.Products.Where(p => p.ReverseLookupOfCategoryIds==category.Id))
+                    @foreach (var product in Model.Products.Where(p => p.CategoryId == category.Id))
                     {
                         <div class="col-md-4 mt-4">
-                            <div class="card">
-                                <img src="@product.PictureUrl" class="card-img-top" alt="Product Image">
+                            <div class="card" style="max-height: 400px">
+                                <img src="@product.PictureUrl" class="card-img-top" alt="Product Image" style="max-height: 200px;">
                                 <div class="card-body">
-                                    <h5 class="card-title">@product.Name</h5>
-                                    <p class="card-text">Price: $@product.Price</p>
+                                    <h5 class="card-title text-truncate overflow-hidden">@product.Name</h5>
+                                    <p class="card-title text-truncate">Price: $@product.Price</p>
                                     <br />
-                                    <p class="card-text">Description: @product.Product_Discription</p>
+                                    <p class="card-title text-truncate overflow-hidden">Description: @product.Description</p>
                                     <br />
                                     <a asp-area="" asp-controller="Product" asp-action="Details" asp-route-id="@product.Id">View Details</a>
                                 </div>
@@ -115,4 +45,3 @@
         }
     </div>
 </div>
- *@

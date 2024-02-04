@@ -27,8 +27,8 @@ namespace WebShop
         [HttpGet]
         public IActionResult Index()
         {
-            var categories = _service.GetAllCategories();
-            var products = _service.GetAllProducts();
+            var categories = _service.GetAllCategories().ToList();
+            var products = _service.GetAllProducts().ToList();
 
             var homeViewModel = new HomeViewModel
             {
@@ -36,15 +36,14 @@ namespace WebShop
                 Products = products
             };
 
-            return View(homeViewModel);
+            return View("Index", homeViewModel);
         }
 
-
-        [HttpGet]
+        [HttpGet("ProductsByCategory")]
         public IActionResult ProductsByCategory(int categoryId)
         {
-            var products = _service.GetProductsByCategory(categoryId);
-            var categories = _service.GetAllCategories();
+            var products = _service.GetProductsByCategory(categoryId).ToList();
+            var categories = _service.GetAllCategories().ToList();
 
             var homeViewModel = new HomeViewModel
             {
@@ -52,8 +51,7 @@ namespace WebShop
                 Categories = categories
             };
 
-            return View(homeViewModel);
+            return View("ProductsByCategory", homeViewModel);
         }
-
     }
 }

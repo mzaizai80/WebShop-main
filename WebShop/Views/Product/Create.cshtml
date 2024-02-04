@@ -1,33 +1,66 @@
-﻿@model WebShop.Models.Product
+﻿@model WebShop.ViewModels.HomeViewModel
 
-<h2>Create Product</h2>
+<h2>Create Products</h2>
 
 <form asp-action="Create" method="post">
-    <div class="form-group">
-        <label asp-for="Name"></label>
-        <input asp-for="Name" class="form-control" />
-        <span asp-validation-for="Name" class="text-danger"></span>
+    @if (Model.Products != null && Model.Products.Any())
+    {
+        <input type="hidden" asp-for="Products.FirstOrDefault().Id" />
+
+        <div class="form-group">
+            <label asp-for="Products.FirstOrDefault().Name"></label>
+            <input asp-for="Products.FirstOrDefault().Name" class="form-control" />
+            <span asp-validation-for="Products.FirstOrDefault().Name" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Products.FirstOrDefault().Price">Price</label>
+            <input asp-for="Products.FirstOrDefault().Price" class="form-control" />
+            <span asp-validation-for="Products.FirstOrDefault().Price" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Products.FirstOrDefault().PictureUrl">Product Image</label>
+            <input asp-for="Products.FirstOrDefault().PictureUrl" class="form-control" />
+            <span asp-validation-for="Products.FirstOrDefault().PictureUrl" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Products.FirstOrDefault().Description">Product Description</label>
+            <input asp-for="Products.FirstOrDefault().Description" class="form-control" />
+            <span asp-validation-for="Products.FirstOrDefault().Description" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Products.FirstOrDefault().CategoryId">Category</label>
+            <select asp-for="Products.FirstOrDefault().CategoryId" asp-items="@(new SelectList(Model.Categories, "Id", "Name"))" class="form-control">
+                <option value="">Select a Category</option>
+            </select>
+            <span asp-validation-for="Products.FirstOrDefault().CategoryId" class="text-danger"></span>
+        </div>
+    }
+    <div asp-validation-summary="All" class="text-danger"></div>
+
+    <div class="d-flex justify-content-end mt-4">
+        <button type="submit" class="btn btn-primary mt-4">Create</button>
+        <a asp-action="Index" class="btn btn-secondary ml-2">Back to List</a>
     </div>
 
-    <div class="form-group">
-        <label asp-for="Price"></label>
-        <input asp-for="Price" class="form-control" />
-        <span asp-validation-for="Price" class="text-danger"></span>
-    </div>
-
-    <div class="form-group">
-        <label asp-for="PictureUrl"></label>
-        <input asp-for="PictureUrl" class="form-control" />
-        <span asp-validation-for="PictureUrl" class="text-danger"></span>
-    </div>
-
-    <div class="form-group">
-        <label asp-for="ReverseLookupOfCategoryIds"></label>
-        <select asp-for="ReverseLookupOfCategoryIds" asp-items="@(new SelectList(ViewBag.Categories, "Id", "Name"))" class="form-control">
-            <option value="">Select a Category</option>
-        </select>
-        <span asp-validation-for="ReverseLookupOfCategoryIds" class="text-danger"></span>
-    </div>
-
-    <button type="submit" class="btn btn-primary">Create</button>
 </form>
+
+
+
+<script>
+    $(document).ready(function () {
+        // Attach a submit event handler to the form
+        $("#createProductForm").submit(function () {
+            // Get the input value
+            var pictureUrl = $("#pictureUrlInput").val();
+
+            // Add the prefix if the value is not empty
+            if (pictureUrl !== "") {
+                $("#pictureUrlInput").val("/images/" + pictureUrl);
+            }
+        });
+    });
+</script>

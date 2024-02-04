@@ -1,19 +1,28 @@
-@model WebShop.Models.Category
+@model WebShop.ViewModels.HomeViewModel
 
 <h2>Create Category</h2>
 
 <form asp-action="Create" method="post">
-    <div class="form-group">
-        <label for="Name">Category Name:</label>
-        <input type="text" class="form-control" id="Name" name="Name" placeholder="Enter category name" required>
+    @if (Model.Categories != null && Model.Categories.Any())
+    {
+        <div class="form-group">
+            <input type="hidden" asp-for="Categories.FirstOrDefault().Id" />
+            <label asp-for="Categories.FirstOrDefault().Name"></label>
+            <input asp-for="Categories.FirstOrDefault().Name" class="form-control" />
+            <span asp-validation-for="Categories.FirstOrDefault().Name" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Categories.FirstOrDefault().Description"></label>
+            <input asp-for="Categories.FirstOrDefault().Description" class="form-control" />
+            <span asp-validation-for="Categories.FirstOrDefault().Description" class="text-danger"></span>
+
+        </div>
+    }
+
+    <div class="d-flex justify-content-end mt-4">
+        <button type="submit" class="btn btn-primary">Create</button>
+        <a asp-action="Index" class="btn btn-secondary ml-2">Back to List</a>
     </div>
-    <div class="form-group">
-        <label for="Description">Description:</label>
-        <textarea class="form-control" id="Description" name="Description" placeholder="Enter category description"></textarea>
-    </div>
-    <div class="form-group">
-        <label for="Subcategories">Subcategories:</label>
-        <input type="text" class="form-control" id="Subcategories" name="Subcategories" placeholder="Enter subcategories (comma-separated)">
-    </div>
-    <button type="submit" class="btn btn-primary">Create</button>
+
 </form>

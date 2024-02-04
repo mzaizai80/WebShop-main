@@ -2,29 +2,20 @@
   {
     "Id": 1,
     "Name": "Electronics",
-    "Subcategories": [
-      {
-        "Id": 2,
-        "Name": "Laptops"
-      },
-      {
-        "Id": 3,
-        "Name": "Smartphones"
-      }
-    ]
+    "Description": "Powerful Electronics for work.",
+    "ProductIds": [ 1 ]
   },
   {
-    "Id": 4,
-    "Name": "Accessories",
-    "Subcategories": [
-      {
-        "Id": 5,
-        "Name": "Headphones"
-      }
-    ]
+    "Id": 2,
+    "Name": "Laptops",
+    "Description": "Powerful laptops for work and play.",
+    "ProductIds": [ 2 ]
   },
   {
-    "Id": 6,
-    "Name": "Clothing"
+    "Id": 2,
+    "Name": "Smartphones",
+    "Description": "Stay connected with the latest smartphones.",
+    "ProductIds": [ 2 ]
   }
+
 ]

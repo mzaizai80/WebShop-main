@@ -1,4 +1,6 @@
-﻿namespace WebShop.Services
+﻿using WebShop.Models;
+
+namespace WebShop.Services
 {
     public interface IFileService
     {

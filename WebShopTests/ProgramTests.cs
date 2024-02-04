@@ -1,52 +1,41 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
-using NUnit.Framework;
-using Moq;
 using WebShop.Services;
 
 namespace WebShopTests
 {
-    //[TestFixture]
-    //public class DependencyInjectionTests
-    //{
-    //       private Mock<IOptions<WebShopFileServiceOptions>> optionsMock;
+    [TestFixture]
+    public class ServiceRegistrationTests
+    {
         
-    //       [SetUp]
-    //    public void Setup()
-    //    {
-    //        optionsMock = new Mock<IOptions<WebShopFileServiceOptions>>();
-        
-    //    }
+        [Test]
+        public void ConfigurationIsSetCorrectly()
+        {
+            // Arrange
+            var builder = WebApplication.CreateBuilder();
 
-    //    [Test]
-    //    public void ConfigureServices_Registrations_AreValid()
-    //    {
-    //        // Arrange
-    //        var services = new ServiceCollection();
+            // Act
+            builder.Services.Configure<FilepathServiceOptions>(builder.Configuration.GetSection("ProductService"));
 
-    //        // Create options for ProductService
-    //        var productServiceOptions = Options.Create(new WebShopFileServiceOptions
-    //        {
-    //            ProductsFilePath = "test_data/products_test.json",
-    //            CategoriesFilePath = "test_data/categories.json",
-    //            ProductCategoryFilePath = "test_data/productCategoryRelation.json"
-    //        });
+            // Assert
+            var options = builder.Services.BuildServiceProvider().GetRequiredService<IOptions<FilepathServiceOptions>>().Value;
+            Assert.That(options.ProductsFilePath, Is.EqualTo("data/products.json"));
+            Assert.That(options.CategoriesFilePath, Is.EqualTo("data/categories.json"));
+        }
 
-    //        // Act
-    //        services.AddSingleton<IFileService, FileService>();
-    //        services.AddSingleton<IOptions<WebShopFileServiceOptions>>(productServiceOptions);
-    //        services.AddScoped<IProductCategoryRelationService, ProductCategoryRelationService>();
-    //        services.AddScoped<ICategoryService, CategoryService>();
-    //        services.AddTransient<ProductService>();
-    //        services.AddTransient<IService, Services>();
+        [Test]
+        public void RoutingIsConfiguredCorrectly()
+        {
+            // Arrange
+            var builder = WebApplication.CreateBuilder();
 
-    //        // Assert
-    //        var serviceProvider = services.BuildServiceProvider();
-    //        Assert.That(serviceProvider.GetService<IFileService>(), Is.Not.Null);
-    //        Assert.That(serviceProvider.GetService<IProductCategoryRelationService>(), Is.Not.Null);
-    //        Assert.That(serviceProvider.GetService<ICategoryService>(), Is.Not.Null);
-    //        Assert.That(serviceProvider.GetService<ProductService>(), Is.Not.Null);
-    //        Assert.That(serviceProvider.GetService<IService>(), Is.Not.Null);
-    //    }
-    //}
+            // Act
+            builder.Services.AddControllersWithViews();
+            var app = builder.Build();
+
+            // Assert
+            Assert.That(app, Has.Property(nameof(app.Environment)).Not.Null);
+        }
+    }
 }

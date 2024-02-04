@@ -6,6 +6,6 @@ namespace WebShop.Services
     {
         IEnumerable<Product> GetAllProducts();
         IEnumerable<Category> GetAllCategories();
-        IEnumerable<Product> GetProductsByCategory(int categoryId);
+        List<Product> GetProductsByCategory(int categoryId);
     }
 }
