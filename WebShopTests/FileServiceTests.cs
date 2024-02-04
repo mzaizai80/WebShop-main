@@ -14,14 +14,12 @@ namespace WebShopTests
         public void Setup()
         {
             _fileService = new FileService();
-            // Create a test file for existing file tests
             File.WriteAllText(ExistingFilePath, FileContent);
         }
 
         [TearDown]
         public void TearDown()
         {
-            // Clean up test files
             if (File.Exists(ExistingFilePath))
             {
                 File.Delete(ExistingFilePath);
@@ -54,7 +52,7 @@ namespace WebShopTests
         public void ReadAllText_ExistingFile_ReturnsFileContent()
         {
             // Arrange
-            // Act
+        // Act
             string content = _fileService.ReadAllText(ExistingFilePath);
 
             // Assert

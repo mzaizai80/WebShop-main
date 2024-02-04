@@ -1,0 +1,33 @@
+@model WebShop.ViewModels.HomeViewModel
+
+
+<h2>Edit Category</h2>
+
+
+<form asp-action="Edit" method="post">
+    @Html.AntiForgeryToken()
+    <input type="hidden" asp-for="Products"/>
+    
+    @if (Model.Categories != null && Model.Categories.Any())
+    {
+        <div class="form-group">
+        <input type="hidden" asp-for="Categories[0].Id" />
+        <label asp-for="Categories[0].Name"></label>
+        <input asp-for="Categories[0].Name" class="form-control" />
+        <span asp-validation-for="Categories[0].Name" class="text-danger"></span>
+        </div>
+        
+        <div class="form-group">
+            <label asp-for="Categories[0].Description"></label>
+            <input asp-for="Categories[0].Description" class="form-control" />
+            <span asp-validation-for="Categories[0].Description" class="text-danger"></span>
+
+        </div>
+        <div class="form-group">
+        </div>
+
+
+    }
+    <button type="submit" class="align-self-end m-3 btn btn-primary">Save</button>
+
+</form>

@@ -3,90 +3,156 @@
     "Id": 11,
     "Name": "Smartphones",
     "Description": "Stay connected with the latest smartphones.",
-    "Products": [ 101, 102, 103, 11, 12, 13, 14, 15, 21, 22, 23, 24, 25, 31, 32, 33, 34, 35, 56, 57, 58, 59, 60, 807 ]
+    "ProductIds": [
+      101,
+      102,
+      103,
+      11,
+      12,
+      13,
+      14,
+      15,
+      21,
+      22,
+      23,
+      24,
+      25,
+      31,
+      32,
+      33,
+      34,
+      35,
+      56,
+      57,
+      58,
+      59,
+      60,
+      807
+    ]
   },
   {
     "Id": 12,
     "Name": "Laptops",
     "Description": "Powerful laptops for work and play.",
-    "Products": [ 1, 201, 202, 203, 7, 8, 21, 22, 23, 24, 25, 31, 32, 33, 34, 35, 41, 42, 43, 44, 45, 51, 52, 53, 54, 55, 57, 58, 59, 60, 66, 67, 68, 69, 70 ]
+    "ProductIds": [
+      1,
+      201,
+      202,
+      203,
+      7,
+      8,
+      21,
+      22,
+      23,
+      24,
+      25,
+      31,
+      32,
+      33,
+      34,
+      35,
+      41,
+      42,
+      43,
+      44,
+      45,
+      51,
+      52,
+      53,
+      54,
+      55,
+      57,
+      58,
+      59,
+      60,
+      66,
+      67,
+      68,
+      69,
+      70
+    ]
   },
   {
     "Id": 13,
     "Name": "Men's Clothing",
     "Description": "Upgrade your wardrobe with our men's clothing collection.",
-    "Products": [ 3, 4, 9, 501, 502, 503, 31, 32, 33, 34, 35, 41, 42, 43, 44, 45, 56, 57, 58, 59, 60, 66, 67, 68, 69, 70 ]
+    "ProductIds": [
+      3,
+      9,
+      501,
+      502,
+      503,
+      31,
+      32,
+      33,
+      34,
+      35,
+      41,
+      42,
+      43,
+      44,
+      45,
+      56,
+      57,
+      58,
+      59,
+      60,
+      66,
+      67,
+      68,
+      69,
+      70
+    ]
   },
   {
     "Id": 14,
     "Name": "Women's Clothing",
     "Description": "Explore the latest trends in women's fashion.",
-    "Products": [ 701, 702, 703, 801, 802, 803 ]
+    "ProductIds": [
+      701,
+      702,
+      703,
+      801,
+      802,
+      803
+    ]
   },
   {
     "Id": 15,
     "Name": "Bedroom Furniture",
     "Description": "Create a cozy retreat with our bedroom furniture.",
-    "Products": [ 5, 6, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60 ]
+    "ProductIds": [
+      5,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57,
+      58,
+      59,
+      60
+    ]
   },
   {
     "Id": 16,
     "Name": "Kitchen Appliances",
     "Description": "Efficient and stylish kitchen appliances for modern homes.",
-    "Products": [ 10 ]
-  },
-  {
-    "Id": 17,
-    "Name": "Notebooks",
-    "Description": "Jot down your thoughts with our diverse range of notebooks.",
-    "Products": [ 7, 8 ]
-  },
-  {
-    "Id": 18,
-    "Name": "Stationery Sets",
-    "Description": "Elevate your desk with our beautifully crafted stationery sets.",
-    "Products": [ 501, 502 ]
-  },
-  {
-    "Id": 19,
-    "Name": "Outdoor Gear",
-    "Description": "Gear up for outdoor adventures with our quality outdoor equipment.",
-    "Products": [ 5 ]
+    "ProductIds": [
+      10,
+      10
+    ]
   },
   {
     "Id": 20,
     "Name": "Sports Apparel",
     "Description": "Achieve peak performance with our comfortable sports apparel.",
-    "Products": [ 503 ]
-  },
-  {
-    "Id": 21,
-    "Name": "Skincare",
-    "Description": "Revitalize your skin with our curated selection of skincare products.",
-    "Products": [ 61, 62, 63, 64, 65 ]
-  },
-  {
-    "Id": 22,
-    "Name": "Haircare",
-    "Description": "Nourish your hair with our premium haircare solutions.",
-    "Products": [ 66, 67, 68, 69, 70 ]
-  },
-  {
-    "Id": 23,
-    "Name": "Educational Toys",
-    "Description": "Inspire learning through play with our educational toys.",
-    "Products": [ 71, 72, 73, 74, 75 ]
-  },
-  {
-    "Id": 24,
-    "Name": "Board Games",
-    "Description": "Gather friends and family for endless fun with our board games.",
-    "Products": [ 76, 77, 78, 79, 80 ]
-  },
-  {
-    "Id": 25,
-    "Name": "Earrings",
-    "Description": "Adorn yourself with our elegant and stylish earrings.",
-    "Products": [ 81, 82, 83, 84, 85 ]
+    "ProductIds": [
+      503,
+      6,
+      4,
+      804
+    ]
   }
 ]

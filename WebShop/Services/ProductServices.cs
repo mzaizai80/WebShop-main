@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Options;
+﻿using Microsoft.CodeAnalysis;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using System.Collections;
 using WebShop.Models;
@@ -13,7 +14,7 @@ namespace WebShop.Services
         private readonly List<Product> _products;
         private readonly ICategoryService _categoryService;
 
-        public ProductService(IFileService fileService, IOptions<WebShopFileServiceOptions> options, List<Product> products, ICategoryService categoryService)
+        public ProductService(IFileService fileService, IOptions<FilepathServiceOptions> options, List<Product> products, ICategoryService categoryService)
         {
             _fileService = fileService ?? throw new ArgumentNullException(nameof(fileService));
             _products = products;
@@ -37,14 +38,9 @@ namespace WebShop.Services
             try
             {
                 var products = GetAllProducts();
-                if (products.Any())
-                {
-                    product.Id = products.Max(p => p.Id) + 1;
-                }
-                else
-                {
-                    product.Id = 10;
-                }
+                int maxId = products.Any() ? products.Max(p => p.Id) : 0;
+                product.Id = maxId + 1;
+
                 products.Add(product);
                 SaveProducts(products);
             }
@@ -54,7 +50,7 @@ namespace WebShop.Services
             }
         }
 
-        public Product GetProductById(int productId)
+        public Product GetProductByProductId(int productId)
         {
             try
             {
@@ -87,18 +83,20 @@ namespace WebShop.Services
             try
             {
                 var products = GetAllProducts();
-                System.Console.WriteLine(updatedProduct);
                 var existingProduct = products.FirstOrDefault(p => p.Id == updatedProduct.Id);
-                System.Console.WriteLine(existingProduct);
+
                 if (existingProduct != null)
                 {
                     existingProduct.Name = updatedProduct.Name;
-                    existingProduct.Price = updatedProduct.Price;
                     existingProduct.PictureUrl = updatedProduct.PictureUrl;
-                    existingProduct.Product_Discription = updatedProduct.Product_Discription;
-                    existingProduct.ReverseLookupOfCategoryIds = updatedProduct.ReverseLookupOfCategoryIds;
+                    existingProduct.Description = updatedProduct.Description;
+                    existingProduct.Price = updatedProduct.Price;
 
-                    _categoryService.UpdateAssociationOfCategoryWithProducts(existingProduct.Id, existingProduct.ReverseLookupOfCategoryIds);
+
+
+                    _categoryService.UpdateProductsIdListInCategory(existingProduct.Id, existingProduct.CategoryId, updatedProduct.CategoryId);
+
+                    existingProduct.CategoryId = updatedProduct.CategoryId;
 
                     SaveProducts(products);
                 }
@@ -136,11 +134,34 @@ namespace WebShop.Services
             }
         }
 
-        private void SaveProducts(List<Product> products)
+        public void DeleteProductByCategoryId(int categoryId)
         {
             try
             {
-                var productsJson = JsonConvert.SerializeObject(products);
+                var products = GetAllProducts();
+                var productsToRemove = products.Where(p => p.CategoryId == categoryId).ToList();
+
+                if (productsToRemove.Count > 0)
+{
+                    foreach (var productToRemove in productsToRemove)
+                    {
+                        products.Remove(productToRemove);
+                    }
+
+                    SaveProducts(products);
+}
+            }
+            catch (Exception ex)
+            {
+                    throw new ProductServiceException($"No products found with Category ID {categoryId} for deletion.");
+            }
+        }
+
+        public void SaveProducts(List<Product> products)
+        {
+            try
+            {
+                var productsJson = JsonConvert.SerializeObject(products, Formatting.Indented);
                 _fileService.WriteAllText(_productsFilePath, productsJson);
             }
             catch (Exception ex)
@@ -149,12 +170,25 @@ namespace WebShop.Services
             }
         }
 
-        public void SaveProducts(Product product)
+        public void SaveProduct(Product product)
         {
             try
             {
                 var products = GetAllProducts();
-                products.Add(product);
+
+                var existingProduct = products.FirstOrDefault(p => p.Id == product.Id);
+
+                if (existingProduct != null)
+                {
+                    existingProduct.Name = product.Name;
+                    existingProduct.Price = product.Price;
+                    existingProduct.CategoryId = product.CategoryId;
+                }
+                else
+                {
+                    products.Add(product);
+                }
+
                 SaveProducts(products);
             }
             catch (Exception ex)
@@ -162,18 +196,14 @@ namespace WebShop.Services
                 throw new ProductServiceException("Error saving product.", ex);
             }
         }
-
-        public IEnumerable<Product> GetProductsByCategory(int categoryId, int page, int pageSize)
+        
+        public List<Product> GetAllProductsByCategory(int categoryId)
         {
             try
             {
                 var allProducts = GetAllProducts();
-                var productsInCategory = allProducts
-                    .Where(p => p.ReverseLookupOfCategoryIds == categoryId)
-                    .Skip((page - 1) * pageSize)
-                    .Take(pageSize);
-
-                return productsInCategory.ToList();
+                List<Product> productsInCategory = allProducts.Where(p => p.CategoryId == categoryId).ToList();
+                return productsInCategory;
             }
             catch (Exception ex)
             {
@@ -181,108 +211,5 @@ namespace WebShop.Services
             }
         }
 
-        public IEnumerable<Product> GetProductsByCategory(int categoryId)
-        {
-            try
-            {
-                var allProducts = GetAllProducts();
-                var productsInCategory = allProducts.Where(p => p.ReverseLookupOfCategoryIds == categoryId);
-                return productsInCategory.ToList();
-            }
-            catch (Exception ex)
-            {
-                throw new ProductServiceException($"Error getting products by category ID {categoryId}.", ex);
-            }
-        }
     }
 }
-
-
-/*public IEnumerable<Product> GetProductsByCategory(int categoryId, int page, int pageSize)
-   {
-       try
-       {
-           var allProducts = GetAllProducts();
-           var productsInCategory = allProducts
-               .Where(p => p.CategoryId == categoryId)
-               .Skip((page - 1) * pageSize)
-               .Take(pageSize);
-
-           return productsInCategory.ToList();
-       }
-       catch (Exception ex)
-       {
-           throw new ProductServiceException($"Error getting products by category ID {categoryId}.", ex);
-       }
-   }
-
-   public IEnumerable<Product> GetProductsByCategory(int categoryId)
-   {
-       try
-       {
-           var allProducts = GetAllProducts();
-           var productsInCategory = allProducts.Where(p => p.CategoryId == categoryId);
-           return productsInCategory.ToList();
-       }
-       catch (Exception ex)
-       {
-           throw new ProductServiceException($"Error getting products by category ID {categoryId}.", ex);
-       }
-   }
-*/
-
-
-//    public void UpdateProduct(Product updatedProduct)
-//    {
-//        try
-//        {
-//            var products = GetAllProducts();
-//            var existingProduct = products.FirstOrDefault(p => p.Id == updatedProduct.Id);
-
-//            if (existingProduct != null)
-//            {
-//                existingProduct.Name = updatedProduct.Name;
-//                existingProduct.Price= updatedProduct.Price;
-//                existingProduct.PictureUrl = updatedProduct.PictureUrl;
-//existingProduct.Product_Discription = updatedProduct.Product_Discription;
-
-//                _categoryService.UpdateCategoryForProduct(existingProduct, updatedProduct.CategoryId);
-
-//                SaveProducts(products);
-//            }
-//            else
-//            {
-//                throw new ProductServiceException($"Product with ID {updatedProduct.Id} not found for update.");
-//            }
-//        }
-//        catch (Exception ex)
-//        {
-//            throw new ProductServiceException("Error updating product.", ex);
-//        }
-//    }
-
-
-
-//public void UpdateProduct(Product updatedProduct)
-//{
-//    try
-//    {
-//        var products = GetAllProducts();
-//        var existingProduct = products.FirstOrDefault(p => p.Id == updatedProduct.Id);
-
-//        if (existingProduct != null)
-//        {
-//            existingProduct.Name = updatedProduct.Name;
-//            existingProduct.PictureUrl = updatedProduct.PictureUrl;
-//            SaveProducts(products);
-//        }
-//        else
-//        {
-//            throw new ProductServiceException($"Product with ID {updatedProduct.Id} not found for update.");
-//        }
-//    }
-//    catch (Exception ex)
-//    {
-//        throw new ProductServiceException("Error updating product.", ex);
-//    }
-//}

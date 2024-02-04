@@ -1,0 +1,50 @@
+﻿@model WebShop.ViewModels.HomeViewModel
+
+<h2>Category Details</h2>
+
+<div>
+    @if (Model.Categories != null && Model.Categories.Any())
+    {
+        <div class="col mt-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">@Model.Categories.First().Name</h5>
+                    <br />
+                    <p class="card-text">Description: @Model.Categories.First().Description</p>
+                    <br />
+                </div>
+                <div class="align-self-end mt-3">
+                    <a asp-action="Edit" asp-route-id="@Model.Categories.First().Id" class="m-2 btn btn-primary">Edit</a>
+                    <a asp-action="Delete" asp-route-id="@Model.Categories.First().Id" class=" m-2 btn btn-danger">Delete</a>
+                </div>
+            </div>
+
+            <div class="row mt-4" style="margin: 2rem;">
+                @foreach (var product in Model.Products)
+                {
+                    <div class="col-md-4 mt-4">
+                        @if (product.CategoryId == Model.Categories.First().Id)
+                        {
+                            <div class="card" style="max-height: 450px">
+                                <img src="@product.PictureUrl" class="card-img-top" alt="Product Image" style="max-height: 200px;">
+                                <div class="card-body">
+                                    <h5 class="card-title">@product.Name</h5>
+                                    <p class="card-text">Price: $@product.Price</p>
+                                    <br />
+                                    <p class="card-text">Description: $@product.Description</p>
+                                    <br />
+                                    <a asp-area="" asp-controller="Product" asp-action="Details" asp-route-id="@product.Id" class="btn btn-primary">View Details</a>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                }
+            </div>
+
+        </div>
+    }
+    else
+    {
+        <p>Product detail is not found</p>
+    }
+</div>

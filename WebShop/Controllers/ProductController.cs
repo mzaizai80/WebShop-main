@@ -18,20 +18,19 @@ namespace WebShop.Controllers
         {
         }
 
-        [HttpGet("Index", Name = "ProductIndex")]
+        [HttpGet("Index")]
         public IActionResult Index()
         {
             HomeViewModel model = new HomeViewModel();
             model.Products = _productService.GetAllProducts();
-            return View(model);
+            return View("Index", model);
         }
 
-        [HttpGet("details/{id}", Name = "GetDetails")]
+        [HttpGet("product/Details/{id}", Name = "GetProductDetails")]
         public IActionResult Details(int id)
         {
             HomeViewModel model = new HomeViewModel();
-
-            var product = _productService.GetProductById(id);
+            var product = _productService.GetProductByProductId(id);
 
             if (product == null)
             {
@@ -39,15 +38,23 @@ namespace WebShop.Controllers
             }
 
             model.Products = new List<Product> { product };
-
-            return View(model);
+            return View("Details", model);
         }
 
         [HttpGet("create")]
         public IActionResult Create()
         {
-            ViewBag.Categories = _categoryService.GetAllCategories();
-            return View("Index");
+            HomeViewModel model = new HomeViewModel();
+            var product = new Product();
+            var categories = _categoryService.GetAllCategories();
+
+            model = new HomeViewModel
+            {
+                Products = new List<Product> { product },
+                Categories = categories
+            };
+
+            return View("Create", model);
         }
 
         [HttpPost("create")]
@@ -59,21 +66,17 @@ namespace WebShop.Controllers
                 return RedirectToAction("Details", new { id = product.Id });
             }
 
-            ViewBag.Categories = _categoryService.GetAllCategories();
-            return View(product);
+            HomeViewModel model = new HomeViewModel();
+            model.Categories = _categoryService.GetAllCategories();
+            return View("Create", model);
         }
 
         [HttpGet("edit/{id}", Name = "EditProduct")]
         public IActionResult Edit(int id)
         {
             HomeViewModel model = new HomeViewModel();
-            var product = _productService.GetProductById(id);
+            var product = _productService.GetProductByProductId(id);
             var categories = _categoryService.GetAllCategories();
-
-            if (product == null)
-            {
-                return NotFound();
-            }
 
             model = new HomeViewModel
             {
@@ -81,43 +84,46 @@ namespace WebShop.Controllers
                 Categories = categories
             };
 
-            return View(model);
+            return View("Edit", model);
         }
 
+
         [HttpPost("edit/{id}")]
-        public IActionResult Edit(int id, HomeViewModel viewModel)
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(HomeViewModel model)
         {
             try
             {
-                HomeViewModel model = new HomeViewModel();
-                var product = _productService.GetProductById(id);
-                var category = _categoryService.GetCategoryById(product.ReverseLookupOfCategoryIds);
-
-
-                if (viewModel.Products == null)
+                if (model.Products != null && model.Products.Any())
                 {
-                    viewModel.Products = new List<Product> { product };
-                    viewModel.Categories = new List<Category> { category };
+
+                    var updatedProduct = model.Products.First();
+
+                    if (ModelState.IsValid)
+                    {
+                        _productService.UpdateProduct(updatedProduct);
+                        return RedirectToAction("Details", new { id = updatedProduct.Id });
+                    }
                 }
 
-                _productService.UpdateProduct(product);
-                return RedirectToAction("Details", new { id = viewModel.Products.First().Id });
+                var categories = _categoryService.GetAllCategories();
+                model.Categories = categories;
+                return View("Edit", model);
             }
             catch (ProductServiceException ex)
             {
-                ModelState.AddModelError(string.Empty, "Error updating product.");
-                viewModel.Categories = _categoryService.GetAllCategories();
-                return View(viewModel);
+                var categories = _categoryService.GetAllCategories();
+                model.Categories = categories;
+                return View();
             }
         }
 
-        [HttpGet("delete/{id}")]
+        [HttpGet("Delete/{id}", Name = "DeleteDetails")]
         public IActionResult Delete(int id)
         {
 
             HomeViewModel model = new HomeViewModel();
-
-            var product = _productService.GetProductById(id);
+            var product = _productService.GetProductByProductId(id);
 
             if (product == null)
             {
@@ -125,124 +131,24 @@ namespace WebShop.Controllers
             }
 
             model.Products = new List<Product> { product };
-
-
-            return View(model);
+            return View("Delete", model);
         }
 
-        [HttpPost("delete/{id}")]
+        [HttpPost("Delete/{id}", Name = "DeleteDetails")]
         public IActionResult DeleteConfirmed(int id)
         {
+            var product = _productService.GetProductByProductId(id);
+
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+            int categoryId = product.CategoryId;
+
             _productService.DeleteProduct(id);
-            return RedirectToAction("Index");
+
+            return RedirectToAction("ProductsByCategory", "Home", new { categoryId });
         }
     }
 }
-
-
-
-//[HttpPost("edit/{id}")]
-//public IActionResult Edit(int id, HomeViewModel viewModel)
-//{
-//        try
-//        {
-//            _productService.UpdateProduct(viewModel.Products.FirstOrDefault());
-//            return RedirectToAction("Details", new { id = viewModel.Products.First().Id });
-//        }
-//        catch (ProductServiceException ex)
-//        {
-//            ModelState.AddModelError(string.Empty, "Error updating product.");
-//            viewModel.Categories = _categoryService.GetAllCategories();
-//            return View(viewModel);
-//        }
-//    //if (ModelState.IsValid)
-//    //{
-//    //}
-
-//    viewModel.Categories = _categoryService.GetAllCategories();
-//    return View(viewModel);
-//}
-
-
-
-
-
-//[HttpGet("edit/{id}")]
-//public IActionResult Edit(int id)
-//{
-//    var product = _productService.GetProductById(id);
-//    var categories = _categoryService.GetAllCategories();
-//    ViewBag.Categories = new SelectList(categories, "Id", "Name", product.CategoryId);
-
-//    var model = new HomeViewModel
-//    {
-//        Products = new List<Product> { product }
-//    };
-
-//    return View(model);
-//}
-
-//[HttpPost("edit/{id}")]
-//public IActionResult Edit(HomeViewModel model)
-//{
-//    if (ModelState.IsValid)
-//    {
-//        var product = model.Products.FirstOrDefault();
-//        if (product != null)
-//        {
-//            _productService.UpdateProduct(product);
-//            return RedirectToAction("Details", new { id = product.Id });
-//        }
-//    }
-
-//    var categories = _categoryService.GetAllCategories();
-//    ViewBag.Categories = new SelectList(categories, "Id", "Name", model.Products?.FirstOrDefault()?.CategoryId);
-//    return View(model);
-//}
-
-
-
-
-//[HttpGet("edit/{id}")]
-//public IActionResult Edit(int id)
-//{
-//    var product = _productService.GetProductById(id);
-//    var categories = _categoryService.GetAllCategories();
-//    ViewBag.Categories = new SelectList(categories, "Id", "Name", product.CategoryId);
-//    return View(product);
-//}
-
-//[HttpPost("edit/{id}")]
-//public IActionResult Edit(Models.Product product)
-//{
-//    if (ModelState.IsValid)
-//    {
-//        _productService.UpdateProduct(product);
-//        return RedirectToAction("Details", new { id = product.Id });
-//    }
-
-//    var categories = _categoryService.GetAllCategories();
-//    ViewBag.Categories = new SelectList(categories, "Id", "Name", product.CategoryId);
-//    return View(product);
-//}
-
-//[HttpGet("edit/{id}")]
-//public IActionResult Edit(int id)
-//{
-//    var product = _productService.GetProductById(id);
-//    ViewBag.Categories = _categoryService.GetAllCategories();
-//    return View(product);
-//}
-
-//[HttpPost("edit/{id}")]
-//public IActionResult Edit(Models.Product product)
-//{
-//    if (ModelState.IsValid)
-//    {
-//        _productService.UpdateProduct(product);
-//        return RedirectToAction("Index");
-//    }
-
-//    ViewBag.Categories = _categoryService.GetAllCategories();
-//    return View(product);
-//}

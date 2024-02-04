@@ -3,7 +3,7 @@
 namespace WebShop.Services
 {
     [Serializable]
-    public class CategoryServiceException : Exception
+    internal class CategoryServiceException : Exception
     {
         public CategoryServiceException()
         {
@@ -17,7 +17,7 @@ namespace WebShop.Services
         {
         }
 
-        public CategoryServiceException(SerializationInfo info, StreamingContext context) : base(info, context)
+        protected CategoryServiceException(SerializationInfo info, StreamingContext context) : base(info, context)
         {
         }
     }

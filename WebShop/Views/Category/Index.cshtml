@@ -1,13 +1,14 @@
-﻿@model List<WebShop.Models.Category>
+﻿@model WebShop.ViewModels.HomeViewModel
 
 <h2>Categories</h2>
 
 <ul>
-    @foreach (var category in Model)
+    @foreach (var category in Model.Categories)
     {
         <li>
-            <a asp-controller="Category" asp-action="Index" asp-route-categoryId="@category.Id">
-                @category.Name
+
+            <a asp-controller="Category" asp-action="Details" asp-route-Id="@category.Id">
+                <h2>@category.Name</h2>
             </a>
         </li>
     }

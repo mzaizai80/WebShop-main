@@ -7,10 +7,13 @@ namespace WebShop.Services
         void AddProduct(Product product);
         void UpdateProduct(Product updatedProduct);
         void DeleteProduct(int productId);
-        void SaveProducts(Product product);
-        Product GetProductById(int productId);
+        void SaveProduct(Product product);
+        void SaveProducts(List<Product> products);
+        Product GetProductByProductId(int productId);
         List<Product> GetAllProducts();
-        IEnumerable<Product> GetProductsByCategory(int categoryId, int page, int pageSize);
-        IEnumerable<Product> GetProductsByCategory(int categoryId);
+
+        // Category Associated methods
+        void DeleteProductByCategoryId(int categoryId);
+        List<Product> GetAllProductsByCategory(int categoryId);
     }
 }

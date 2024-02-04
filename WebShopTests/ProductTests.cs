@@ -2,7 +2,7 @@
 
 namespace WebShopTests
 {
-    public class ProductTests
+    internal class ProductTests
     {
         [SetUp]
         public void Setup()
@@ -54,15 +54,15 @@ namespace WebShopTests
         public void Set_CategoryId()
         {
             var product = new Product();
-//            product.CategoryId = 123; // Assigning a sample category ID
+            product.CategoryId = 123; 
 
-//            Assert.That(product.CategoryId, Is.EqualTo(123));
+          Assert.That(product.CategoryId, Is.EqualTo(123));
         }
 
         [Test]
         public void Create_New_Product()
         {
-            // Arrange & Act
+            // Arrange & // Act
             var product = new Product();
 
             // Assert

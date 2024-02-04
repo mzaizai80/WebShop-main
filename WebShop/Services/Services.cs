@@ -24,9 +24,9 @@ namespace WebShop.Services
             return _categoryService.GetAllCategories();
         }
 
-        IEnumerable<Product> IService.GetProductsByCategory(int categoryId)
+List<Product> IService.GetProductsByCategory(int categoryId)
         {
-            return _productService.GetProductsByCategory(categoryId);
+            return _productService.GetAllProductsByCategory(categoryId);
         }
     }
 }
